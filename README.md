@@ -39,6 +39,8 @@ TODO: Tell users more about the package: where to find more information, how to
 contribute to the package, how to file issues, what response they can expect 
 from the package authors, and more.
 
+## Mobile:
+
 ### Example
 ![](./screenshots/00.png)
 
@@ -59,3 +61,13 @@ from the package authors, and more.
 ![](./screenshots/08.png)
 ![](./screenshots/09.png)
 ![](./screenshots/10.png)
+
+## Web and Desktop:
+![](./screenshots/11_desktop.png)
+![](./screenshots/12_desktop.png)
+![](./screenshots/13_desktop.png)
+![](./screenshots/14_desktop.png)
+![](./screenshots/15_desktop.png)
+
+
+
