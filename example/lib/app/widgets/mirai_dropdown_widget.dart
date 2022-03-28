@@ -3,6 +3,7 @@
 * On 3/28/2022.
 */
 import 'package:example/app/core/utils/app_theme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
@@ -19,6 +20,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
     this.exit = MiraiExit.fromAll,
     this.chevronDownColor,
     this.dropdownChild,
+    this.showMode = MiraiShowMode.bottom,
   }) : super(key: key);
 
   final ValueNotifier<String> valueNotifier;
@@ -30,12 +32,15 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
   final MiraiExit exit;
   final Color? chevronDownColor;
   final Widget? dropdownChild;
+  final MiraiShowMode showMode;
 
   @override
   Widget build(BuildContext context) {
     return MiraiPopupMenu<T>(
       key: UniqueKey(),
       enable: true,
+      space: 4,
+      showMode: showMode,
       exit: exit,
       showSeparator: showSeparator,
       child: Container(

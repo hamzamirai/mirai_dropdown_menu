@@ -29,7 +29,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.onOtherChanged,
     this.exit = MiraiExit.fromAll,
     this.isExpanded,
-    this.space = 2,
+    this.space = 3,
   })  : assert(child.key != null),
         super(key: key);
 
@@ -217,7 +217,9 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
                       ? widget.position.dy + widget.space + widget.size.height
                       : widget.position.dy -
                           widget.space -
-                          (widget.maxHeight ?? 0),
+                          (widget.maxHeight ??
+                              (widget.size.height - 3) *
+                                  widget.children.length),
                   child: AnimatedBuilder(
                     animation: _animationController,
                     builder: (context, child) {

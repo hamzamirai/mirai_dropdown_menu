@@ -1,6 +1,8 @@
 import 'package:example/app/widgets/mirai_drop_down_item_widget.dart';
 import 'package:example/app/widgets/mirai_dropdown_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
 
 import 'app/core/utils/app_size_config.dart';
 
@@ -71,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 14,
+            horizontal: kIsWeb ? 100 : 14,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -173,6 +175,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Expanded(
                     child: MiraiDropdownWidget(
+                      showMode:
+                          kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
                       valueNotifier: valueNotifier,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
@@ -186,6 +190,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: MiraiDropdownWidget(
+                      showMode:
+                          kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
                       valueNotifier: valueNotifier,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
@@ -199,6 +205,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: MiraiDropdownWidget(
+                      showMode:
+                          kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
                       valueNotifier: valueNotifier,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
@@ -212,6 +220,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: MiraiDropdownWidget(
+                      showMode:
+                          kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
                       valueNotifier: valueNotifier,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
