@@ -37,3 +37,24 @@ const like = 'sample';
 TODO: Tell users more about the package: where to find more information, how to 
 contribute to the package, how to file issues, what response they can expect 
 from the package authors, and more.
+
+### Example
+![](./screenshots/00.png)
+
+### 1 item
+![](./screenshots/01.png)
+
+### 2 items
+![](./screenshots/02.png)
+![](./screenshots/03.png)
+
+### 3 items
+![](./screenshots/04.png)
+![](./screenshots/05.png)
+![](./screenshots/06.png)
+
+### 4 items
+![](./screenshots/07.png)
+![](./screenshots/08.png)
+![](./screenshots/09.png)
+![](./screenshots/10.png)
