@@ -14,6 +14,7 @@ and the Flutter guide for
 ![](./screenshots/mirai_logo.png)
 ## MiraiDevs <contact@miraidevs.com>
 
+<!-- 
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.
 
@@ -30,17 +31,23 @@ start using the package.
 
 TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder. 
+-->
+
+## Installation 
+Add mirai_dropdown_menu as a dependency in your pubspec.yaml file.
 
 ```dart
 dependencies:
   mirai_dropdown_menu: <latest_version>
 ```
 
+<!-- 
 ## Additional information
 
 TODO: Tell users more about the package: where to find more information, how to 
 contribute to the package, how to file issues, what response they can expect 
 from the package authors, and more.
+-->
 
 ## Mobile:
 
