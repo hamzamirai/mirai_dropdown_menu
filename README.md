@@ -149,6 +149,40 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
 }
 ```
 
+## List of items and ValueNotifier:
+```dart
+  final List<String> listOfItem = <String>[
+    'Flutter',
+    'Dart',
+    'GetX',
+    'State',
+  ];
+
+  late ValueNotifier<String> valueNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    valueNotifier = ValueNotifier<String>(
+      listOfItem.first,
+    );
+  }
+```
+
+## Then you can use the dropdown widget in build:
+```dart
+        MiraiDropdownWidget(
+                valueNotifier: valueNotifier,
+                itemWidget: (int index, String item) {
+                  return MiraiDropDownItemWidget(item: item);
+                },
+                children: listOfItem,
+                onChanged: (String value) {
+                  valueNotifier.value = value;
+                },
+              ),
+```
+
 <!-- 
 ## Additional information
 
