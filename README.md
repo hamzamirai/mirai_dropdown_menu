@@ -52,7 +52,7 @@ import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
   https://github.com/devhch/mirai_dropdown_menu/tree/master/example
 ```
 
-## Basic Usage:
+## Usage:
 
 ```dart
 class MiraiDropdownWidget<T> extends StatelessWidget {
