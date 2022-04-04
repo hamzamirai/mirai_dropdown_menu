@@ -27,18 +27,126 @@ TODO: List what your package can do. Maybe include images, gifs, or videos.
 TODO: List prerequisites and provide or point to information on how to
 start using the package.
 
-## Usage
+
 
 TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder. 
 -->
 
 ## Installation 
-Add mirai_dropdown_menu as a dependency in your pubspec.yaml file.
+1. Add mirai_dropdown_menu as a dependency in your pubspec.yaml file.
 
 ```dart
 dependencies:
   mirai_dropdown_menu: <latest_version>
+```
+
+2. Import the mirai_dropdown_menu package.
+ 
+```dart
+import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
+```
+
+### Please check the example for more information:
+```dart
+  https://github.com/devhch/mirai_dropdown_menu/tree/master/example
+```
+
+## Basic Usage:
+
+```dart
+class MiraiDropdownWidget<T> extends StatelessWidget {
+  const MiraiDropdownWidget({
+    Key? key,
+    required this.valueNotifier,
+    required this.itemWidget,
+    required this.children,
+    required this.onChanged,
+    this.underline = false,
+    this.showSeparator = true,
+    this.exit = MiraiExit.fromAll,
+    this.chevronDownColor,
+    this.dropdownChild,
+    this.showMode = MiraiShowMode.bottom,
+  }) : super(key: key);
+
+  final ValueNotifier<String> valueNotifier;
+  final MiraiDropdownBuilder<T> itemWidget;
+  final List<T> children;
+  final ValueChanged<T> onChanged;
+  final bool underline;
+  final bool showSeparator;
+  final MiraiExit exit;
+  final Color? chevronDownColor;
+  final Widget? dropdownChild;
+  final MiraiShowMode showMode;
+
+  @override
+  Widget build(BuildContext context) {
+    return MiraiPopupMenu<T>(
+      key: UniqueKey(),
+      enable: true,
+      space: 4,
+      showMode: showMode,
+      exit: exit,
+      showSeparator: showSeparator,
+      child: Container(
+        key: GlobalKey(),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 14,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: underline ? null : BorderRadius.circular(5.0),
+          border: underline
+              ? const Border(
+                  bottom: BorderSide(
+                    width: 1.0,
+                    color: Colors.blueGrey,
+                  ),
+                )
+              : Border.all(
+                  color: Colors.blueGrey,
+                  width: 1.0,
+                ),
+        ),
+        height: 40,
+        child: dropdownChild ??
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: ValueListenableBuilder<String>(
+                    valueListenable: valueNotifier,
+                    builder: (_, String chosenTitle, __) {
+                      return AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 600),
+                        child: Text(
+                          chosenTitle,
+                          key: ValueKey(chosenTitle.trim()),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(width: 16),
+                FaIcon(
+                  FontAwesomeIcons.chevronDown,
+                  color: chevronDownColor ?? AppTheme.keyAppColor,
+                  size: 12,
+                ),
+              ],
+            ),
+      ),
+      children: children,
+      itemWidget: itemWidget,
+      onChanged: onChanged,
+    );
+  }
+}
 ```
 
 <!-- 
