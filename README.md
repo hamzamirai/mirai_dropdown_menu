@@ -225,7 +225,17 @@ contribute to the package, how to file issues, what response they can expect
 from the package authors, and more.
 -->
 
-## Mobile:
+## iOS:
+
+### iPhone 13 Pro Max
+![](./screenshots/1.iphone_13_pro_max.png)
+![](./screenshots/2.iphone_13_pro_max.png)
+
+### iPhone 8 Plus
+![](./screenshots/1.iphone_8.png)
+![](./screenshots/2.iphone_8.png)
+
+## Android:
 
 ### Example
 ![](./screenshots/00.png)

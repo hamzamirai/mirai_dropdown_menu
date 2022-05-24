@@ -3,7 +3,6 @@
 * On 3/28/2022.
 */
 import 'package:example/app/core/utils/app_theme.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
@@ -43,6 +42,9 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
       showMode: showMode,
       exit: exit,
       showSeparator: showSeparator,
+      children: children,
+      itemWidget: itemWidget,
+      onChanged: onChanged,
       child: Container(
         key: GlobalKey(),
         padding: const EdgeInsets.symmetric(
@@ -94,9 +96,6 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
               ],
             ),
       ),
-      children: children,
-      itemWidget: itemWidget,
-      onChanged: onChanged,
     );
   }
 }

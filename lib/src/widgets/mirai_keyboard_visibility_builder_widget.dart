@@ -27,23 +27,23 @@ class MiraiKeyboardVisibilityBuilder extends StatefulWidget {
 class _MiraiKeyboardVisibilityBuilderState
     extends State<MiraiKeyboardVisibilityBuilder> with WidgetsBindingObserver {
   bool _isKeyboardVisible =
-      WidgetsBinding.instance!.window.viewInsets.bottom > 0.0;
+      WidgetsBinding.instance.window.viewInsets.bottom > 0.0;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   void didChangeMetrics() {
-    final bottomInset = WidgetsBinding.instance!.window.viewInsets.bottom;
+    final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
     final newValue = bottomInset > 0.0;
     if (newValue != _isKeyboardVisible) {
       setState(() {

@@ -68,8 +68,8 @@ class _MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: widget.child,
       onTap: widget.enable ? _showPopupMenu : null,
+      child: widget.child,
     );
   }
 
@@ -170,7 +170,7 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
       ),
     );
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _animationController.forward();
     });
   }
@@ -186,9 +186,6 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
   @override
   Widget build(BuildContext context) {
     final Size sizeScreen = MediaQuery.of(context).size;
-    debugPrint(" widget.position.dx ${widget.position.dx}");
-    debugPrint(" widget.size.width ${widget.size.width}");
-    final double indicatorHeight = widget.size.height;
 
     return WillPopScope(
       onWillPop: () async {
@@ -252,7 +249,7 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
                         ],
                       ),
                       child: Scrollbar(
-                        isAlwaysShown: true,
+                        thumbVisibility: true,
                         controller: _scrollController,
                         radius: const Radius.circular(20),
                         child: ListView.separated(
