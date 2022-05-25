@@ -20,11 +20,11 @@ class MiraiKeyboardVisibilityBuilder extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MiraiKeyboardVisibilityBuilderState createState() =>
-      _MiraiKeyboardVisibilityBuilderState();
+  MiraiKeyboardVisibilityBuilderState createState() =>
+      MiraiKeyboardVisibilityBuilderState();
 }
 
-class _MiraiKeyboardVisibilityBuilderState
+class MiraiKeyboardVisibilityBuilderState
     extends State<MiraiKeyboardVisibilityBuilder> with WidgetsBindingObserver {
   bool _isKeyboardVisible =
       WidgetsBinding.instance.window.viewInsets.bottom > 0.0;

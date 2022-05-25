@@ -61,10 +61,10 @@ class MiraiPopupMenu<T> extends StatefulWidget {
   final double space;
 
   @override
-  _MiraiPopupMenuState<T> createState() => _MiraiPopupMenuState<T>();
+  MiraiPopupMenuState<T> createState() => MiraiPopupMenuState<T>();
 }
 
-class _MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
+class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

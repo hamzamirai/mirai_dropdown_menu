@@ -1,6 +1,6 @@
 name: mirai_dropdown_menu
-description: Dropdown Menu Package Created By Mirai Devs.
-version: 0.0.4
+description: MiraiDevs developed the Mirai Dropdown Menu Package. Using this package, you can set a static list of objects or a list you have downloaded from an API.
+version: 0.0.5
 
 homepage: https://github.com/devhch/mirai_dropdown_menu
 

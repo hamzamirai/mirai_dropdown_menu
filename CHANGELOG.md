@@ -1,3 +1,7 @@
+## 0.0.5 - 2022-05-25
+
+* Added more detail to the description.
+
 ## 0.0.4 - 2022-05-24
 
 * Update to Flutter 3
