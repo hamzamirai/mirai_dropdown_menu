@@ -1,3 +1,7 @@
+## 0.0.5+1 - 2022-05-26
+
+* Support Dart version 2.17.0
+
 ## 0.0.5 - 2022-05-25
 
 * Added more detail to the description.
