@@ -1,5 +1,5 @@
 import 'package:example/app/widgets/mirai_drop_down_item_widget.dart';
-import 'package:example/app/widgets/mirai_dropdown_widget.dart';
+import 'package:example/app/widgets/mirai_dropdown_list_of_strings_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
@@ -22,14 +22,77 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
     'Dart',
     'GetX',
     'State',
+    'Item 5',
+    'Item 6',
+    'Item 7',
+    'Item 8',
+    'Item 9',
+    'Item 10',
   ];
 
-  late ValueNotifier<String> valueNotifier;
+  /// Value Notifiers
+  late ValueNotifier<String> valueNotifierFirst;
+  late ValueNotifier<String> valueNotifierSecond;
+  late ValueNotifier<String> valueNotifierThird;
+  late ValueNotifier<String> valueNotifierFourth;
+  late ValueNotifier<String> valueNotifierFifth;
+  late ValueNotifier<String> valueNotifierSixth;
+  late ValueNotifier<String> valueNotifierSeventh;
+  late ValueNotifier<String> valueNotifierEighth;
+  late ValueNotifier<String> valueNotifierNinth;
+  late ValueNotifier<String> valueNotifierTenth;
 
   @override
   void initState() {
     super.initState();
-    valueNotifier = ValueNotifier<String>(
+
+    /// valueNotifierFirst
+    valueNotifierFirst = ValueNotifier<String>(
+      listOfItem.first,
+    );
+
+    /// valueNotifierSecond
+    valueNotifierSecond = ValueNotifier<String>(
+      listOfItem.first,
+    );
+
+    /// valueNotifierThird
+    valueNotifierThird = ValueNotifier<String>(
+      listOfItem.first,
+    );
+
+    /// valueNotifierFourth
+    valueNotifierFourth = ValueNotifier<String>(
+      listOfItem.first,
+    );
+
+    /// valueNotifierFifth
+    valueNotifierFifth = ValueNotifier<String>(
+      listOfItem.first,
+    );
+
+    /// valueNotifierSixth
+    valueNotifierSixth = ValueNotifier<String>(
+      listOfItem.first,
+    );
+
+    /// valueNotifierSeventh
+    valueNotifierSeventh = ValueNotifier<String>(
+      listOfItem.first,
+    );
+
+    /// valueNotifierEighth
+    valueNotifierEighth = ValueNotifier<String>(
+      listOfItem.first,
+    );
+
+    /// valueNotifierNinth
+    valueNotifierNinth = ValueNotifier<String>(
+      listOfItem.first,
+    );
+
+    /// valueNotifierTenth
+    valueNotifierTenth = ValueNotifier<String>(
       listOfItem.first,
     );
   }
@@ -38,7 +101,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('List Of Texts/Strings'),
+        title: const Text('List Of Texts / Strings'),
       ),
       body: Center(
         child: Padding(
@@ -52,13 +115,13 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
               const Text('Drop Down'),
               const SizedBox(height: 8),
               MiraiDropdownWidget(
-                valueNotifier: valueNotifier,
+                valueNotifier: valueNotifierFirst,
                 itemWidget: (int index, String item) {
                   return MiraiDropDownItemWidget(item: item);
                 },
                 children: listOfItem,
                 onChanged: (String value) {
-                  valueNotifier.value = value;
+                  valueNotifierFirst.value = value;
                 },
               ),
               const SizedBox(height: 16),
@@ -68,26 +131,28 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                 children: [
                   Expanded(
                     child: MiraiDropdownWidget(
-                      valueNotifier: valueNotifier,
+                      maxHeight: listOfItem.length > 8 ? 300 : null,
+                      valueNotifier: valueNotifierSecond,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
                       onChanged: (String value) {
-                        valueNotifier.value = value;
+                        valueNotifierSecond.value = value;
                       },
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: MiraiDropdownWidget(
-                      valueNotifier: valueNotifier,
+                      maxHeight: listOfItem.length > 8 ? 300 : null,
+                      valueNotifier: valueNotifierThird,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
                       onChanged: (String value) {
-                        valueNotifier.value = value;
+                        valueNotifierThird.value = value;
                       },
                     ),
                   ),
@@ -100,39 +165,42 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                 children: [
                   Expanded(
                     child: MiraiDropdownWidget(
-                      valueNotifier: valueNotifier,
+                      maxHeight: listOfItem.length > 6 ? 240 : null,
+                      valueNotifier: valueNotifierFourth,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
                       onChanged: (String value) {
-                        valueNotifier.value = value;
+                        valueNotifierFourth.value = value;
                       },
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: MiraiDropdownWidget(
-                      valueNotifier: valueNotifier,
+                      maxHeight: listOfItem.length > 6 ? 240 : null,
+                      valueNotifier: valueNotifierFifth,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
                       onChanged: (String value) {
-                        valueNotifier.value = value;
+                        valueNotifierFifth.value = value;
                       },
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: MiraiDropdownWidget(
-                      valueNotifier: valueNotifier,
+                      maxHeight: listOfItem.length > 6 ? 240 : null,
+                      valueNotifier: valueNotifierSixth,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
                       onChanged: (String value) {
-                        valueNotifier.value = value;
+                        valueNotifierSixth.value = value;
                       },
                     ),
                   ),
@@ -145,60 +213,61 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                 children: [
                   Expanded(
                     child: MiraiDropdownWidget(
-                      showMode:
-                          kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
-                      valueNotifier: valueNotifier,
+                      showMode: MiraiShowMode.top,
+                      valueNotifier: valueNotifierSeventh,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
                       onChanged: (String value) {
-                        valueNotifier.value = value;
+                        valueNotifierSeventh.value = value;
                       },
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: MiraiDropdownWidget(
+                      maxHeight: listOfItem.length > 6 ? 160 : null,
                       showMode:
                           kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
-                      valueNotifier: valueNotifier,
+                      valueNotifier: valueNotifierEighth,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
                       onChanged: (String value) {
-                        valueNotifier.value = value;
+                        valueNotifierEighth.value = value;
                       },
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: MiraiDropdownWidget(
+                      maxHeight: listOfItem.length > 6 ? 160 : null,
                       showMode:
                           kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
-                      valueNotifier: valueNotifier,
+                      valueNotifier: valueNotifierNinth,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
                       onChanged: (String value) {
-                        valueNotifier.value = value;
+                        valueNotifierNinth.value = value;
                       },
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: MiraiDropdownWidget(
-                      showMode:
-                          kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
-                      valueNotifier: valueNotifier,
+                    child: MiraiDropdownWidget<String>(
+                      maxHeight: 200,
+                      showMode: MiraiShowMode.top,
+                      valueNotifier: valueNotifierTenth,
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
                       onChanged: (String value) {
-                        valueNotifier.value = value;
+                        valueNotifierTenth.value = value;
                       },
                     ),
                   ),

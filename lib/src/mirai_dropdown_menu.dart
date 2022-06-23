@@ -80,28 +80,36 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
         ?.findRenderObject() as RenderBox;
     Offset position = renderBox.localToGlobal(Offset.zero);
 
-    showCupertinoDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) {
-        return _PopupMenuContent<T>(
-          maxHeight: widget.maxHeight,
-          space: widget.space,
-          showMode: widget.showMode,
-          itemWidget: widget.itemWidget,
-          mode: widget.mode,
-          position: position,
-          size: renderBox.size,
-          onChanged: widget.onChanged,
-          children: widget.children,
-          exit: widget.exit,
-          isExpanded: widget.isExpanded,
-          showOtherAndItsTextField: widget.showOtherAndItsTextField,
-          showSeparator: widget.showSeparator,
-          onOtherChanged: widget.onOtherChanged,
-        );
-      },
-    );
+    if (widget.children.isNotEmpty) {
+      showCupertinoDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return _PopupMenuContent<T>(
+            maxHeight: widget.maxHeight,
+            space: widget.space,
+            showMode: widget.showMode,
+            itemWidget: widget.itemWidget,
+            mode: widget.mode,
+            position: position,
+            size: renderBox.size,
+            onChanged: widget.onChanged,
+            children: widget.children,
+            exit: widget.exit,
+            isExpanded: widget.isExpanded,
+            showOtherAndItsTextField: widget.showOtherAndItsTextField,
+            showSeparator: widget.showSeparator,
+            onOtherChanged: widget.onOtherChanged,
+          );
+        },
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Empty Children!'),
+        ),
+      );
+    }
   }
 }
 
@@ -186,7 +194,6 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
   @override
   Widget build(BuildContext context) {
     final Size sizeScreen = MediaQuery.of(context).size;
-
     return WillPopScope(
       onWillPop: () async {
         _closePopup(context: context, action: null);
@@ -207,16 +214,14 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
             child: Stack(
               children: [
                 Positioned(
-                  right:
-                      (MediaQuery.of(context).size.width - widget.position.dx) -
-                          widget.size.width,
+                  right: (sizeScreen.width - widget.position.dx) -
+                      widget.size.width,
                   top: widget.showMode != MiraiShowMode.top
                       ? widget.position.dy + widget.space + widget.size.height
-                      : widget.position.dy -
-                          widget.space -
-                          (widget.maxHeight ??
-                              (widget.size.height - 3) *
-                                  widget.children.length),
+                      : null,
+                  bottom: widget.showMode != MiraiShowMode.bottom
+                      ? sizeScreen.height - widget.position.dy + widget.space
+                      : null,
                   child: AnimatedBuilder(
                     animation: _animationController,
                     builder: (context, child) {
@@ -232,7 +237,8 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
                       );
                     },
                     child: Container(
-                      height: widget.maxHeight,
+                      height:
+                          widget.children.length > 20 ? 300 : widget.maxHeight,
                       width: widget.size.width - 1,
                       decoration: BoxDecoration(
                         color: Colors.white,

@@ -20,6 +20,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
     this.chevronDownColor,
     this.dropdownChild,
     this.showMode = MiraiShowMode.bottom,
+    this.maxHeight,
   }) : super(key: key);
 
   final ValueNotifier<String> valueNotifier;
@@ -32,6 +33,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
   final Color? chevronDownColor;
   final Widget? dropdownChild;
   final MiraiShowMode showMode;
+  final double? maxHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
       children: children,
       itemWidget: itemWidget,
       onChanged: onChanged,
+      maxHeight: maxHeight,
       child: Container(
         key: GlobalKey(),
         padding: const EdgeInsets.symmetric(
@@ -74,7 +77,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
                     valueListenable: valueNotifier,
                     builder: (_, String chosenTitle, __) {
                       return AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 600),
+                        duration: const Duration(milliseconds: 200),
                         child: Text(
                           chosenTitle,
                           key: ValueKey(chosenTitle.trim()),

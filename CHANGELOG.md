@@ -1,3 +1,8 @@
+## 0.0.6 - 2022-06-23
+
+* Added new features such as:
+  - Make Dropdown not opening when Children list isEmpty
+
 ## 0.0.5+1 - 2022-05-26
 
 * Support Dart version 2.17.0

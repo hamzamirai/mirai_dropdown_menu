@@ -11,7 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-![](./screenshots/mirai_logo.png)
+![](./screenshots/mirai_devs_logo.png)
 ## MiraiDevs <contact@miraidevs.com>
 
 <!-- 
@@ -32,6 +32,9 @@ start using the package.
 TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder. 
 -->
+
+## Take a first look
+![](./screenshots/0.0.6_screenshots/00_example.png)
 
 ## Installation 
 1. Add mirai_dropdown_menu as a dependency in your pubspec.yaml file.
@@ -228,42 +231,42 @@ from the package authors, and more.
 ## iOS:
 
 ### iPhone 13 Pro Max
-![](./screenshots/1.iphone_13_pro_max.png)
-![](./screenshots/2.iphone_13_pro_max.png)
+![](screenshots/0.0.5_screenshots/1.iphone_13_pro_max.png)
+![](screenshots/0.0.5_screenshots/2.iphone_13_pro_max.png)
 
 ### iPhone 8 Plus
-![](./screenshots/1.iphone_8.png)
-![](./screenshots/2.iphone_8.png)
+![](screenshots/0.0.5_screenshots/1.iphone_8.png)
+![](screenshots/0.0.5_screenshots/2.iphone_8.png)
 
 ## Android:
 
 ### Example
-![](./screenshots/00.png)
+![](screenshots/0.0.5_screenshots/00.png)
 
 ### 1 item
-![](./screenshots/01.png)
+![](screenshots/0.0.5_screenshots/01.png)
 
 ### 2 items
-![](./screenshots/02.png)
-![](./screenshots/03.png)
+![](screenshots/0.0.5_screenshots/02.png)
+![](screenshots/0.0.5_screenshots/03.png)
 
 ### 3 items
-![](./screenshots/04.png)
-![](./screenshots/05.png)
-![](./screenshots/06.png)
+![](screenshots/0.0.5_screenshots/04.png)
+![](screenshots/0.0.5_screenshots/05.png)
+![](screenshots/0.0.5_screenshots/06.png)
 
 ### 4 items
-![](./screenshots/07.png)
-![](./screenshots/08.png)
-![](./screenshots/09.png)
-![](./screenshots/10.png)
+![](screenshots/0.0.5_screenshots/07.png)
+![](screenshots/0.0.5_screenshots/08.png)
+![](screenshots/0.0.5_screenshots/09.png)
+![](screenshots/0.0.5_screenshots/10.png)
 
 ## Web and Desktop:
-![](./screenshots/11_desktop.png)
-![](./screenshots/12_desktop.png)
-![](./screenshots/13_desktop.png)
-![](./screenshots/14_desktop.png)
-![](./screenshots/15_desktop.png)
+![](screenshots/0.0.5_screenshots/11_desktop.png)
+![](screenshots/0.0.5_screenshots/12_desktop.png)
+![](screenshots/0.0.5_screenshots/13_desktop.png)
+![](screenshots/0.0.5_screenshots/14_desktop.png)
+![](screenshots/0.0.5_screenshots/15_desktop.png)
 
 
 
