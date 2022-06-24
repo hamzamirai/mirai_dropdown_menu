@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
 
-class MiraiDropdownWidget<T> extends StatelessWidget {
+class MiraiDropdownWidget<String> extends StatelessWidget {
   const MiraiDropdownWidget({
     Key? key,
     required this.valueNotifier,
@@ -18,7 +18,6 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
     this.showSeparator = true,
     this.exit = MiraiExit.fromAll,
     this.chevronDownColor,
-    this.dropdownChild,
     this.showMode = MiraiShowMode.bottom,
     this.maxHeight,
     this.showSearchTextField = false,
@@ -27,14 +26,13 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
   }) : super(key: key);
 
   final ValueNotifier<String> valueNotifier;
-  final MiraiDropdownBuilder<T> itemWidgetBuilder;
-  final List<T> children;
-  final ValueChanged<T> onChanged;
+  final MiraiDropdownBuilder<String> itemWidgetBuilder;
+  final List<String> children;
+  final ValueChanged<String> onChanged;
   final bool underline;
   final bool showSeparator;
   final MiraiExit exit;
   final Color? chevronDownColor;
-  final Widget? dropdownChild;
   final MiraiShowMode showMode;
   final double? maxHeight;
   final bool showSearchTextField;
@@ -43,7 +41,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MiraiPopupMenu<T>(
+    return MiraiPopupMenu<String>(
       key: UniqueKey(),
       enable: true,
       space: 4,
@@ -77,36 +75,35 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
                 ),
         ),
         height: 40,
-        child: dropdownChild ??
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  child: ValueListenableBuilder<String>(
-                    valueListenable: valueNotifier,
-                    builder: (_, String chosenTitle, __) {
-                      return AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
-                        child: Text(
-                          chosenTitle,
-                          key: ValueKey<String>(chosenTitle.trim()),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(width: 16),
-                FaIcon(
-                  FontAwesomeIcons.chevronDown,
-                  color: chevronDownColor ?? AppTheme.keyAppColor,
-                  size: 12,
-                ),
-              ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Flexible(
+              child: ValueListenableBuilder<String>(
+                valueListenable: valueNotifier,
+                builder: (_, String chosenTitle, __) {
+                  return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: Text(
+                      '$chosenTitle',
+                      key: ValueKey<String>(chosenTitle),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  );
+                },
+              ),
             ),
+            const SizedBox(width: 16),
+            FaIcon(
+              FontAwesomeIcons.chevronDown,
+              color: chevronDownColor ?? AppTheme.keyAppColor,
+              size: 12,
+            ),
+          ],
+        ),
       ),
     );
   }

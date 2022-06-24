@@ -1,7 +1,11 @@
-## 0.0.6 - 2022-06-23
+## 0.0.6 - 2022-06-24
 
 * Added new features such as:
   - Make Dropdown not opening when Children list isEmpty
+  - Added search TextFormField: 
+    - make showSearchTextField: true,
+    - Also, you can user a custom input decoration: 
+      - searchDecoration: InputDecoration(),
 
 ## 0.0.5+1 - 2022-05-26
 

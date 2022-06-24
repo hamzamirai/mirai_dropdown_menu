@@ -1,4 +1,4 @@
-import 'package:example/app/widgets/mirai_drop_down_item_widget.dart';
+import 'package:example/app/widgets/mirai_dropdown_item_widget.dart';
 import 'package:example/app/widgets/mirai_dropdown_list_of_strings_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -129,14 +129,6 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                 valueNotifier: valueNotifierFirst,
                 showOtherAndItsTextField: true,
                 showSearchTextField: true,
-                other: Text(
-                  'Welcome to Other',
-                  style: Theme.of(context).textTheme.headline1?.copyWith(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColorDark,
-                      ),
-                ),
                 itemWidgetBuilder: (int index, String item) {
                   return MiraiDropDownItemWidget(item: item);
                 },
