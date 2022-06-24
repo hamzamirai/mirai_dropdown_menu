@@ -21,6 +21,9 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
     this.dropdownChild,
     this.showMode = MiraiShowMode.bottom,
     this.maxHeight,
+    this.showSearchTextField = false,
+    this.showOtherAndItsTextField = false,
+    this.other,
   }) : super(key: key);
 
   final ValueNotifier<String> valueNotifier;
@@ -34,6 +37,9 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
   final Widget? dropdownChild;
   final MiraiShowMode showMode;
   final double? maxHeight;
+  final bool showSearchTextField;
+  final bool showOtherAndItsTextField;
+  final Widget? other;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +54,9 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
       itemWidget: itemWidget,
       onChanged: onChanged,
       maxHeight: maxHeight,
+      showOtherAndItsTextField: showOtherAndItsTextField,
+      showSearchTextField: showSearchTextField,
+      other: other,
       child: Container(
         key: GlobalKey(),
         padding: const EdgeInsets.symmetric(

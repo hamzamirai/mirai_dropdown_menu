@@ -4,6 +4,8 @@
 */
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mirai_dropdown_menu/src/models/search_attributes_model.dart';
+import 'package:mirai_dropdown_menu/src/utils/mirai_outline_input_border.dart';
 
 import 'widgets/mirai_keyboard_visibility_builder_widget.dart';
 
@@ -31,6 +33,9 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.isExpanded,
     this.space = 3,
     this.emptyListMessage,
+    this.showSearchTextField = false,
+    this.searchDecoration,
+    this.searchQuery,
   })  : assert(child.key != null),
         super(key: key);
 
@@ -63,6 +68,10 @@ class MiraiPopupMenu<T> extends StatefulWidget {
 
   final String? emptyListMessage;
 
+  final bool showSearchTextField;
+  final InputDecoration? searchDecoration;
+  final String? searchQuery;
+
   @override
   MiraiPopupMenuState<T> createState() => MiraiPopupMenuState<T>();
 }
@@ -88,7 +97,7 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
         context: context,
         barrierDismissible: false,
         builder: (_) {
-          return _PopupMenuContent<T>(
+          return _DropDownMenuContent<T>(
             maxHeight: widget.maxHeight,
             space: widget.space,
             showMode: widget.showMode,
@@ -103,6 +112,8 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             showOtherAndItsTextField: widget.showOtherAndItsTextField,
             showSeparator: widget.showSeparator,
             onOtherChanged: widget.onOtherChanged,
+            showSearchTextField: widget.showSearchTextField,
+            searchDecoration: widget.searchDecoration,
           );
         },
       );
@@ -118,8 +129,8 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
   }
 }
 
-class _PopupMenuContent<T> extends StatefulWidget {
-  const _PopupMenuContent({
+class _DropDownMenuContent<T> extends StatefulWidget {
+  const _DropDownMenuContent({
     Key? key,
     required this.children,
     required this.itemWidget,
@@ -136,6 +147,9 @@ class _PopupMenuContent<T> extends StatefulWidget {
     this.isExpanded,
     required this.space,
     this.other,
+    this.showSearchTextField = false,
+    this.searchDecoration,
+    this.searchQuery,
   }) : super(key: key);
 
   final List<T> children;
@@ -154,11 +168,15 @@ class _PopupMenuContent<T> extends StatefulWidget {
   final double space;
   final Widget? other;
 
+  final bool showSearchTextField;
+  final InputDecoration? searchDecoration;
+  final String? searchQuery;
+
   @override
-  _PopupMenuContentState<T> createState() => _PopupMenuContentState<T>();
+  _DropDownMenuContentState<T> createState() => _DropDownMenuContentState<T>();
 }
 
-class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
+class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
     with SingleTickerProviderStateMixin {
   /// Let's create animation
   late AnimationController _animationController;
@@ -166,6 +184,15 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
 
   /// ListView controller
   final ScrollController _scrollController = ScrollController();
+
+  /// Search Children
+  ValueNotifier<SearchAttributes<T>> searchChildren =
+      ValueNotifier<SearchAttributes<T>>(
+    SearchAttributes<T>(),
+  );
+
+  ///  Search Controller
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -182,6 +209,9 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
         curve: Curves.easeOut,
       ),
     );
+
+    /// Copy children to searchChildren.value.searchList
+    searchChildren.value.searchList = List.from(widget.children);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _animationController.forward();
@@ -259,68 +289,33 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
                           ),
                         ],
                       ),
-                      child: Scrollbar(
-                        thumbVisibility: true,
-                        controller: _scrollController,
-                        radius: const Radius.circular(20),
-                        child: ListView.separated(
-                          controller: _scrollController,
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          itemCount: widget.children.length +
-                              (widget.showOtherAndItsTextField ? 1 : 0),
-                          itemBuilder: (_, int index) {
-                            if (!widget.showOtherAndItsTextField) {
-                              return InkWell(
-                                onTap: () => onTapChild(index),
-                                child: widget.itemWidget(
-                                  index,
-                                  widget.children[index],
-                                ),
-                              );
-                            } else {
-                              if (index != widget.children.length) {
-                                return InkWell(
-                                  onTap: () => onTapChild(index),
-                                  child: Align(
-                                    alignment: Alignment.topCenter,
-                                    child: widget.itemWidget(
-                                      index,
-                                      widget.children[index],
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return MiraiKeyboardVisibilityBuilder(
-                                  builder: (context, child, isKeyboardVisible) {
-                                    if (isKeyboardVisible) {
-                                      _scrollController.jumpTo(
-                                        _scrollController
-                                            .position.maxScrollExtent,
-                                      );
-                                    }
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                        bottom: isKeyboardVisible ? 46 : 0,
-                                      ),
-                                      child: widget.other,
-                                    );
-                                  },
-                                );
-                              }
-                            }
-                          },
-                          separatorBuilder: (_, int index) {
-                            if (widget.showSeparator) {
-                              return Container(
-                                height: 1,
-                                color: const Color(0xFF707070).withOpacity(0.2),
-                              );
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                          },
-                        ),
+                      child: ValueListenableBuilder<SearchAttributes<T>>(
+                        valueListenable: searchChildren,
+                        builder: (_, SearchAttributes<T> children, __) {
+                          return Scrollbar(
+                            thumbVisibility: true,
+                            controller: _scrollController,
+                            radius: const Radius.circular(20),
+                            child: ListView.separated(
+                              controller: _scrollController,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              itemCount: children.searchList.length +
+                                  (widget.showOtherAndItsTextField ? 1 : 0) +
+                                  (widget.showSearchTextField ? 1 : 0),
+                              itemBuilder: (_, int index) {
+                                return itemBuilderReturn(children, index);
+                              },
+                              separatorBuilder: (_, int index) {
+                                if (widget.showSeparator) {
+                                  return buildSeparator();
+                                } else {
+                                  return const SizedBox.shrink();
+                                }
+                              },
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -330,6 +325,113 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
           ),
         ),
       ),
+    );
+  }
+
+  Widget itemBuilderReturn(SearchAttributes<T> children, int index) {
+    if (!widget.showOtherAndItsTextField) {
+      if (widget.showSearchTextField) {
+        if (index == 0 && widget.showSearchTextField) {
+          return buildSearchTextField(context);
+        } else {
+          return buildItemToReturn(
+            index - 1,
+            children,
+          );
+        }
+      } else {
+        return buildItemToReturn(index, children);
+      }
+    } else {
+      if (index !=
+          children.searchList.length + (widget.showSearchTextField ? 1 : 0)) {
+        if (widget.showSearchTextField) {
+          if (index == 0) {
+            return buildSearchTextField(context);
+          } else {
+            return buildItemToReturn(
+              index - 1,
+              children,
+            );
+          }
+        } else {
+          return buildItemToReturn(index, children);
+        }
+      } else {
+        debugPrint('buildOtherWidget index$index');
+        return buildOtherWidget();
+      }
+    }
+  }
+
+  InkWell buildItemToReturn(int index, SearchAttributes<T> children) {
+    debugPrint('children index: $index');
+    return InkWell(
+      onTap: () => onTapChild(index),
+      child: widget.itemWidget(
+        index,
+        children.searchList[index],
+      ),
+    );
+  }
+
+  Container buildSearchTextField(BuildContext context) {
+    return Container(
+      height: 40,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 14,
+        vertical: 8,
+      ),
+      child: TextFormField(
+        controller: searchController,
+        textAlignVertical: TextAlignVertical.center,
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              color: Theme.of(context).primaryColorDark,
+            ),
+        cursorColor: Theme.of(context).primaryColorDark,
+        decoration: widget.searchDecoration ??
+            InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.all(12),
+              hintText: 'Search...',
+              border: miraiOutlineInputBorderForTextField(),
+            ),
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (_) {},
+        onChanged: (String text) {
+          searchSubscription(text);
+        },
+      ),
+    );
+  }
+
+  MiraiKeyboardVisibilityBuilder buildOtherWidget() {
+    return MiraiKeyboardVisibilityBuilder(
+      builder: (context, child, isKeyboardVisible) {
+        if (isKeyboardVisible) {
+          _scrollController.jumpTo(
+            _scrollController.position.maxScrollExtent,
+          );
+        }
+        return Container(
+          color: Colors.red,
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: isKeyboardVisible ? 46 : 0,
+            ),
+            child: widget.other,
+          ),
+        );
+      },
+    );
+  }
+
+  Container buildSeparator() {
+    return Container(
+      height: 1,
+      color: const Color(0xFF707070).withOpacity(0.2),
     );
   }
 
@@ -345,11 +447,36 @@ class _PopupMenuContentState<T> extends State<_PopupMenuContent<T>>
     if (widget.exit == MiraiExit.fromAll || widget.exit == MiraiExit.inside) {
       _closePopup(
         context: context,
-        action: widget.children[index],
+        action: searchChildren.value.searchList[index],
       );
     } else {
-      widget.onChanged?.call(widget.children[index]);
+      widget.onChanged?.call(searchChildren.value.searchList[index]);
     }
     setState(() => selectedIndex = index);
+  }
+
+  void clearTextController() {
+    searchController.clear();
+    searchChildren.value.showHighLight = true;
+    searchChildren.value.mQueryClient = '';
+    searchChildren.value.searchList = List.from(widget.children);
+  }
+
+  void searchSubscription(String query) {
+    if (query.isNotEmpty) {
+      searchChildren.value.showHighLight = true;
+      searchChildren.value.mQueryClient = query;
+
+      final results = widget.children.where((child) =>
+          '${(child is String) ? child : widget.searchQuery}'
+              .toLowerCase()
+              .contains(query));
+      searchChildren.value.searchList = List.from(results);
+    } else {
+      searchChildren.value.showHighLight = false;
+      searchChildren.value.mQueryClient = '';
+      searchChildren.value.searchList = List.from(widget.children);
+    }
+    searchChildren.notifyListeners();
   }
 }

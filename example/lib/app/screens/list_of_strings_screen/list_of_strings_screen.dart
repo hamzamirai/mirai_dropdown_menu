@@ -127,6 +127,16 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
               const SizedBox(height: 8),
               MiraiDropdownWidget<String>(
                 valueNotifier: valueNotifierFirst,
+                showOtherAndItsTextField: true,
+                showSearchTextField: true,
+                other: Text(
+                  'Welcome to Other',
+                  style: Theme.of(context).textTheme.headline1?.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
+                ),
                 itemWidget: (int index, String item) {
                   return MiraiDropDownItemWidget(item: item);
                 },
@@ -139,11 +149,13 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
               const Text('Drop Down: 2 items'),
               const SizedBox(height: 8),
               Row(
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 8 ? 300 : null,
                       valueNotifier: valueNotifierSecond,
+                      showOtherAndItsTextField: true,
+                      other: const Text('Other'),
                       itemWidget: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
