@@ -16,6 +16,8 @@ dependencies:
   google_fonts: ^3.0.1
   font_awesome_flutter: ^10.1.0
 
+  substring_highlight: ^1.0.33
+
   mirai_dropdown_menu:
     path: ../
 

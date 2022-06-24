@@ -12,6 +12,8 @@ import 'widgets/mirai_keyboard_visibility_builder_widget.dart';
 part 'utils/enums.dart';
 
 typedef MiraiDropdownBuilder<T> = Widget Function(int index, T item);
+typedef MiraiHighLightDropdownBuilder<T> = Widget Function(
+    int index, SearchAttributes<T> item);
 typedef MiraiValueChanged<T> = void Function(T value);
 
 class MiraiPopupMenu<T> extends StatefulWidget {
@@ -19,7 +21,8 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     Key? key,
     required this.child,
     this.other,
-    required this.itemWidget,
+    required this.itemWidgetBuilder,
+    this.itemHighLightBuilder,
     required this.children,
     this.mode = MiraiPopupMenuMode.dropDownMenu,
     this.showMode = MiraiShowMode.bottom,
@@ -44,7 +47,8 @@ class MiraiPopupMenu<T> extends StatefulWidget {
   final Widget? other;
 
   /// itemWidget, is a widget that we display as an item in the list menu
-  final MiraiDropdownBuilder<T> itemWidget;
+  final MiraiDropdownBuilder<T> itemWidgetBuilder;
+  final MiraiHighLightDropdownBuilder<T>? itemHighLightBuilder;
 
   /// children, is the list that we display in the dropdown
   final List<T> children;
@@ -101,7 +105,7 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             maxHeight: widget.maxHeight,
             space: widget.space,
             showMode: widget.showMode,
-            itemWidget: widget.itemWidget,
+            itemWidget: widget.itemWidgetBuilder,
             mode: widget.mode,
             position: position,
             size: renderBox.size,
@@ -134,6 +138,7 @@ class _DropDownMenuContent<T> extends StatefulWidget {
     Key? key,
     required this.children,
     required this.itemWidget,
+    this.itemHighLightBuilder,
     required this.position,
     required this.size,
     required this.mode,
@@ -154,6 +159,7 @@ class _DropDownMenuContent<T> extends StatefulWidget {
 
   final List<T> children;
   final MiraiDropdownBuilder<T> itemWidget;
+  final MiraiHighLightDropdownBuilder<T>? itemHighLightBuilder;
   final Offset position;
   final Size size;
   final ValueChanged<T>? onChanged;

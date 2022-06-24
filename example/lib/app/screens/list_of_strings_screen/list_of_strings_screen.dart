@@ -137,7 +137,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                         color: Theme.of(context).primaryColorDark,
                       ),
                 ),
-                itemWidget: (int index, String item) {
+                itemWidgetBuilder: (int index, String item) {
                   return MiraiDropDownItemWidget(item: item);
                 },
                 children: listOfItem,
@@ -156,7 +156,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                       valueNotifier: valueNotifierSecond,
                       showOtherAndItsTextField: true,
                       other: const Text('Other'),
-                      itemWidget: (int index, String item) {
+                      itemWidgetBuilder: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
@@ -170,7 +170,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                     child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 8 ? 300 : null,
                       valueNotifier: valueNotifierThird,
-                      itemWidget: (int index, String item) {
+                      itemWidgetBuilder: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
@@ -190,7 +190,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                     child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 6 ? 240 : null,
                       valueNotifier: valueNotifierFourth,
-                      itemWidget: (int index, String item) {
+                      itemWidgetBuilder: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
@@ -204,7 +204,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                     child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 6 ? 240 : null,
                       valueNotifier: valueNotifierFifth,
-                      itemWidget: (int index, String item) {
+                      itemWidgetBuilder: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
@@ -218,7 +218,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                     child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 6 ? 240 : null,
                       valueNotifier: valueNotifierSixth,
-                      itemWidget: (int index, String item) {
+                      itemWidgetBuilder: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
@@ -238,7 +238,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                     child: MiraiDropdownWidget<String>(
                       showMode: MiraiShowMode.top,
                       valueNotifier: valueNotifierSeventh,
-                      itemWidget: (int index, String item) {
+                      itemWidgetBuilder: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
@@ -254,7 +254,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                       showMode:
                           kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
                       valueNotifier: valueNotifierEighth,
-                      itemWidget: (int index, String item) {
+                      itemWidgetBuilder: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
@@ -270,7 +270,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                       showMode:
                           kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
                       valueNotifier: valueNotifierNinth,
-                      itemWidget: (int index, String item) {
+                      itemWidgetBuilder: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,
@@ -285,7 +285,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                       maxHeight: 200,
                       showMode: MiraiShowMode.top,
                       valueNotifier: valueNotifierTenth,
-                      itemWidget: (int index, String item) {
+                      itemWidgetBuilder: (int index, String item) {
                         return MiraiDropDownItemWidget(item: item);
                       },
                       children: listOfItem,

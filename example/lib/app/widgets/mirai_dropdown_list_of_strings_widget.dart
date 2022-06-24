@@ -11,7 +11,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
   const MiraiDropdownWidget({
     Key? key,
     required this.valueNotifier,
-    required this.itemWidget,
+    required this.itemWidgetBuilder,
     required this.children,
     required this.onChanged,
     this.underline = false,
@@ -27,7 +27,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
   }) : super(key: key);
 
   final ValueNotifier<String> valueNotifier;
-  final MiraiDropdownBuilder<T> itemWidget;
+  final MiraiDropdownBuilder<T> itemWidgetBuilder;
   final List<T> children;
   final ValueChanged<T> onChanged;
   final bool underline;
@@ -51,7 +51,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
       exit: exit,
       showSeparator: showSeparator,
       children: children,
-      itemWidget: itemWidget,
+      itemWidgetBuilder: itemWidgetBuilder,
       onChanged: onChanged,
       maxHeight: maxHeight,
       showOtherAndItsTextField: showOtherAndItsTextField,
