@@ -218,8 +218,6 @@ If the MiraiDropDown package matches your needs, please do not hesitate to suppo
 
 ## iOS:
 
-### iPhone 13 Pro Max
-
 #### List Of Objects:
 ![](screenshots/0.0.6_screenshots/06.png)
 ![](screenshots/0.0.6_screenshots/07.png)
@@ -234,42 +232,3 @@ If the MiraiDropDown package matches your needs, please do not hesitate to suppo
 ![](screenshots/0.0.6_screenshots/03.png)
 ![](screenshots/0.0.6_screenshots/04.png)
 ![](screenshots/0.0.6_screenshots/05.png)
-
-## Android:
-
-![](screenshots/0.0.5_screenshots/00.png)
-
-### 1 item
-
-![](screenshots/0.0.5_screenshots/01.png)
-
-### 2 items
-
-![](screenshots/0.0.5_screenshots/02.png)
-![](screenshots/0.0.5_screenshots/03.png)
-
-### 3 items
-
-![](screenshots/0.0.5_screenshots/04.png)
-![](screenshots/0.0.5_screenshots/05.png)
-![](screenshots/0.0.5_screenshots/06.png)
-
-### 4 items
-
-![](screenshots/0.0.5_screenshots/07.png)
-![](screenshots/0.0.5_screenshots/08.png)
-![](screenshots/0.0.5_screenshots/09.png)
-![](screenshots/0.0.5_screenshots/10.png)
-
-## Web and Desktop:
-
-![](screenshots/0.0.5_screenshots/11_desktop.png)
-![](screenshots/0.0.5_screenshots/12_desktop.png)
-![](screenshots/0.0.5_screenshots/13_desktop.png)
-![](screenshots/0.0.5_screenshots/14_desktop.png)
-![](screenshots/0.0.5_screenshots/15_desktop.png)
-
-
-
-
-
