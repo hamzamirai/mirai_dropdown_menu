@@ -64,6 +64,12 @@ contribute to the package, how to file issues, what response they can expect
 from the package authors, and more.
 -->
 
+## Support
+
+If Mirai DropDown package was useful to you, saved you a lot of time, or you just want to support the project, I would be very grateful if you buy me a cup of coffee.
+
+<a href="https://www.buymeacoffee.com/miraidevs" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
 ## iOS:
 
 ### iPhone 13 Pro Max
@@ -118,11 +124,6 @@ from the package authors, and more.
 ![](screenshots/0.0.5_screenshots/15_desktop.png)
 
 
-## Support
-
-If Mirai DropDown package was useful to you, saved you a lot of time, or you just want to support the project, I would be very grateful if you buy me a cup of coffee.
-
-<a href="https://www.buymeacoffee.com/miraidevs" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 
 
