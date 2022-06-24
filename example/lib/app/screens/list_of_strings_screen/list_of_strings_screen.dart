@@ -102,6 +102,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('List Of Texts / Strings'),
+        backgroundColor: Theme.of(context).primaryColorDark,
       ),
       body: Center(
         child: Padding(
@@ -144,7 +145,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: MiraiDropdownWidget(
+                    child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 8 ? 300 : null,
                       valueNotifier: valueNotifierThird,
                       itemWidget: (int index, String item) {

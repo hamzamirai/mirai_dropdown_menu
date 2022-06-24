@@ -3,7 +3,7 @@
 * On 23/6/2022.
 */
 
-import 'package:example/app/screens/list_of_objects_screen.dart';
+import 'package:example/app/screens/list_of_objects_screen/list_of_objects_screen.dart';
 import 'package:example/app/screens/list_of_strings_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -32,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Welcome to, Mirai Drop Down Menu.',
+                'Welcome to, \nMirai Drop Down Menu.',
                 style: Theme.of(context).textTheme.headline1?.copyWith(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
