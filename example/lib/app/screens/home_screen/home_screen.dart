@@ -4,7 +4,7 @@
 */
 
 import 'package:example/app/screens/list_of_objects_screen/list_of_objects_screen.dart';
-import 'package:example/app/screens/list_of_strings_screen.dart';
+import 'package:example/app/screens/list_of_strings_screen/list_of_strings_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

@@ -107,15 +107,25 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: kIsWeb ? 100 : 14,
+            vertical: 20,
+            horizontal: kIsWeb ? 100 : 20,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Text(
+                'Welcome to, \nList Of Texts / Strings screen.',
+                style: Theme.of(context).textTheme.headline1?.copyWith(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+              ),
+              const SizedBox(height: 40),
               const Text('Drop Down'),
               const SizedBox(height: 8),
-              MiraiDropdownWidget(
+              MiraiDropdownWidget<String>(
                 valueNotifier: valueNotifierFirst,
                 itemWidget: (int index, String item) {
                   return MiraiDropDownItemWidget(item: item);
@@ -131,7 +141,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: MiraiDropdownWidget(
+                    child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 8 ? 300 : null,
                       valueNotifier: valueNotifierSecond,
                       itemWidget: (int index, String item) {
@@ -165,7 +175,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: MiraiDropdownWidget(
+                    child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 6 ? 240 : null,
                       valueNotifier: valueNotifierFourth,
                       itemWidget: (int index, String item) {
@@ -179,7 +189,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: MiraiDropdownWidget(
+                    child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 6 ? 240 : null,
                       valueNotifier: valueNotifierFifth,
                       itemWidget: (int index, String item) {
@@ -193,7 +203,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: MiraiDropdownWidget(
+                    child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 6 ? 240 : null,
                       valueNotifier: valueNotifierSixth,
                       itemWidget: (int index, String item) {
@@ -213,7 +223,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: MiraiDropdownWidget(
+                    child: MiraiDropdownWidget<String>(
                       showMode: MiraiShowMode.top,
                       valueNotifier: valueNotifierSeventh,
                       itemWidget: (int index, String item) {
@@ -227,7 +237,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: MiraiDropdownWidget(
+                    child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 6 ? 160 : null,
                       showMode:
                           kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,
@@ -243,7 +253,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: MiraiDropdownWidget(
+                    child: MiraiDropdownWidget<String>(
                       maxHeight: listOfItem.length > 6 ? 160 : null,
                       showMode:
                           kIsWeb ? MiraiShowMode.top : MiraiShowMode.bottom,

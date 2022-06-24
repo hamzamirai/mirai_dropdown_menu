@@ -11,7 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-![](./screenshots/mirai_devs_logo.png)
+![](./screenshots/miraidevs.png)
 ## MiraiDevs <contact@miraidevs.com>
 
 <!-- 

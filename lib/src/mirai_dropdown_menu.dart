@@ -30,6 +30,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.exit = MiraiExit.fromAll,
     this.isExpanded,
     this.space = 3,
+    this.emptyListMessage,
   })  : assert(child.key != null),
         super(key: key);
 
@@ -60,6 +61,8 @@ class MiraiPopupMenu<T> extends StatefulWidget {
   /// Space between dropdown and child
   final double space;
 
+  final String? emptyListMessage;
+
   @override
   MiraiPopupMenuState<T> createState() => MiraiPopupMenuState<T>();
 }
@@ -68,12 +71,12 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.enable ? _showPopupMenu : null,
+      onTap: widget.enable ? _showDropDownMenu : null,
       child: widget.child,
     );
   }
 
-  void _showPopupMenu() {
+  void _showDropDownMenu() {
     /// Find RenderBox object
     RenderBox renderBox = (widget.child.key as GlobalKey)
         .currentContext
@@ -105,8 +108,10 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Empty Children!'),
+        SnackBar(
+          content: Text(
+            widget.emptyListMessage ?? 'MiraiDropDown: Empty Children!',
+          ),
         ),
       );
     }

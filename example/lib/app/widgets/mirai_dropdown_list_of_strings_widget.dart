@@ -71,7 +71,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
         child: dropdownChild ??
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Flexible(
                   child: ValueListenableBuilder<String>(
                     valueListenable: valueNotifier,
@@ -80,7 +80,7 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
                         duration: const Duration(milliseconds: 200),
                         child: Text(
                           chosenTitle,
-                          key: ValueKey(chosenTitle.trim()),
+                          key: ValueKey<String>(chosenTitle.trim()),
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),

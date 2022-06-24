@@ -6,8 +6,10 @@ import 'package:example/app/core/utils/app_theme.dart';
 import 'package:example/app/data/projects.dart';
 import 'package:example/app/models/project_model.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
+
+import 'components/drop_down_object_child_widget.dart';
+import 'components/drop_down_object_item_widget.dart';
 
 class ListObjectsScreen extends StatefulWidget {
   const ListObjectsScreen({Key? key}) : super(key: key);
@@ -18,8 +20,23 @@ class ListObjectsScreen extends StatefulWidget {
 
 class _ListObjectsScreenState extends State<ListObjectsScreen> {
   /// ProjectModel
-  final ValueNotifier<ProjectModel> projectValueNotifier =
+  final ValueNotifier<ProjectModel> projectValueNotifierFirst =
       ValueNotifier<ProjectModel>(listProjects[0]);
+
+  final ValueNotifier<ProjectModel> projectValueNotifierSecond =
+      ValueNotifier<ProjectModel>(listProjects[1]);
+
+  final ValueNotifier<ProjectModel> projectValueNotifierThird =
+      ValueNotifier<ProjectModel>(listProjects[3]);
+
+  final ValueNotifier<ProjectModel> projectValueNotifierFourth =
+      ValueNotifier<ProjectModel>(listProjects[4]);
+
+  final ValueNotifier<ProjectModel> projectValueNotifierFifth =
+      ValueNotifier<ProjectModel>(listProjects[5]);
+
+  final ValueNotifier<ProjectModel> projectValueNotifierSixth =
+      ValueNotifier<ProjectModel>(listProjects[6]);
 
   @override
   Widget build(BuildContext context) {
@@ -35,129 +52,184 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text(
+              'Welcome to, \nList Of Objects screen.',
+              style: Theme.of(context).textTheme.headline1?.copyWith(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColorDark,
+                  ),
+            ),
+            const SizedBox(height: 40),
             MiraiPopupMenu<ProjectModel>(
               key: UniqueKey(),
               children: listProjects,
               space: 4,
               itemWidget: (int index, ProjectModel project) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 16.0,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      _BuildContainerColor(color: project.color),
-                      const SizedBox(width: 30),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              '${project.name}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                    color: Colors.black,
-                                  ),
-                            ),
-                            Text(
-                              '${project.job}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
-                                    color: Colors.grey.shade600,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                return DropDownItemWidget(project: project);
               },
               onChanged: (ProjectModel project) {
-                projectValueNotifier.value = project;
+                projectValueNotifierFirst.value = project;
               },
-              child: Container(
+              child: DropDownObjectChildWidget(
                 key: GlobalKey(),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(
-                    color: const Color(0xFFECECEC),
-                    width: 1.0,
+                projectValueNotifier: projectValueNotifierFirst,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: MiraiPopupMenu<ProjectModel>(
+                    key: UniqueKey(),
+                    children: listProjects,
+                    space: 4,
+                    maxHeight: 300,
+                    itemWidget: (int index, ProjectModel project) {
+                      return DropDownItemWidget(
+                        project: project,
+                        firstSpace: 10,
+                        fontSize: 12,
+                      );
+                    },
+                    onChanged: (ProjectModel project) {
+                      projectValueNotifierSecond.value = project;
+                    },
+                    child: DropDownObjectChildWidget(
+                      key: GlobalKey(),
+                      fontSize: 12,
+                      projectValueNotifier: projectValueNotifierSecond,
+                    ),
                   ),
                 ),
-                height: 40,
-                child: ValueListenableBuilder<ProjectModel>(
-                    valueListenable: projectValueNotifier,
-                    builder: (_, ProjectModel project, __) {
-                      return Row(
-                        children: [
-                          _BuildContainerColor(color: project.color),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 400),
-                                child: Text(
-                                  '${project.job}',
-                                  key: ValueKey('${project.title}'.trim()),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        color: AppTheme.keyTextBlackColor,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          const FaIcon(
-                            FontAwesomeIcons.chevronDown,
-                            color: AppTheme.keyAppColor,
-                            size: 12,
-                          ),
-                        ],
+                const SizedBox(width: 8),
+                Expanded(
+                  child: MiraiPopupMenu<ProjectModel>(
+                    key: UniqueKey(),
+                    children: listProjects,
+                    space: 4,
+                    maxHeight: 360,
+                    itemWidget: (int index, ProjectModel project) {
+                      return DropDownItemWidget(
+                        project: project,
+                        firstSpace: 10,
+                        fontSize: 12,
                       );
-                    }),
-              ),
-              // onAction: (String value) =>
-              //     timeEmployeeOrFreelancerNewEntryController.companyName.value = value,
-            )
+                    },
+                    onChanged: (ProjectModel project) {
+                      projectValueNotifierThird.value = project;
+                    },
+                    child: DropDownObjectChildWidget(
+                      key: GlobalKey(),
+                      fontSize: 12,
+                      projectValueNotifier: projectValueNotifierThird,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: MiraiPopupMenu<ProjectModel>(
+                    key: UniqueKey(),
+                    children: listProjects,
+                    space: 4,
+                    maxHeight: 300,
+                    itemWidget: (int index, ProjectModel project) {
+                      return DropDownItemWidget(
+                        project: project,
+                        fontSize: 10,
+                        firstSpace: 8,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 10,
+                        ),
+                      );
+                    },
+                    onChanged: (ProjectModel project) {
+                      projectValueNotifierFourth.value = project;
+                    },
+                    child: DropDownObjectChildWidget(
+                      key: GlobalKey(),
+                      firstSpace: 6,
+                      secondSpace: 6,
+                      fontSize: 12,
+                      coloredContainerSize: 14,
+                      projectValueNotifier: projectValueNotifierFourth,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: MiraiPopupMenu<ProjectModel>(
+                    key: UniqueKey(),
+                    children: listProjects,
+                    space: 4,
+                    maxHeight: 360,
+                    itemWidget: (int index, ProjectModel project) {
+                      return DropDownItemWidget(
+                        project: project,
+                        fontSize: 10,
+                        firstSpace: 8,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 10,
+                        ),
+                      );
+                    },
+                    onChanged: (ProjectModel project) {
+                      projectValueNotifierFifth.value = project;
+                    },
+                    child: DropDownObjectChildWidget(
+                      key: GlobalKey(),
+                      firstSpace: 6,
+                      secondSpace: 6,
+                      fontSize: 12,
+                      coloredContainerSize: 14,
+                      projectValueNotifier: projectValueNotifierFifth,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: MiraiPopupMenu<ProjectModel>(
+                    key: UniqueKey(),
+                    children: listProjects,
+                    space: 4,
+                    maxHeight: 360,
+                    itemWidget: (int index, ProjectModel project) {
+                      return DropDownItemWidget(
+                        project: project,
+                        fontSize: 10,
+                        firstSpace: 8,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 10,
+                        ),
+                      );
+                    },
+                    onChanged: (ProjectModel project) {
+                      projectValueNotifierSixth.value = project;
+                    },
+                    child: DropDownObjectChildWidget(
+                      key: GlobalKey(),
+                      firstSpace: 6,
+                      secondSpace: 6,
+                      fontSize: 12,
+                      coloredContainerSize: 14,
+                      projectValueNotifier: projectValueNotifierSixth,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _BuildContainerColor extends StatelessWidget {
-  const _BuildContainerColor({
-    Key? key,
-    required this.color,
-  }) : super(key: key);
-
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 20,
-      width: 20,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(2),
       ),
     );
   }
