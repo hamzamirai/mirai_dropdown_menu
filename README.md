@@ -12,6 +12,7 @@ and the Flutter guide for
 -->
 
 ![](./screenshots/miraidevs.png)
+
 ## MiraiDevs <contact@miraidevs.com>
 
 <!-- 
@@ -33,26 +34,32 @@ TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder. 
 -->
 
-## Take a first look
-![](./screenshots/0.0.6_screenshots/00_example.png)
+## Take a first look:
 
-## Installation 
+![](./screenshots/0.0.6_screenshots/00_example.png)
+![](./screenshots/0.0.6_screenshots/06.png)
+![](./screenshots/0.0.6_screenshots/07.png)
+![](./screenshots/0.0.6_screenshots/08.png)
+
+## Installation
+
 1. Add mirai_dropdown_menu as a dependency in your pubspec.yaml file.
 
 ```dart
-dependencies:
-  mirai_dropdown_menu: <latest_version>
+dependencies:mirai_dropdown_menu: <
+latest_version>
 ```
 
 2. Import the mirai_dropdown_menu package.
- 
+
 ```dart
 import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
 ```
 
 ### Please check the example for more information:
+
 ```dart
-  https://github.com/devhch/mirai_dropdown_menu/tree/master/example
+  https: //github.com/devhch/mirai_dropdown_menu/tree/master/example
 ```
 
 ## Usage:
@@ -102,15 +109,15 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
           borderRadius: underline ? null : BorderRadius.circular(5.0),
           border: underline
               ? const Border(
-                  bottom: BorderSide(
-                    width: 1.0,
-                    color: Colors.blueGrey,
-                  ),
-                )
+            bottom: BorderSide(
+              width: 1.0,
+              color: Colors.blueGrey,
+            ),
+          )
               : Border.all(
-                  color: Colors.blueGrey,
-                  width: 1.0,
-                ),
+            color: Colors.blueGrey,
+            width: 1.0,
+          ),
         ),
         height: 40,
         child: dropdownChild ??
@@ -153,40 +160,50 @@ class MiraiDropdownWidget<T> extends StatelessWidget {
 ```
 
 ## List of items and ValueNotifier:
+
 ```dart
-  final List<String> listOfItem = <String>[
-    'Flutter',
-    'Dart',
-    'GetX',
-    'State',
-  ];
 
-  late ValueNotifier<String> valueNotifier;
+final List<String> listOfItem = <String>[
+  'Flutter',
+  'Dart',
+  'GetX',
+  'State',
+];
 
-  @override
-  void initState() {
-    super.initState();
-    valueNotifier = ValueNotifier<String>(
-      listOfItem.first,
-    );
-  }
+late ValueNotifier<String> valueNotifier;
+
+@override
+void initState() {
+  super.initState();
+  valueNotifier = ValueNotifier<String>(
+    listOfItem.first,
+  );
+}
 ```
 
 ## Then you can use the dropdown widget in build:
+
 ```dart
-        MiraiDropdownWidget(
-                valueNotifier: valueNotifier,
-                itemWidget: (int index, String item) {
-                  return MiraiDropDownItemWidget(item: item);
-                },
-                children: listOfItem,
-                onChanged: (String value) {
-                  valueNotifier.value = value;
-                },
-              ),
+        MiraiDropdownWidget
+(
+valueNotifier: valueNotifier,itemWidget: (
+
+int index, String
+item) {
+return MiraiDropDownItemWidget(item: item);
+},
+children: listOfItem,onChanged: (
+
+String value
+) {
+valueNotifier.value = value;
+},
+)
+,
 ```
 
 ## MiraiDropDownItemWidget:
+
 ```dart
 /*
 * Created By Mirai Devs.
@@ -220,6 +237,7 @@ class MiraiDropDownItemWidget extends StatelessWidget {
   }
 }
 ```
+
 <!-- 
 ## Additional information
 
@@ -231,37 +249,55 @@ from the package authors, and more.
 ## iOS:
 
 ### iPhone 13 Pro Max
-![](screenshots/0.0.5_screenshots/1.iphone_13_pro_max.png)
-![](screenshots/0.0.5_screenshots/2.iphone_13_pro_max.png)
+
+#### List Of Objects:
+![](screenshots/0.0.6_screenshots/06.png)
+![](screenshots/0.0.6_screenshots/07.png)
+![](screenshots/0.0.6_screenshots/08.png)
+![](screenshots/0.0.6_screenshots/09.png)
+
+#### List Of Texts / Strings:
+![](screenshots/0.0.6_screenshots/01.png)
+![](screenshots/0.0.6_screenshots/02.png)
+![](screenshots/0.0.6_screenshots/03.png)
+![](screenshots/0.0.6_screenshots/04.png)
+![](screenshots/0.0.6_screenshots/05.png)
 
 ### iPhone 8 Plus
+
 ![](screenshots/0.0.5_screenshots/1.iphone_8.png)
 ![](screenshots/0.0.5_screenshots/2.iphone_8.png)
 
 ## Android:
 
 ### Example
+
 ![](screenshots/0.0.5_screenshots/00.png)
 
 ### 1 item
+
 ![](screenshots/0.0.5_screenshots/01.png)
 
 ### 2 items
+
 ![](screenshots/0.0.5_screenshots/02.png)
 ![](screenshots/0.0.5_screenshots/03.png)
 
 ### 3 items
+
 ![](screenshots/0.0.5_screenshots/04.png)
 ![](screenshots/0.0.5_screenshots/05.png)
 ![](screenshots/0.0.5_screenshots/06.png)
 
 ### 4 items
+
 ![](screenshots/0.0.5_screenshots/07.png)
 ![](screenshots/0.0.5_screenshots/08.png)
 ![](screenshots/0.0.5_screenshots/09.png)
 ![](screenshots/0.0.5_screenshots/10.png)
 
 ## Web and Desktop:
+
 ![](screenshots/0.0.5_screenshots/11_desktop.png)
 ![](screenshots/0.0.5_screenshots/12_desktop.png)
 ![](screenshots/0.0.5_screenshots/13_desktop.png)
