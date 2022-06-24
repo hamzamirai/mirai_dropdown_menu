@@ -210,14 +210,6 @@ MiraiDropdownWidget<String>(
 
 ###  [Please check the example for more information](https://github.com/devhch/mirai_dropdown_menu/tree/master/example)
 
-<!-- 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
--->
-
 ## Support
 
 If the MiraiDropDown package matches your needs, please do not hesitate to support the package, I would be very grateful if you buy me a cup of coffee.
