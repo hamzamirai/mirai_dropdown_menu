@@ -44,8 +44,8 @@ to `/example` folder.
 1. Add mirai_dropdown_menu as a dependency in your pubspec.yaml file.
 
 ```dart
-dependencies:mirai_dropdown_menu: <
-latest_version>
+dependencies:
+  mirai_dropdown_menu: <latest_version>
 ```
 
 2. Import the mirai_dropdown_menu package.
