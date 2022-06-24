@@ -37,9 +37,7 @@ to `/example` folder.
 ## Take a first look:
 
 ![](./screenshots/0.0.6_screenshots/00_example.png)
-![](./screenshots/0.0.6_screenshots/06.png)
 ![](./screenshots/0.0.6_screenshots/07.png)
-![](./screenshots/0.0.6_screenshots/08.png)
 
 ## Installation
 
@@ -56,11 +54,7 @@ latest_version>
 import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
 ```
 
-### Please check the example for more information:
-
-```dart
-  https://github.com/devhch/mirai_dropdown_menu/tree/master/example
-```
+###  [Please check the example for more information](https://github.com/devhch/mirai_dropdown_menu/tree/master/example)
 
 <!-- 
 ## Additional information
@@ -82,6 +76,8 @@ from the package authors, and more.
 
 #### List Of Texts / Strings:
 ![](screenshots/0.0.6_screenshots/01.png)
+![](screenshots/0.0.6_screenshots/10.png)
+![](screenshots/0.0.6_screenshots/11.png)
 ![](screenshots/0.0.6_screenshots/02.png)
 ![](screenshots/0.0.6_screenshots/03.png)
 ![](screenshots/0.0.6_screenshots/04.png)
@@ -120,6 +116,13 @@ from the package authors, and more.
 ![](screenshots/0.0.5_screenshots/13_desktop.png)
 ![](screenshots/0.0.5_screenshots/14_desktop.png)
 ![](screenshots/0.0.5_screenshots/15_desktop.png)
+
+
+## Support
+
+If Mirai DropDown package was useful to you, saved you a lot of time, or you just want to support the project, I would be very grateful if you buy me a cup of coffee.
+
+<a href="https://www.buymeacoffee.com/miraidevs" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 
 
