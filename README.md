@@ -223,6 +223,15 @@ If the MiraiDropDown package matches your needs, please do not hesitate to suppo
 ![](screenshots/0.0.6_screenshots/09.png)
 
 #### General search list of objects:
+Add toString() method to your model.
+For Example:
+```dart
+  @override
+  String toString() {
+    return 'ProjectModel{number: $number, job: $job, name: $name, title: $title, date: $date, client: $client, progress: $progress, color: $color}';
+  } 
+```
+
 ![](screenshots/0.0.6+1_screenshots/01.png)
 ![](screenshots/0.0.6+1_screenshots/02.png)
 ![](screenshots/0.0.6+1_screenshots/03.png)
