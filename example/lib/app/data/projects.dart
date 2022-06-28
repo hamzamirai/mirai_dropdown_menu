@@ -24,7 +24,7 @@ ProjectModel projectModel1 = ProjectModel(
 
 ProjectModel projectModel2 = ProjectModel(
   job: "BackEnd Development",
-  name: "Mohammed Benmchich",
+  name: "Bilal Aboubi",
   title: "5% completed 19988 budget left",
   progress: 0.05,
   color: listColor[2],

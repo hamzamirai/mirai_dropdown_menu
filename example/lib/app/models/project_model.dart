@@ -24,4 +24,9 @@ class ProjectModel {
     this.progress,
     this.color = const Color(0xFF37B34A),
   });
+
+  @override
+  String toString() {
+    return 'ProjectModel{number: $number, job: $job, name: $name, title: $title, date: $date, client: $client, progress: $progress, color: $color}';
+  }
 }

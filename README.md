@@ -216,19 +216,26 @@ If the MiraiDropDown package matches your needs, please do not hesitate to suppo
 
 <a href="https://www.buymeacoffee.com/miraidevs" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
-## iOS:
-
 #### List Of Objects:
 ![](screenshots/0.0.6_screenshots/06.png)
 ![](screenshots/0.0.6_screenshots/07.png)
 ![](screenshots/0.0.6_screenshots/08.png)
 ![](screenshots/0.0.6_screenshots/09.png)
 
+#### General search list of objects:
+![](screenshots/0.0.6+1_screenshots/01.png)
+![](screenshots/0.0.6+1_screenshots/02.png)
+![](screenshots/0.0.6+1_screenshots/03.png)
+![](screenshots/0.0.6+1_screenshots/04.png)
+![](screenshots/0.0.6+1_screenshots/05.png)
+
 #### List Of Texts / Strings:
 ![](screenshots/0.0.6_screenshots/01.png)
-![](screenshots/0.0.6_screenshots/10.png)
-![](screenshots/0.0.6_screenshots/11.png)
 ![](screenshots/0.0.6_screenshots/02.png)
 ![](screenshots/0.0.6_screenshots/03.png)
 ![](screenshots/0.0.6_screenshots/04.png)
 ![](screenshots/0.0.6_screenshots/05.png)
+
+#### Search for List Of Texts / Strings:
+![](screenshots/0.0.6_screenshots/10.png)
+![](screenshots/0.0.6_screenshots/11.png)

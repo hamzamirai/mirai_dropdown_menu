@@ -12,8 +12,10 @@ import 'widgets/mirai_keyboard_visibility_builder_widget.dart';
 part 'utils/enums.dart';
 
 typedef MiraiDropdownBuilder<T> = Widget Function(int index, T item);
+
 typedef MiraiHighLightDropdownBuilder<T> = Widget Function(
     int index, SearchAttributes<T> item);
+
 typedef MiraiValueChanged<T> = void Function(T value);
 
 class MiraiPopupMenu<T> extends StatefulWidget {
@@ -38,7 +40,6 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.emptyListMessage,
     this.showSearchTextField = false,
     this.searchDecoration,
-    this.searchQuery,
   })  : assert(child.key != null),
         super(key: key);
 
@@ -74,7 +75,6 @@ class MiraiPopupMenu<T> extends StatefulWidget {
 
   final bool showSearchTextField;
   final InputDecoration? searchDecoration;
-  final String? searchQuery;
 
   @override
   MiraiPopupMenuState<T> createState() => MiraiPopupMenuState<T>();
@@ -364,14 +364,12 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
           return buildItemToReturn(index, children);
         }
       } else {
-        debugPrint('buildOtherWidget index$index');
         return buildOtherWidget();
       }
     }
   }
 
   InkWell buildItemToReturn(int index, SearchAttributes<T> children) {
-    debugPrint('children index: $index');
     return InkWell(
       onTap: () => onTapChild(index),
       child: widget.itemWidget(
@@ -474,7 +472,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
       searchChildren.value.mQueryClient = query;
 
       final results = widget.children.where((child) =>
-          '${(child is String) ? child : widget.searchQuery}'
+          ((child is String) ? child : child.toString())
               .toLowerCase()
               .contains(query));
       searchChildren.value.searchList = List.from(results);

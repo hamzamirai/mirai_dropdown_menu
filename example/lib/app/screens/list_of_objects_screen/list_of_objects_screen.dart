@@ -65,6 +65,7 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
               key: UniqueKey(),
               children: listProjects,
               space: 4,
+              showSearchTextField: true,
               itemWidgetBuilder: (int index, ProjectModel project) {
                 return DropDownItemWidget(project: project);
               },

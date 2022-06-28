@@ -18,6 +18,7 @@ class DropDownObjectChildWidget extends StatelessWidget {
     this.padding,
     this.fontSize,
     this.coloredContainerSize,
+    this.height,
   }) : super(key: key);
 
   final ValueNotifier<ProjectModel> projectValueNotifier;
@@ -26,6 +27,7 @@ class DropDownObjectChildWidget extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double? fontSize;
   final double? coloredContainerSize;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class DropDownObjectChildWidget extends StatelessWidget {
           width: 1.0,
         ),
       ),
-      height: 40,
+      height: height ?? 40,
       child: ValueListenableBuilder<ProjectModel>(
         valueListenable: projectValueNotifier,
         builder: (_, ProjectModel project, __) {
@@ -59,10 +61,12 @@ class DropDownObjectChildWidget extends StatelessWidget {
                     child: Text(
                       '${project.job}',
                       key: ValueKey<String>('${project.title}'.trim()),
+                      maxLines: 1,
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontWeight: FontWeight.w600,
                             color: AppTheme.keyTextBlackColor,
                             fontSize: fontSize,
+                            overflow: TextOverflow.ellipsis,
                           ),
                     ),
                   ),

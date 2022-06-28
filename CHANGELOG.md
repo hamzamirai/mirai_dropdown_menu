@@ -1,3 +1,7 @@
+## 0.0.6+1 - 2022-06-29
+
+* General search ✅
+
 ## 0.0.6 - 2022-06-24
 
 * Added new features such as:
