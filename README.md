@@ -222,7 +222,7 @@ If the MiraiDropDown package matches your needs, please do not hesitate to suppo
 ![](screenshots/0.0.6_screenshots/08.png)
 ![](screenshots/0.0.6_screenshots/09.png)
 
-#### General search list of objects:
+#### General search for list of objects:
 Add toString() method to your model.
 For Example:
 ```dart
