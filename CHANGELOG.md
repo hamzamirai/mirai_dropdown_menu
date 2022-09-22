@@ -8,7 +8,7 @@
   - Make Dropdown not opening when Children list isEmpty
   - Added search TextFormField: 
     - make showSearchTextField: true,
-    - Also, you can user a custom input decoration: 
+    - Also, you can use a custom input decoration: 
       - searchDecoration: InputDecoration(),
 
 ## 0.0.5+1 - 2022-05-26

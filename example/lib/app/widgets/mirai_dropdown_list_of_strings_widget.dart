@@ -82,15 +82,18 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
               child: ValueListenableBuilder<String>(
                 valueListenable: valueNotifier,
                 builder: (_, String chosenTitle, __) {
-                  return AnimatedSwitcher(
+                  return AnimatedSize(
                     duration: const Duration(milliseconds: 200),
-                    child: Text(
-                      '$chosenTitle',
-                      key: ValueKey<String>(chosenTitle),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 100),
+                      child: Text(
+                        '$chosenTitle',
+                        key: ValueKey<String>(chosenTitle),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
                   );
                 },

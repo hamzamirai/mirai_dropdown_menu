@@ -23,6 +23,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     Key? key,
     required this.child,
     this.other,
+    this.decoration,
     required this.itemWidgetBuilder,
     this.itemHighLightBuilder,
     required this.children,
@@ -40,11 +41,15 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.emptyListMessage,
     this.showSearchTextField = false,
     this.searchDecoration,
+    this.searchValidator,
   })  : assert(child.key != null),
         super(key: key);
 
   /// Child widget that has dropdown menu
   final Widget child;
+
+  /// Drop Down Decoration
+  final Decoration? decoration;
   final Widget? other;
 
   /// itemWidget, is a widget that we display as an item in the list menu
@@ -75,6 +80,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
 
   final bool showSearchTextField;
   final InputDecoration? searchDecoration;
+  final FormFieldValidator<String>? searchValidator;
 
   @override
   MiraiPopupMenuState<T> createState() => MiraiPopupMenuState<T>();
@@ -105,12 +111,13 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             maxHeight: widget.maxHeight,
             space: widget.space,
             showMode: widget.showMode,
-            itemWidget: widget.itemWidgetBuilder,
+            itemWidgetBuilder: widget.itemWidgetBuilder,
             mode: widget.mode,
             position: position,
             size: renderBox.size,
             onChanged: widget.onChanged,
             children: widget.children,
+            decoration: widget.decoration,
             exit: widget.exit,
             isExpanded: widget.isExpanded,
             showOtherAndItsTextField: widget.showOtherAndItsTextField,
@@ -118,6 +125,7 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             onOtherChanged: widget.onOtherChanged,
             showSearchTextField: widget.showSearchTextField,
             searchDecoration: widget.searchDecoration,
+            searchValidator: widget.searchValidator,
           );
         },
       );
@@ -137,7 +145,7 @@ class _DropDownMenuContent<T> extends StatefulWidget {
   const _DropDownMenuContent({
     Key? key,
     required this.children,
-    required this.itemWidget,
+    required this.itemWidgetBuilder,
     this.itemHighLightBuilder,
     required this.position,
     required this.size,
@@ -151,14 +159,15 @@ class _DropDownMenuContent<T> extends StatefulWidget {
     this.exit = MiraiExit.fromAll,
     this.isExpanded,
     required this.space,
+    this.decoration,
     this.other,
     this.showSearchTextField = false,
     this.searchDecoration,
-    this.searchQuery,
+    this.searchValidator,
   }) : super(key: key);
 
   final List<T> children;
-  final MiraiDropdownBuilder<T> itemWidget;
+  final MiraiDropdownBuilder<T> itemWidgetBuilder;
   final MiraiHighLightDropdownBuilder<T>? itemHighLightBuilder;
   final Offset position;
   final Size size;
@@ -172,11 +181,12 @@ class _DropDownMenuContent<T> extends StatefulWidget {
   final MiraiExit exit;
   final ValueChanged<bool>? isExpanded;
   final double space;
+  final Decoration? decoration;
   final Widget? other;
 
   final bool showSearchTextField;
   final InputDecoration? searchDecoration;
-  final String? searchQuery;
+  final FormFieldValidator<String>? searchValidator;
 
   @override
   _DropDownMenuContentState<T> createState() => _DropDownMenuContentState<T>();
@@ -281,20 +291,21 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                       height:
                           widget.children.length > 20 ? 300 : widget.maxHeight,
                       width: widget.size.width - 1,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: const Color(0xFFCECECE),
-                          width: 0.5,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(.1),
-                            blurRadius: 8,
+                      decoration: widget.decoration ??
+                          BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: const Color(0xFFCECECE),
+                              width: 0.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(.1),
+                                blurRadius: 8,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
                       child: ValueListenableBuilder<SearchAttributes<T>>(
                         valueListenable: searchChildren,
                         builder: (_, SearchAttributes<T> children, __) {
@@ -369,10 +380,14 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
     }
   }
 
-  InkWell buildItemToReturn(int index, SearchAttributes<T> children) {
-    return InkWell(
-      onTap: () => onTapChild(index),
-      child: widget.itemWidget(
+  ElevatedButton buildItemToReturn(int index, SearchAttributes<T> children) {
+    return ElevatedButton(
+      onPressed: () => onTapChild(index),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ).copyWith(elevation: MaterialStateProperty.all(0)),
+      child: widget.itemWidgetBuilder(
         index,
         children.searchList[index],
       ),
@@ -401,7 +416,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
               hintText: 'Search...',
               border: miraiOutlineInputBorderForTextField(),
             ),
-        keyboardType: TextInputType.emailAddress,
+        validator: widget.searchValidator,
         textInputAction: TextInputAction.next,
         onFieldSubmitted: (_) {},
         onChanged: (String text) {
