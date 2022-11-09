@@ -55,7 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const ListOfStringScreen(),
+                      builder: (BuildContext context) =>
+                          const ListOfStringScreen(),
                     ),
                   );
                 },
@@ -77,7 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const ListObjectsScreen(),
+                      builder: (BuildContext context) =>
+                          const ListObjectsScreen(),
                     ),
                   );
                 },

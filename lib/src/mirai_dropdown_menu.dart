@@ -31,6 +31,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.showMode = MiraiShowMode.bottom,
     this.onChanged,
     this.maxHeight,
+    this.radius,
     this.enable = true,
     this.showSeparator = true,
     this.showOtherAndItsTextField = false,
@@ -61,6 +62,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
 
   /// The max height of the dropdown
   final double? maxHeight;
+  final double? radius;
 
   /// mode, can have two values: dropDownMenu or popupMenu
   final MiraiPopupMenuMode mode;
@@ -109,6 +111,7 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
         builder: (_) {
           return _DropDownMenuContent<T>(
             maxHeight: widget.maxHeight,
+            radius: widget.radius,
             space: widget.space,
             showMode: widget.showMode,
             itemWidgetBuilder: widget.itemWidgetBuilder,
@@ -153,6 +156,7 @@ class _DropDownMenuContent<T> extends StatefulWidget {
     required this.showMode,
     this.onChanged,
     this.maxHeight,
+    this.radius,
     required this.showOtherAndItsTextField,
     required this.showSeparator,
     this.onOtherChanged,
@@ -175,6 +179,7 @@ class _DropDownMenuContent<T> extends StatefulWidget {
   final MiraiPopupMenuMode mode;
   final MiraiShowMode showMode;
   final double? maxHeight;
+  final double? radius;
   final bool showOtherAndItsTextField;
   final bool showSeparator;
   final ValueChanged<String>? onOtherChanged;
@@ -294,7 +299,8 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                       decoration: widget.decoration ??
                           BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius:
+                                BorderRadius.circular(widget.radius ?? 5),
                             border: Border.all(
                               color: const Color(0xFFCECECE),
                               width: 0.5,
