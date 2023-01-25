@@ -410,7 +410,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
       child: TextFormField(
         controller: searchController,
         textAlignVertical: TextAlignVertical.center,
-        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Theme.of(context).primaryColorDark,
             ),
         cursorColor: Theme.of(context).primaryColorDark,
@@ -488,20 +488,21 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
   }
 
   void searchSubscription(String query) {
+    SearchAttributes<T> searchAttributes = SearchAttributes<T>();
     if (query.isNotEmpty) {
-      searchChildren.value.showHighLight = true;
-      searchChildren.value.mQueryClient = query;
+      searchAttributes.showHighLight = true;
+      searchAttributes.mQueryClient = query;
 
       final results = widget.children.where((child) =>
           ((child is String) ? child : child.toString())
               .toLowerCase()
               .contains(query));
-      searchChildren.value.searchList = List.from(results);
+      searchAttributes.searchList = List.from(results);
     } else {
-      searchChildren.value.showHighLight = false;
-      searchChildren.value.mQueryClient = '';
-      searchChildren.value.searchList = List.from(widget.children);
+      searchAttributes.showHighLight = false;
+      searchAttributes.mQueryClient = '';
+      searchAttributes.searchList = List.from(widget.children);
     }
-    searchChildren.notifyListeners();
+    searchChildren.value = searchAttributes;
   }
 }
