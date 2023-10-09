@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
                 primaryColor: Colors.transparent,
                 textTheme: TextTheme(
-                  headline1: GoogleFonts.nunito(),
+                  displayMedium: GoogleFonts.nunito(),
                   button: GoogleFonts.nunito(),
                 ),
               ),
