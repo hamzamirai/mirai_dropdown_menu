@@ -5,7 +5,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mirai_dropdown_menu/src/models/search_attributes_model.dart';
-import 'package:mirai_dropdown_menu/src/utils/mirai_outline_input_border.dart';
 import 'package:mirai_dropdown_menu/src/widgets/item_widget.dart';
 import 'package:mirai_dropdown_menu/src/widgets/separator_widget.dart';
 

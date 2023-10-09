@@ -4,8 +4,7 @@
 */
 
 import 'package:flutter/material.dart';
-
-import '../utils/mirai_outline_input_border.dart';
+import 'package:mirai_dropdown_menu/src/utils/mirai_outline_input_border.dart';
 
 class SearchTextFieldWidget extends StatelessWidget {
   const SearchTextFieldWidget({

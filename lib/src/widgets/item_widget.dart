@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:mirai_dropdown_menu/src/widgets/search_text_field_widget.dart';
 
-import '../models/search_attributes_model.dart';
 import 'item_to_return_widget.dart';
 import 'other_widget.dart';
 
