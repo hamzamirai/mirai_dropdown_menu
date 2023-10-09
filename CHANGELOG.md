@@ -1,3 +1,9 @@
+## 0.0.6+4 - 2023-10-09
+
+- Added DropDown Item Padding.
+- Added DropDown Item OverlayColor.
+- Added DropDown Item Height.
+
 ## 0.0.6+3 - 2023-09-24
 
 - Upgrade to Flutter 3.13.

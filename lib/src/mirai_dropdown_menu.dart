@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mirai_dropdown_menu/src/models/search_attributes_model.dart';
 import 'package:mirai_dropdown_menu/src/utils/mirai_outline_input_border.dart';
+import 'package:mirai_dropdown_menu/src/widgets/item_widget.dart';
+import 'package:mirai_dropdown_menu/src/widgets/separator_widget.dart';
 
 import 'widgets/mirai_keyboard_visibility_builder_widget.dart';
 
@@ -43,6 +45,10 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.showSearchTextField = false,
     this.searchDecoration,
     this.searchValidator,
+    this.itemPadding,
+    this.itemOverlayColor,
+    this.itemHeight,
+    this.separatorColor,
   })  : assert(child.key != null),
         super(key: key);
 
@@ -84,6 +90,13 @@ class MiraiPopupMenu<T> extends StatefulWidget {
   final InputDecoration? searchDecoration;
   final FormFieldValidator<String>? searchValidator;
 
+  final EdgeInsetsGeometry? itemPadding;
+
+  final Color? itemOverlayColor;
+  final double? itemHeight;
+
+  final Color? separatorColor;
+
   @override
   MiraiPopupMenuState<T> createState() => MiraiPopupMenuState<T>();
 }
@@ -99,9 +112,8 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
 
   void _showDropDownMenu() {
     /// Find RenderBox object
-    RenderBox renderBox = (widget.child.key as GlobalKey)
-        .currentContext
-        ?.findRenderObject() as RenderBox;
+    RenderBox renderBox =
+        (widget.child.key as GlobalKey).currentContext?.findRenderObject() as RenderBox;
     Offset position = renderBox.localToGlobal(Offset.zero);
 
     if (widget.children.isNotEmpty) {
@@ -129,6 +141,10 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             showSearchTextField: widget.showSearchTextField,
             searchDecoration: widget.searchDecoration,
             searchValidator: widget.searchValidator,
+            itemPadding: widget.itemPadding,
+            itemOverlayColor: widget.itemOverlayColor,
+            itemHeight: widget.itemHeight,
+            separatorColor: widget.separatorColor,
           );
         },
       );
@@ -168,6 +184,10 @@ class _DropDownMenuContent<T> extends StatefulWidget {
     this.showSearchTextField = false,
     this.searchDecoration,
     this.searchValidator,
+    this.itemPadding,
+    required this.itemOverlayColor,
+    required this.itemHeight,
+    required this.separatorColor,
   }) : super(key: key);
 
   final List<T> children;
@@ -193,6 +213,13 @@ class _DropDownMenuContent<T> extends StatefulWidget {
   final InputDecoration? searchDecoration;
   final FormFieldValidator<String>? searchValidator;
 
+  final EdgeInsetsGeometry? itemPadding;
+
+  final Color? itemOverlayColor;
+  final double? itemHeight;
+
+  final Color? separatorColor;
+
   @override
   _DropDownMenuContentState<T> createState() => _DropDownMenuContentState<T>();
 }
@@ -207,8 +234,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
   final ScrollController _scrollController = ScrollController();
 
   /// Search Children
-  ValueNotifier<SearchAttributes<T>> searchChildren =
-      ValueNotifier<SearchAttributes<T>>(
+  ValueNotifier<SearchAttributes<T>> searchChildren = ValueNotifier<SearchAttributes<T>>(
     SearchAttributes<T>(),
   );
 
@@ -256,10 +282,10 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
         return false;
       },
       child: GestureDetector(
-        onTap: () => (widget.exit == MiraiExit.fromAll ||
-                widget.exit == MiraiExit.outside)
-            ? _closePopup(context: context, action: null)
-            : null,
+        onTap: () =>
+            (widget.exit == MiraiExit.fromAll || widget.exit == MiraiExit.outside)
+                ? _closePopup(context: context, action: null)
+                : null,
         child: Material(
           elevation: 0,
           type: MaterialType.transparency,
@@ -270,8 +296,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
             child: Stack(
               children: [
                 Positioned(
-                  right: (sizeScreen.width - widget.position.dx) -
-                      widget.size.width,
+                  right: (sizeScreen.width - widget.position.dx) - widget.size.width,
                   top: widget.showMode != MiraiShowMode.top
                       ? widget.position.dy + widget.space + widget.size.height
                       : null,
@@ -293,14 +318,12 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                       );
                     },
                     child: Container(
-                      height:
-                          widget.children.length > 20 ? 300 : widget.maxHeight,
+                      height: widget.children.length > 20 ? 300 : widget.maxHeight,
                       width: widget.size.width - 1,
                       decoration: widget.decoration ??
                           BoxDecoration(
                             color: Colors.white,
-                            borderRadius:
-                                BorderRadius.circular(widget.radius ?? 5),
+                            borderRadius: BorderRadius.circular(widget.radius ?? 5),
                             border: Border.all(
                               color: const Color(0xFFCECECE),
                               width: 0.5,
@@ -327,11 +350,34 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                                   (widget.showOtherAndItsTextField ? 1 : 0) +
                                   (widget.showSearchTextField ? 1 : 0),
                               itemBuilder: (_, int index) {
-                                return itemBuilderReturn(children, index);
+                                return ItemWidget(
+                                  index: index,
+                                  onTapChild: () => onTapChild(index),
+                                  showOtherAndItsTextField:
+                                      widget.showOtherAndItsTextField,
+                                  showSearchTextField: widget.showSearchTextField,
+                                  searchListLength: children.searchList.length,
+                                  searchController: searchController,
+                                  searchDecoration: widget.searchDecoration,
+                                  searchValidator: widget.searchValidator,
+                                  onChanged: (String text) {
+                                    searchSubscription(text);
+                                  },
+                                  itemPadding: widget.itemPadding,
+                                  itemOverlayColor: widget.itemOverlayColor,
+                                  itemHeight: widget.itemHeight,
+                                  radius: widget.radius ?? 5,
+                                  isFirst: index == 0,
+                                  isLast: index == children.searchList.length - 1,
+                                  child: widget.itemWidgetBuilder(
+                                    index,
+                                    children.searchList[index],
+                                  ),
+                                );
                               },
                               separatorBuilder: (_, int index) {
                                 if (widget.showSeparator) {
-                                  return buildSeparator();
+                                  return SeparatorWidget(color: widget.separatorColor);
                                 } else {
                                   return const SizedBox.shrink();
                                 }
@@ -347,87 +393,6 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget itemBuilderReturn(SearchAttributes<T> children, int index) {
-    if (!widget.showOtherAndItsTextField) {
-      if (widget.showSearchTextField) {
-        if (index == 0 && widget.showSearchTextField) {
-          return buildSearchTextField(context);
-        } else {
-          return buildItemToReturn(
-            index - 1,
-            children,
-          );
-        }
-      } else {
-        return buildItemToReturn(index, children);
-      }
-    } else {
-      if (index !=
-          children.searchList.length + (widget.showSearchTextField ? 1 : 0)) {
-        if (widget.showSearchTextField) {
-          if (index == 0) {
-            return buildSearchTextField(context);
-          } else {
-            return buildItemToReturn(
-              index - 1,
-              children,
-            );
-          }
-        } else {
-          return buildItemToReturn(index, children);
-        }
-      } else {
-        return buildOtherWidget();
-      }
-    }
-  }
-
-  ElevatedButton buildItemToReturn(int index, SearchAttributes<T> children) {
-    return ElevatedButton(
-      onPressed: () => onTapChild(index),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ).copyWith(elevation: MaterialStateProperty.all(0)),
-      child: widget.itemWidgetBuilder(
-        index,
-        children.searchList[index],
-      ),
-    );
-  }
-
-  Container buildSearchTextField(BuildContext context) {
-    return Container(
-      height: 40,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 8,
-      ),
-      child: TextFormField(
-        controller: searchController,
-        textAlignVertical: TextAlignVertical.center,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).primaryColorDark,
-            ),
-        cursorColor: Theme.of(context).primaryColorDark,
-        decoration: widget.searchDecoration ??
-            InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              contentPadding: const EdgeInsets.all(12),
-              hintText: 'Search...',
-              border: miraiOutlineInputBorderForTextField(),
-            ),
-        validator: widget.searchValidator,
-        textInputAction: TextInputAction.next,
-        onFieldSubmitted: (_) {},
-        onChanged: (String text) {
-          searchSubscription(text);
-        },
       ),
     );
   }
@@ -450,13 +415,6 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
           ),
         );
       },
-    );
-  }
-
-  Container buildSeparator() {
-    return Container(
-      height: 1,
-      color: const Color(0xFF707070).withOpacity(0.2),
     );
   }
 
@@ -494,9 +452,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
       searchAttributes.mQueryClient = query;
 
       final results = widget.children.where((child) =>
-          ((child is String) ? child : child.toString())
-              .toLowerCase()
-              .contains(query));
+          ((child is String) ? child : child.toString()).toLowerCase().contains(query));
       searchAttributes.searchList = List.from(results);
     } else {
       searchAttributes.showHighLight = false;
