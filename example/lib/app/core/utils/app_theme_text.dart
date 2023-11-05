@@ -12,30 +12,30 @@ abstract class AppTextTheme {
 
   static TextTheme textTheme() {
     return TextTheme(
-      button: GoogleFonts.nunito().copyWith(
+      labelLarge: GoogleFonts.nunito().copyWith(
         color: Colors.white,
         fontWeight: FontWeight.w500,
         fontSize: 30,
       ),
-      headline1: GoogleFonts.nunito().copyWith(
+      displayLarge: GoogleFonts.nunito().copyWith(
         fontWeight: FontWeight.bold,
         fontSize: AppSizeConfig.textSize,
       ),
-      headline2: GoogleFonts.nunito().copyWith(
+      displayMedium: GoogleFonts.nunito().copyWith(
         fontWeight: FontWeight.bold,
         fontSize: AppSizeConfig.textSize - 2,
       ),
-      bodyText1: GoogleFonts.nunito().copyWith(
+      bodyLarge: GoogleFonts.nunito().copyWith(
         fontSize: AppSizeConfig.textSize - 4,
       ),
-      bodyText2: GoogleFonts.nunito().copyWith(
+      bodyMedium: GoogleFonts.nunito().copyWith(
         fontSize: AppSizeConfig.textSize - 6,
       ),
-      subtitle1: GoogleFonts.nunito().copyWith(
+      titleMedium: GoogleFonts.nunito().copyWith(
         fontWeight: FontWeight.w100,
         fontSize: AppSizeConfig.textSize - 8,
       ),
-      subtitle2: GoogleFonts.nunito().copyWith(
+      titleSmall: GoogleFonts.nunito().copyWith(
         fontWeight: FontWeight.w100,
         fontSize: AppSizeConfig.textSize - 10,
       ),

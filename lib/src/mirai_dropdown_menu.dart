@@ -8,11 +8,12 @@ import 'package:mirai_dropdown_menu/src/models/search_attributes_model.dart';
 import 'package:mirai_dropdown_menu/src/widgets/item_widget.dart';
 import 'package:mirai_dropdown_menu/src/widgets/separator_widget.dart';
 
+import 'utils/common_function.dart';
 import 'widgets/mirai_keyboard_visibility_builder_widget.dart';
 
 part 'utils/enums.dart';
 
-typedef MiraiDropdownBuilder<T> = Widget Function(int index, T item);
+typedef MiraiDropdownBuilder<T> = Widget Function(int index, T? item);
 
 typedef MiraiHighLightDropdownBuilder<T> = Widget Function(
     int index, SearchAttributes<T> item);
@@ -35,6 +36,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.radius,
     this.enable = true,
     this.showSeparator = true,
+    this.listThumbVisibility = true,
     this.showOtherAndItsTextField = false,
     this.onOtherChanged,
     this.exit = MiraiExit.fromAll,
@@ -48,6 +50,14 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.itemOverlayColor,
     this.itemHeight,
     this.separatorColor,
+
+    /// Other
+    this.otherController,
+    this.otherDecoration,
+    this.otherValidator,
+    this.otherOnFieldSubmitted,
+    this.otherHeight,
+    this.otherMargin,
   })  : assert(child.key != null),
         super(key: key);
 
@@ -72,6 +82,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
   /// mode, can have two values: dropDownMenu or popupMenu
   final MiraiPopupMenuMode mode;
   final MiraiShowMode showMode;
+
   final ValueChanged<T>? onChanged;
   final MiraiExit exit;
   final ValueChanged<bool>? isExpanded;
@@ -95,6 +106,15 @@ class MiraiPopupMenu<T> extends StatefulWidget {
   final double? itemHeight;
 
   final Color? separatorColor;
+  final bool listThumbVisibility;
+
+  /// Other
+  final TextEditingController? otherController;
+  final InputDecoration? otherDecoration;
+  final FormFieldValidator<String>? otherValidator;
+  final ValueChanged<String>? otherOnFieldSubmitted;
+  final double? otherHeight;
+  final EdgeInsetsGeometry? otherMargin;
 
   @override
   MiraiPopupMenuState<T> createState() => MiraiPopupMenuState<T>();
@@ -144,6 +164,17 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             itemOverlayColor: widget.itemOverlayColor,
             itemHeight: widget.itemHeight,
             separatorColor: widget.separatorColor,
+            listThumbVisibility: widget.listThumbVisibility,
+
+            /// Other
+            otherController: widget.otherController,
+            otherDecoration: widget.otherDecoration,
+            otherValidator: widget.otherValidator,
+            otherOnFieldSubmitted: widget.otherOnFieldSubmitted,
+            otherHeight: widget.otherHeight,
+            otherMargin: widget.otherMargin,
+            other: widget.other,
+            itemHighLightBuilder: widget.itemHighLightBuilder,
           );
         },
       );
@@ -164,29 +195,42 @@ class _DropDownMenuContent<T> extends StatefulWidget {
     Key? key,
     required this.children,
     required this.itemWidgetBuilder,
-    this.itemHighLightBuilder,
+    required this.itemHighLightBuilder,
     required this.position,
     required this.size,
     required this.mode,
     required this.showMode,
-    this.onChanged,
-    this.maxHeight,
-    this.radius,
+    required this.onChanged,
+    required this.maxHeight,
+    required this.radius,
     required this.showOtherAndItsTextField,
     required this.showSeparator,
-    this.onOtherChanged,
-    this.exit = MiraiExit.fromAll,
-    this.isExpanded,
+    required this.onOtherChanged,
+    required this.exit,
+    required this.isExpanded,
     required this.space,
-    this.decoration,
-    this.other,
-    this.showSearchTextField = false,
-    this.searchDecoration,
-    this.searchValidator,
-    this.itemPadding,
+    required this.decoration,
+
+    /// Search
+    required this.showSearchTextField,
+    required this.searchDecoration,
+    required this.searchValidator,
+
+    /// Other
+    required this.other,
+    required this.otherController,
+    required this.otherDecoration,
+    required this.otherValidator,
+    required this.otherOnFieldSubmitted,
+    required this.otherHeight,
+    required this.otherMargin,
+
+    ///
+    required this.itemPadding,
     required this.itemOverlayColor,
     required this.itemHeight,
     required this.separatorColor,
+    required this.listThumbVisibility,
   }) : super(key: key);
 
   final List<T> children;
@@ -200,6 +244,7 @@ class _DropDownMenuContent<T> extends StatefulWidget {
   final double? maxHeight;
   final double? radius;
   final bool showOtherAndItsTextField;
+  final bool listThumbVisibility;
   final bool showSeparator;
   final ValueChanged<String>? onOtherChanged;
   final MiraiExit exit;
@@ -209,8 +254,16 @@ class _DropDownMenuContent<T> extends StatefulWidget {
   final Widget? other;
 
   final bool showSearchTextField;
+
   final InputDecoration? searchDecoration;
   final FormFieldValidator<String>? searchValidator;
+
+  final TextEditingController? otherController;
+  final InputDecoration? otherDecoration;
+  final FormFieldValidator<String>? otherValidator;
+  final ValueChanged<String>? otherOnFieldSubmitted;
+  final double? otherHeight;
+  final EdgeInsetsGeometry? otherMargin;
 
   final EdgeInsetsGeometry? itemPadding;
 
@@ -240,6 +293,8 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
   ///  Search Controller
   final TextEditingController searchController = TextEditingController();
 
+  GlobalKey myWidgetKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -261,8 +316,16 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _animationController.forward();
+      isEntirelyOnScreen(myWidgetKey);
+      // if (isEntirelyOnScreen(myWidgetKey)) {
+      //   miraiPrint("The entire widget is on the screen!");
+      // } else {
+      //   miraiPrint("The entire widget is not fully visible on the screen!");
+      // }
     });
   }
+
+  double? dropHeight;
 
   @override
   void dispose() {
@@ -274,7 +337,10 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
 
   @override
   Widget build(BuildContext context) {
-    final Size sizeScreen = MediaQuery.of(context).size;
+    final Size sizeScreen = MediaQuery.sizeOf(context);
+    dropHeight ??= widget.children.length > 20.0 ? 300.0 : widget.maxHeight;
+   // miraiPrint('dropHeight $dropHeight');
+
     return WillPopScope(
       onWillPop: () async {
         _closePopup(context: context, action: null);
@@ -317,8 +383,8 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                       );
                     },
                     child: Container(
-                      height: widget.children.length > 20 ? 300 : widget.maxHeight,
-                      width: widget.size.width - 1,
+                      height: dropHeight,
+                      width: widget.size.width, // - 1,
                       decoration: widget.decoration ??
                           BoxDecoration(
                             color: Colors.white,
@@ -334,60 +400,127 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                               ),
                             ],
                           ),
-                      child: ValueListenableBuilder<SearchAttributes<T>>(
-                        valueListenable: searchChildren,
-                        builder: (_, SearchAttributes<T> children, __) {
-                          return Scrollbar(
-                            thumbVisibility: true,
-                            controller: _scrollController,
-                            radius: const Radius.circular(20),
-                            child: ListView.separated(
-                              controller: _scrollController,
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              itemCount: children.searchList.length +
-                                  (widget.showOtherAndItsTextField ? 1 : 0) +
-                                  (widget.showSearchTextField ? 1 : 0),
-                              itemBuilder: (_, int index) {
-                                return ItemWidget(
-                                  index: index,
-                                  onTapChild: () => onTapChild(index),
-                                  showOtherAndItsTextField:
-                                      widget.showOtherAndItsTextField,
-                                  showSearchTextField: widget.showSearchTextField,
-                                  searchListLength: children.searchList.length,
-                                  searchController: searchController,
-                                  searchDecoration: widget.searchDecoration,
-                                  searchValidator: widget.searchValidator,
-                                  onChanged: (String text) {
-                                    searchSubscription(text);
-                                  },
-                                  itemPadding: widget.itemPadding,
-                                  itemOverlayColor: widget.itemOverlayColor,
-                                  itemHeight: widget.itemHeight,
-                                  radius: widget.radius ?? 5,
-                                  isFirst: index == 0,
-                                  isLast: index == children.searchList.length - 1,
-                                  child: widget.itemWidgetBuilder(
-                                    index,
-                                    children.searchList[index],
+                      child: LayoutBuilder(
+                          key: myWidgetKey,
+                          builder: (_, BoxConstraints constraints) {
+                            miraiPrint('constraints maxHeight  ${constraints.maxHeight}');
+                            return ValueListenableBuilder<SearchAttributes<T>>(
+                              valueListenable: searchChildren,
+                              builder: (_, SearchAttributes<T> children, __) {
+                                final int itemCount = children.searchList.length +
+                                    (widget.showOtherAndItsTextField ? 1 : 0) +
+                                    (widget.showSearchTextField ? 1 : 0);
+
+                                return Scrollbar(
+                                  thumbVisibility: widget.listThumbVisibility,
+                                  controller: _scrollController,
+                                  radius: const Radius.circular(20),
+                                  child: ListView.separated(
+                                    controller: _scrollController,
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.zero,
+                                    itemCount: itemCount,
+                                    itemBuilder: (_, int index) {
+                                      final int newIndex =
+                                          widget.showSearchTextField ? index - 1 : index;
+
+                                      final searchList =
+                                          safeGet(children.searchList, newIndex);
+                                      return ItemWidget(
+                                        index: index,
+                                        onTapChild: () => onTapChild(index),
+                                        showOtherAndItsTextField:
+                                            widget.showOtherAndItsTextField,
+                                        showSearchTextField: widget.showSearchTextField,
+                                        searchListLength: children.searchList.length,
+
+                                        /// Search
+                                        searchController: searchController,
+                                        searchDecoration: widget.searchDecoration,
+                                        searchValidator: widget.searchValidator,
+                                        onChanged: searchSubscription,
+
+                                        /// Other
+                                        otherController: widget.otherController,
+                                        otherDecoration: widget.searchDecoration,
+                                        otherValidator: widget.searchValidator,
+                                        otherOnFieldSubmitted:
+                                            widget.otherOnFieldSubmitted,
+                                        otherHeight: widget.otherHeight,
+                                        otherMargin: widget.otherMargin,
+
+                                        ///
+                                        itemPadding: widget.itemPadding,
+                                        itemOverlayColor: widget.itemOverlayColor,
+                                        itemHeight: widget.itemHeight,
+                                        radius: widget.radius ?? 5,
+                                        isFirst: index == 0,
+                                        isLast: index == children.searchList.length - 1,
+                                        child: widget.itemWidgetBuilder(
+                                          index,
+                                          searchList,
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (_, int index) {
+                                      if (widget.showSeparator) {
+                                        return SeparatorWidget(
+                                            color: widget.separatorColor);
+                                      } else {
+                                        return const SizedBox.shrink();
+                                      }
+                                    },
                                   ),
                                 );
                               },
-                              separatorBuilder: (_, int index) {
-                                if (widget.showSeparator) {
-                                  return SeparatorWidget(color: widget.separatorColor);
-                                } else {
-                                  return const SizedBox.shrink();
-                                }
-                              },
-                            ),
-                          );
-                        },
-                      ),
+                            );
+                          }),
                     ),
                   ),
                 ),
+                // Positioned(
+                //   left: 215.7,
+                //   top: 252.8+ widget.space,
+                //   child: Container(
+                //     margin: EdgeInsets.zero,
+                //     padding: EdgeInsets.zero,
+                //     width: 100,
+                //     // specify the width of the container
+                //     height: 100,
+                //     // specify the height of the container
+                //     color: Colors.red,
+                //   ),
+                // ),
+                // Positioned(
+                //   left: 330.7,
+                //   top: 915.8,
+                //   child: Container(
+                //     width: 100, // specify the width of the container
+                //     height: 100, // specify the height of the container
+                //     color: Colors.purple,
+                //   ),
+                // ),
+                // Positioned(
+                //   left: 20.7,
+                //   top: 928,
+                //   child: Container(
+                //     width: 100, // specify the width of the container
+                //     height: 100, // specify the height of the container
+                //     color: Colors.yellow,
+                //   ),
+                // ),
+                //
+                // Positioned(
+                //   left: 20.7,
+                //
+                //   top: 252.8 + widget.size.height + widget.space+ widget.space,
+                //
+                //   child: Container(
+                //     width: 100, // specify the width of the container
+                //     height: (dropHeight ?? 0), // specify the height of the container
+                //     color: Colors.green,
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -405,7 +538,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
           );
         }
         return Container(
-          color: Colors.red,
+          // color: Colors.red,
           child: Padding(
             padding: EdgeInsets.only(
               bottom: isKeyboardVisible ? 46 : 0,
@@ -459,5 +592,91 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
       searchAttributes.searchList = List.from(widget.children);
     }
     searchChildren.value = searchAttributes;
+  }
+
+  bool isBottomOnScreen(GlobalKey key) {
+    final RenderBox widgetRenderBox = key.currentContext?.findRenderObject() as RenderBox;
+    final Offset widgetPosition = widgetRenderBox.localToGlobal(Offset.zero);
+    final Size widgetSize = widgetRenderBox.size;
+
+    // Get the screen size
+    final Size screenSize = MediaQuery.of(key.currentContext!).size;
+
+    // Check the position and size of the widget against the screen size
+    bool isBottomOnScreen = widgetPosition.dy + widgetSize.height <= screenSize.height;
+
+    return isBottomOnScreen;
+  }
+
+  // bool isEntirelyOnScreen(GlobalKey key) {
+  //   final RenderBox widgetRenderBox = key.currentContext?.findRenderObject() as RenderBox;
+  //   final Offset widgetTopLeft = widgetRenderBox.localToGlobal(Offset.zero);
+  //   final Offset widgetBottomRight = widgetRenderBox.localToGlobal(Offset(widgetRenderBox.size.width, widgetRenderBox.size.height));
+  //
+  //   print('widgetRenderBox width ${widgetRenderBox.size.width}');
+  //   print('widgetRenderBox height ${widgetRenderBox.size.height}');
+  //
+  //   // Get the screen size
+  //   final Size screenSize = MediaQuery.of(key.currentContext!).size;
+  //
+  //   // Check the position and size of the widget against the screen size
+  //   bool isEntirelyOnScreen = widgetTopLeft.dx >= 0 &&
+  //       widgetTopLeft.dy >= 0 &&
+  //       widgetBottomRight.dx <= screenSize.width &&
+  //       widgetBottomRight.dy <= screenSize.height;
+  //
+  //   print('isEntirelyOnScreen $isEntirelyOnScreen');
+  //   print('widgetTopLeft dx ${widgetTopLeft.dx}');
+  //   print('widgetTopLeft dy ${widgetTopLeft.dy}');
+  //   print('widgetBottomRight dx ${widgetBottomRight.dx}');
+  //   print('widgetBottomRight dy ${widgetBottomRight.dy}');
+  //   print('screenSize width ${screenSize.width}');
+  //   print('screenSize height ${screenSize.height}');
+  //
+  //   return isEntirelyOnScreen;
+  // }
+
+  bool isEntirelyOnScreen(GlobalKey key) {
+    final RenderBox? widgetRenderBox =
+        key.currentContext?.findRenderObject() as RenderBox?;
+    if (widgetRenderBox == null) {
+      print('No RenderBox found for the widget.');
+      return false;
+    }
+
+    final Offset widgetTopLeft = widgetRenderBox.localToGlobal(Offset.zero);
+    final Offset widgetBottomRight = Offset(
+        widgetRenderBox.size.width,
+        widgetRenderBox.size.height +
+            widgetTopLeft.dy +
+            widget.space +
+            widget.size.height);
+
+    // Get the screen size
+    final Size screenSize = MediaQuery.sizeOf(key.currentContext!);
+    final EdgeInsets padding = MediaQuery.paddingOf(key.currentContext!);
+
+    // Check the position and size of the widget against the screen size
+    bool isEntirelyOnScreen = widgetTopLeft.dx >= 0 &&
+        widgetTopLeft.dy >= 0 &&
+        widgetBottomRight.dx <= screenSize.width &&
+        widgetBottomRight.dy <= screenSize.height;
+
+    print('widgetTopLeft: $widgetTopLeft');
+    print('widgetBottomRight: $widgetBottomRight');
+    print('screenSize: $screenSize');
+    print('padding: $padding');
+    print('Rest: ${widgetBottomRight.dy - screenSize.height}');
+    final rest = widgetBottomRight.dy - screenSize.height;
+
+    if (!isEntirelyOnScreen) {
+      setState(() {
+        dropHeight =
+            widgetRenderBox.size.height - rest - widget.size.height - widget.space;
+        print('dropHeight: $dropHeight');
+      });
+    }
+
+    return isEntirelyOnScreen;
   }
 }

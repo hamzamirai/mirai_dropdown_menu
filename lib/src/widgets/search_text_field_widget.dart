@@ -44,7 +44,7 @@ class SearchTextFieldWidget extends StatelessWidget {
               border: miraiOutlineInputBorderForTextField(),
             ),
         validator: searchValidator,
-        textInputAction: TextInputAction.next,
+        textInputAction: TextInputAction.done,
         onFieldSubmitted: (_) {},
         onChanged: onChanged,
         // onChanged: (String text) {

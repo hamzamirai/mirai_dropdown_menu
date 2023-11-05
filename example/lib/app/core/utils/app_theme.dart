@@ -16,7 +16,6 @@ abstract class AppTheme {
 
   // ThemeData
   static ThemeData get themeData => ThemeData(
-        backgroundColor: keyAppColor,
         appBarTheme: const AppBarTheme(color: keyAppColor),
         primaryColor: keyAppColor,
         textTheme: AppTextTheme.textTheme(),

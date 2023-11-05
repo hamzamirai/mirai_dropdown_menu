@@ -15,7 +15,7 @@ class MiraiDropDownItemWidget extends StatelessWidget {
     this.query,
   }) : super(key: key);
 
-  final String item;
+  final String? item;
   final bool showHighLight;
   final String? query;
 
@@ -28,7 +28,7 @@ class MiraiDropDownItemWidget extends StatelessWidget {
       ),
       child: showHighLight
           ? SubstringHighlight(
-              text: item,
+              text: '$item',
               term: query,
               textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
                     color: AppTheme.keyDarkBlueColor.withOpacity(.5),
@@ -41,7 +41,7 @@ class MiraiDropDownItemWidget extends StatelessWidget {
                       ),
             )
           : Text(
-              item,
+              '$item',
               style: const TextStyle(
                 color: Colors.black,
               ),

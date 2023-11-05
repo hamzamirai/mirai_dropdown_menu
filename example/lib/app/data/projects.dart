@@ -86,7 +86,7 @@ ProjectModel projectModel9 = ProjectModel(
   color: listColor[2],
 );
 
-List<ProjectModel> listProjects = [
+List<ProjectModel> listProjects = <ProjectModel>[
   projectModel0,
   projectModel1,
   projectModel2,
@@ -99,7 +99,7 @@ List<ProjectModel> listProjects = [
   projectModel9,
 ];
 
-const List<Color> listColor = [
+const List<Color> listColor = <Color>[
   Color(0xFFF56287),
   Color(0xFF37B34A),
   Color(0xFF1488CC),

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
                 primaryColor: Colors.transparent,
                 textTheme: TextTheme(
                   displayMedium: GoogleFonts.nunito(),
-                  button: GoogleFonts.nunito(),
+                  labelLarge: GoogleFonts.nunito(),
                 ),
               ),
               home: const HomeScreen(title: 'Mirai Dropdown menu \nExample'),

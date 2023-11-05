@@ -54,7 +54,7 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
           children: <Widget>[
             Text(
               'Welcome to, \nList Of Objects screen.',
-              style: Theme.of(context).textTheme.headline1?.copyWith(
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).primaryColorDark,
@@ -66,7 +66,7 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
               children: listProjects,
               space: 4,
               showSearchTextField: true,
-              itemWidgetBuilder: (int index, ProjectModel project) {
+              itemWidgetBuilder: (int index, ProjectModel? project) {
                 return DropDownItemWidget(project: project);
               },
               onChanged: (ProjectModel project) {
@@ -86,7 +86,7 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 300,
-                    itemWidgetBuilder: (int index, ProjectModel project) {
+                    itemWidgetBuilder: (int index, ProjectModel? project) {
                       return DropDownItemWidget(
                         project: project,
                         firstSpace: 10,
@@ -110,7 +110,7 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 360,
-                    itemWidgetBuilder: (int index, ProjectModel project) {
+                    itemWidgetBuilder: (int index, ProjectModel? project) {
                       return DropDownItemWidget(
                         project: project,
                         firstSpace: 10,
@@ -138,7 +138,7 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 300,
-                    itemWidgetBuilder: (int index, ProjectModel project) {
+                    itemWidgetBuilder: (int index, ProjectModel? project) {
                       return DropDownItemWidget(
                         project: project,
                         fontSize: 10,
@@ -170,7 +170,7 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 360,
-                    itemWidgetBuilder: (int index, ProjectModel project) {
+                    itemWidgetBuilder: (int index, ProjectModel? project) {
                       return DropDownItemWidget(
                         project: project,
                         fontSize: 10,
@@ -202,7 +202,7 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 360,
-                    itemWidgetBuilder: (int index, ProjectModel project) {
+                    itemWidgetBuilder: (int index, ProjectModel? project) {
                       return DropDownItemWidget(
                         project: project,
                         fontSize: 10,

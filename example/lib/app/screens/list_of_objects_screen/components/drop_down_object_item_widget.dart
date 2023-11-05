@@ -16,13 +16,14 @@ class DropDownItemWidget extends StatelessWidget {
     this.fontSize,
   }) : super(key: key);
 
-  final ProjectModel project;
+  final ProjectModel? project;
   final double firstSpace;
   final EdgeInsetsGeometry? padding;
   final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
+    if (project == null) return const SizedBox.shrink();
     return Padding(
       padding: padding ??
           const EdgeInsets.symmetric(
@@ -31,7 +32,7 @@ class DropDownItemWidget extends StatelessWidget {
           ),
       child: Row(
         children: <Widget>[
-          MiraiContainerWidget(color: project.color),
+          MiraiContainerWidget(color: project!.color),
           SizedBox(width: firstSpace),
           Expanded(
             child: Column(
@@ -39,18 +40,26 @@ class DropDownItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '${project.name}',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Colors.black,
-                        fontSize: fontSize,
-                      ),
+                  '${project!.name}',
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(
+                    color: Colors.black,
+                    fontSize: fontSize,
+                  ),
                 ),
                 Text(
-                  '${project.job}',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Colors.grey.shade600,
-                        fontSize: fontSize,
-                      ),
+                  '${project!.job}',
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(
+                    color: Colors.grey.shade600,
+                    fontSize: fontSize,
+                  ),
                 ),
               ],
             ),

@@ -1,3 +1,8 @@
+## 0.0.6+5 - 2023-11-05
+
+- Fixed bugs and Added new Features.
+- New Fields added on other widget.
+
 ## 0.0.6+4 - 2023-10-09
 
 - Added DropDown Item Padding.

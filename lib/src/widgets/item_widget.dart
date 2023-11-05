@@ -3,6 +3,7 @@
 * On 9/10/2023.
 */
 import 'package:flutter/material.dart';
+import 'package:mirai_dropdown_menu/src/utils/common_function.dart';
 import 'package:mirai_dropdown_menu/src/widgets/search_text_field_widget.dart';
 
 import 'item_to_return_widget.dart';
@@ -26,6 +27,15 @@ class ItemWidget<T> extends StatelessWidget {
     required this.searchDecoration,
     required this.searchValidator,
     required this.onChanged,
+
+    /// Other Fields
+    required this.otherController,
+    required this.otherDecoration,
+    required this.otherValidator,
+    required this.otherOnFieldSubmitted,
+    required this.otherHeight,
+    required this.otherMargin,
+
     required this.radius,
     required this.isFirst,
     required this.isLast,
@@ -45,6 +55,14 @@ class ItemWidget<T> extends StatelessWidget {
   final FormFieldValidator<String>? searchValidator;
   final ValueChanged<String>? onChanged;
 
+  /// Other Fields
+  final TextEditingController? otherController;
+  final InputDecoration? otherDecoration;
+  final FormFieldValidator<String>? otherValidator;
+  final ValueChanged<String>? otherOnFieldSubmitted;
+  final double? otherHeight;
+  final EdgeInsetsGeometry? otherMargin;
+
   final Color? itemOverlayColor;
   final double? itemHeight;
 
@@ -56,6 +74,8 @@ class ItemWidget<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!showOtherAndItsTextField) {
       if (showSearchTextField) {
+
+
         if (index == 0 && showSearchTextField) {
           return SearchTextFieldWidget(
             searchController: searchController,
@@ -77,7 +97,6 @@ class ItemWidget<T> extends StatelessWidget {
           );
         }
       } else {
-        //  return buildItemToReturn(index, children);
         return ItemToReturnWidget<T>(
           index: index,
           onTapChild: onTapChild,
@@ -127,7 +146,14 @@ class ItemWidget<T> extends StatelessWidget {
           );
         }
       } else {
-        return const OtherWidget();
+        return OtherWidget(
+          otherController: otherController,
+          otherDecoration: otherDecoration,
+          otherValidator: otherValidator,
+          onFieldSubmitted: otherOnFieldSubmitted,
+          height: otherHeight,
+          margin: otherMargin,
+        );
       }
     }
   }

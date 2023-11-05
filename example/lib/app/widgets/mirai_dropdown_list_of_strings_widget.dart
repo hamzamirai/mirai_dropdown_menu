@@ -23,6 +23,12 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
     this.showSearchTextField = false,
     this.showOtherAndItsTextField = false,
     this.other,
+    this.otherController,
+    this.otherDecoration,
+    this.otherValidator,
+    this.otherOnFieldSubmitted,
+    this.otherHeight,
+    this.otherMargin,
   }) : super(key: key);
 
   final ValueNotifier<String> valueNotifier;
@@ -38,6 +44,13 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
   final bool showSearchTextField;
   final bool showOtherAndItsTextField;
   final Widget? other;
+
+  final TextEditingController? otherController;
+  final InputDecoration? otherDecoration;
+  final FormFieldValidator<String>? otherValidator;
+  final ValueChanged<String>? otherOnFieldSubmitted;
+  final double? otherHeight;
+  final EdgeInsetsGeometry? otherMargin;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +68,13 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
       showOtherAndItsTextField: showOtherAndItsTextField,
       showSearchTextField: showSearchTextField,
       other: other,
+      otherController: otherController,
+      otherDecoration: otherDecoration,
+      //otherValidator: this.otherValidator,
+
+      //  otherOnFieldSubmitted: print,
+      otherHeight: otherHeight,
+      otherMargin: otherMargin,
       child: Container(
         key: GlobalKey(),
         padding: const EdgeInsets.symmetric(
