@@ -3,7 +3,6 @@
 * On 9/10/2023.
 */
 import 'package:flutter/material.dart';
-import 'package:mirai_dropdown_menu/src/utils/common_function.dart';
 import 'package:mirai_dropdown_menu/src/widgets/search_text_field_widget.dart';
 
 import 'item_to_return_widget.dart';

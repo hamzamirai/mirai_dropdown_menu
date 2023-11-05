@@ -339,7 +339,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
   Widget build(BuildContext context) {
     final Size sizeScreen = MediaQuery.sizeOf(context);
     dropHeight ??= widget.children.length > 20.0 ? 300.0 : widget.maxHeight;
-   // miraiPrint('dropHeight $dropHeight');
+    // miraiPrint('dropHeight $dropHeight');
 
     return WillPopScope(
       onWillPop: () async {
@@ -401,126 +401,84 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                             ],
                           ),
                       child: LayoutBuilder(
-                          key: myWidgetKey,
-                          builder: (_, BoxConstraints constraints) {
-                            miraiPrint('constraints maxHeight  ${constraints.maxHeight}');
-                            return ValueListenableBuilder<SearchAttributes<T>>(
-                              valueListenable: searchChildren,
-                              builder: (_, SearchAttributes<T> children, __) {
-                                final int itemCount = children.searchList.length +
-                                    (widget.showOtherAndItsTextField ? 1 : 0) +
-                                    (widget.showSearchTextField ? 1 : 0);
+                        key: myWidgetKey,
+                        builder: (_, BoxConstraints constraints) {
+                          // miraiPrint('constraints maxHeight  ${constraints.maxHeight}');
+                          return ValueListenableBuilder<SearchAttributes<T>>(
+                            valueListenable: searchChildren,
+                            builder: (_, SearchAttributes<T> children, __) {
+                              final int itemCount = children.searchList.length +
+                                  (widget.showOtherAndItsTextField ? 1 : 0) +
+                                  (widget.showSearchTextField ? 1 : 0);
 
-                                return Scrollbar(
-                                  thumbVisibility: widget.listThumbVisibility,
+                              return Scrollbar(
+                                thumbVisibility: widget.listThumbVisibility,
+                                controller: _scrollController,
+                                radius: const Radius.circular(20),
+                                child: ListView.separated(
                                   controller: _scrollController,
-                                  radius: const Radius.circular(20),
-                                  child: ListView.separated(
-                                    controller: _scrollController,
-                                    shrinkWrap: true,
-                                    padding: EdgeInsets.zero,
-                                    itemCount: itemCount,
-                                    itemBuilder: (_, int index) {
-                                      final int newIndex =
-                                          widget.showSearchTextField ? index - 1 : index;
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  itemCount: itemCount,
+                                  itemBuilder: (_, int index) {
+                                    final int newIndex =
+                                        widget.showSearchTextField ? index - 1 : index;
 
-                                      final searchList =
-                                          safeGet(children.searchList, newIndex);
-                                      return ItemWidget(
-                                        index: index,
-                                        onTapChild: () => onTapChild(index),
-                                        showOtherAndItsTextField:
-                                            widget.showOtherAndItsTextField,
-                                        showSearchTextField: widget.showSearchTextField,
-                                        searchListLength: children.searchList.length,
+                                    final searchList =
+                                        safeGet(children.searchList, newIndex);
+                                    return ItemWidget(
+                                      index: index,
+                                      onTapChild: () => onTapChild(index),
+                                      showOtherAndItsTextField:
+                                          widget.showOtherAndItsTextField,
+                                      showSearchTextField: widget.showSearchTextField,
+                                      searchListLength: children.searchList.length,
 
-                                        /// Search
-                                        searchController: searchController,
-                                        searchDecoration: widget.searchDecoration,
-                                        searchValidator: widget.searchValidator,
-                                        onChanged: searchSubscription,
+                                      /// Search
+                                      searchController: searchController,
+                                      searchDecoration: widget.searchDecoration,
+                                      searchValidator: widget.searchValidator,
+                                      onChanged: searchSubscription,
 
-                                        /// Other
-                                        otherController: widget.otherController,
-                                        otherDecoration: widget.searchDecoration,
-                                        otherValidator: widget.searchValidator,
-                                        otherOnFieldSubmitted:
-                                            widget.otherOnFieldSubmitted,
-                                        otherHeight: widget.otherHeight,
-                                        otherMargin: widget.otherMargin,
+                                      /// Other
+                                      otherController: widget.otherController,
+                                      otherDecoration: widget.searchDecoration,
+                                      otherValidator: widget.searchValidator,
+                                      otherOnFieldSubmitted: widget.otherOnFieldSubmitted,
+                                      otherHeight: widget.otherHeight,
+                                      otherMargin: widget.otherMargin,
 
-                                        ///
-                                        itemPadding: widget.itemPadding,
-                                        itemOverlayColor: widget.itemOverlayColor,
-                                        itemHeight: widget.itemHeight,
-                                        radius: widget.radius ?? 5,
-                                        isFirst: index == 0,
-                                        isLast: index == children.searchList.length - 1,
-                                        child: widget.itemWidgetBuilder(
-                                          index,
-                                          searchList,
-                                        ),
+                                      ///
+                                      itemPadding: widget.itemPadding,
+                                      itemOverlayColor: widget.itemOverlayColor,
+                                      itemHeight: widget.itemHeight,
+                                      radius: widget.radius ?? 5,
+                                      isFirst: index == 0,
+                                      isLast: index == children.searchList.length - 1,
+                                      child: widget.itemWidgetBuilder(
+                                        index,
+                                        searchList,
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (_, int index) {
+                                    if (widget.showSeparator) {
+                                      return SeparatorWidget(
+                                        color: widget.separatorColor,
                                       );
-                                    },
-                                    separatorBuilder: (_, int index) {
-                                      if (widget.showSeparator) {
-                                        return SeparatorWidget(
-                                            color: widget.separatorColor);
-                                      } else {
-                                        return const SizedBox.shrink();
-                                      }
-                                    },
-                                  ),
-                                );
-                              },
-                            );
-                          }),
+                                    } else {
+                                      return const SizedBox.shrink();
+                                    }
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
-                // Positioned(
-                //   left: 215.7,
-                //   top: 252.8+ widget.space,
-                //   child: Container(
-                //     margin: EdgeInsets.zero,
-                //     padding: EdgeInsets.zero,
-                //     width: 100,
-                //     // specify the width of the container
-                //     height: 100,
-                //     // specify the height of the container
-                //     color: Colors.red,
-                //   ),
-                // ),
-                // Positioned(
-                //   left: 330.7,
-                //   top: 915.8,
-                //   child: Container(
-                //     width: 100, // specify the width of the container
-                //     height: 100, // specify the height of the container
-                //     color: Colors.purple,
-                //   ),
-                // ),
-                // Positioned(
-                //   left: 20.7,
-                //   top: 928,
-                //   child: Container(
-                //     width: 100, // specify the width of the container
-                //     height: 100, // specify the height of the container
-                //     color: Colors.yellow,
-                //   ),
-                // ),
-                //
-                // Positioned(
-                //   left: 20.7,
-                //
-                //   top: 252.8 + widget.size.height + widget.space+ widget.space,
-                //
-                //   child: Container(
-                //     width: 100, // specify the width of the container
-                //     height: (dropHeight ?? 0), // specify the height of the container
-                //     color: Colors.green,
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -537,14 +495,11 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
             _scrollController.position.maxScrollExtent,
           );
         }
-        return Container(
-          // color: Colors.red,
-          child: Padding(
-            padding: EdgeInsets.only(
-              bottom: isKeyboardVisible ? 46 : 0,
-            ),
-            child: widget.other,
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: isKeyboardVisible ? 46 : 0,
           ),
+          child: widget.other,
         );
       },
     );
@@ -608,39 +563,11 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
     return isBottomOnScreen;
   }
 
-  // bool isEntirelyOnScreen(GlobalKey key) {
-  //   final RenderBox widgetRenderBox = key.currentContext?.findRenderObject() as RenderBox;
-  //   final Offset widgetTopLeft = widgetRenderBox.localToGlobal(Offset.zero);
-  //   final Offset widgetBottomRight = widgetRenderBox.localToGlobal(Offset(widgetRenderBox.size.width, widgetRenderBox.size.height));
-  //
-  //   print('widgetRenderBox width ${widgetRenderBox.size.width}');
-  //   print('widgetRenderBox height ${widgetRenderBox.size.height}');
-  //
-  //   // Get the screen size
-  //   final Size screenSize = MediaQuery.of(key.currentContext!).size;
-  //
-  //   // Check the position and size of the widget against the screen size
-  //   bool isEntirelyOnScreen = widgetTopLeft.dx >= 0 &&
-  //       widgetTopLeft.dy >= 0 &&
-  //       widgetBottomRight.dx <= screenSize.width &&
-  //       widgetBottomRight.dy <= screenSize.height;
-  //
-  //   print('isEntirelyOnScreen $isEntirelyOnScreen');
-  //   print('widgetTopLeft dx ${widgetTopLeft.dx}');
-  //   print('widgetTopLeft dy ${widgetTopLeft.dy}');
-  //   print('widgetBottomRight dx ${widgetBottomRight.dx}');
-  //   print('widgetBottomRight dy ${widgetBottomRight.dy}');
-  //   print('screenSize width ${screenSize.width}');
-  //   print('screenSize height ${screenSize.height}');
-  //
-  //   return isEntirelyOnScreen;
-  // }
-
   bool isEntirelyOnScreen(GlobalKey key) {
     final RenderBox? widgetRenderBox =
         key.currentContext?.findRenderObject() as RenderBox?;
     if (widgetRenderBox == null) {
-      print('No RenderBox found for the widget.');
+      //  miraiPrint('No RenderBox found for the widget.');
       return false;
     }
 
@@ -654,7 +581,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
 
     // Get the screen size
     final Size screenSize = MediaQuery.sizeOf(key.currentContext!);
-    final EdgeInsets padding = MediaQuery.paddingOf(key.currentContext!);
+    // final EdgeInsets padding = MediaQuery.paddingOf(key.currentContext!);
 
     // Check the position and size of the widget against the screen size
     bool isEntirelyOnScreen = widgetTopLeft.dx >= 0 &&
@@ -662,18 +589,27 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
         widgetBottomRight.dx <= screenSize.width &&
         widgetBottomRight.dy <= screenSize.height;
 
-    print('widgetTopLeft: $widgetTopLeft');
-    print('widgetBottomRight: $widgetBottomRight');
-    print('screenSize: $screenSize');
-    print('padding: $padding');
-    print('Rest: ${widgetBottomRight.dy - screenSize.height}');
+    //   print('isEntirelyOnScreen $isEntirelyOnScreen');
+    //   print('widgetTopLeft dx ${widgetTopLeft.dx}');
+    //   print('widgetTopLeft dy ${widgetTopLeft.dy}');
+    //   print('widgetBottomRight dx ${widgetBottomRight.dx}');
+    //   print('widgetBottomRight dy ${widgetBottomRight.dy}');
+    //   print('screenSize width ${screenSize.width}');
+    //   print('screenSize height ${screenSize.height}');
+    //
+
+    // miraiPrint('widgetTopLeft: $widgetTopLeft');
+    // miraiPrint('widgetBottomRight: $widgetBottomRight');
+    // miraiPrint('screenSize: $screenSize');
+    // miraiPrint('padding: $padding');
+    // miraiPrint('Rest: ${widgetBottomRight.dy - screenSize.height}');
     final rest = widgetBottomRight.dy - screenSize.height;
 
     if (!isEntirelyOnScreen) {
       setState(() {
         dropHeight =
             widgetRenderBox.size.height - rest - widget.size.height - widget.space;
-        print('dropHeight: $dropHeight');
+        // miraiPrint('dropHeight: $dropHeight');
       });
     }
 

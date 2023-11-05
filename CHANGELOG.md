@@ -1,4 +1,4 @@
-## 0.0.6+5 - 2023-11-05
+## 0.0.7 - 2023-11-05
 
 - Fixed bugs and Added new Features.
 - New Fields added on other widget.
