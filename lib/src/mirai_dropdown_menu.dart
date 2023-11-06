@@ -428,7 +428,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                                         safeGet(children.searchList, newIndex);
                                     return ItemWidget(
                                       index: index,
-                                      onTapChild: () => onTapChild(index),
+                                      onTapChild: () => onTapChild(newIndex),
                                       showOtherAndItsTextField:
                                           widget.showOtherAndItsTextField,
                                       showSearchTextField: widget.showSearchTextField,

@@ -21,31 +21,34 @@ class MiraiDropDownItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10.0,
-        horizontal: 16.0,
-      ),
-      child: showHighLight
-          ? SubstringHighlight(
-              text: '$item',
-              term: query,
-              textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
-                    color: AppTheme.keyDarkBlueColor.withOpacity(.5),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-              textStyleHighlight:
-                  Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: AppTheme.keyDarkBlueColor,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-            )
-          : Text(
-              '$item',
-              style: const TextStyle(
-                color: Colors.black,
+    return Container(
+      color: Colors.purple,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 16.0,
+        ),
+        child: showHighLight
+            ? SubstringHighlight(
+                text: '$item',
+                term: query,
+                textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
+                      color: AppTheme.keyDarkBlueColor.withOpacity(.5),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                textStyleHighlight:
+                    Theme.of(context).textTheme.displayLarge!.copyWith(
+                          color: AppTheme.keyDarkBlueColor,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+              )
+            : Text(
+                '$item',
+                style: const TextStyle(
+                  color: Colors.black,
+                ),
               ),
-            ),
+      ),
     );
   }
 }
