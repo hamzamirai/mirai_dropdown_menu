@@ -1,4 +1,8 @@
-## 0.0.7 - 2023-11-05
+## 0.0.7+1 - 2023-11-06
+
+- Fix onTapChild(newIndex)...
+
+- ## 0.0.7 - 2023-11-05
 
 - Fixed bugs and Added new Features.
 - New Fields added on other widget.
