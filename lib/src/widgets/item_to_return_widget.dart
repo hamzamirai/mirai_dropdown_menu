@@ -31,58 +31,26 @@ class ItemToReturnWidget<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: SizedBox(
-        height: itemHeight,
-
-        // child: InkWell(
-        //   onTap: onTapChild,
-        //   overlayColor: MaterialStateProperty.all(itemOverlayColor),
-        //   // style: ElevatedButton.styleFrom(
-        //   //   backgroundColor: Colors.transparent,
-        //   //   shape: RoundedRectangleBorder(
-        //   //     borderRadius: BorderRadius.only(
-        //   //       topLeft: Radius.circular(isFirst ? radius : 0),
-        //   //       topRight: Radius.circular(isFirst ? radius : 0),
-        //   //       bottomLeft: Radius.circular(isLast ? radius : 0),
-        //   //       bottomRight: Radius.circular(isLast ? radius : 0),
-        //   //     ),
-        //   //   ),
-        //   // ).copyWith(
-        //   //   elevation: MaterialStateProperty.all(0),
-        //   //   padding: MaterialStateProperty.all(padding),
-        //   //   overlayColor: MaterialStateProperty.all(itemOverlayColor),
-        //   // ),
-        //   child: child,
-        //   // child: widget.itemWidgetBuilder(
-        //   //   index,
-        //   //   children.searchList[index],
-        //   // ),
-        // ),
-        child: ElevatedButton(
-          onPressed: onTapChild,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(isFirst ? radius : 0),
-                topRight: Radius.circular(isFirst ? radius : 0),
-                bottomLeft: Radius.circular(isLast ? radius : 0),
-                bottomRight: Radius.circular(isLast ? radius : 0),
-              ),
+    return SizedBox(
+      height: itemHeight,
+      child: ElevatedButton(
+        onPressed: onTapChild,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(isFirst ? radius : 0),
+              topRight: Radius.circular(isFirst ? radius : 0),
+              bottomLeft: Radius.circular(isLast ? radius : 0),
+              bottomRight: Radius.circular(isLast ? radius : 0),
             ),
-          ).copyWith(
-            elevation: MaterialStateProperty.all(0),
-            padding: MaterialStateProperty.all(padding),
-            overlayColor: MaterialStateProperty.all(itemOverlayColor),
           ),
-          child: child,
-          // child: widget.itemWidgetBuilder(
-          //   index,
-          //   children.searchList[index],
-          // ),
+        ).copyWith(
+          elevation: MaterialStateProperty.all(0),
+          padding: MaterialStateProperty.all(padding),
+          overlayColor: MaterialStateProperty.all(itemOverlayColor),
         ),
+        child: child,
       ),
     );
   }
