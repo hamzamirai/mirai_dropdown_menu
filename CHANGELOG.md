@@ -1,3 +1,7 @@
+## 0.0.7+3 - 2023-11-08
+
+- Added Search TextFormField Style
+
 ## 0.0.7+2 - 2023-11-06
 
 - Some Changes...

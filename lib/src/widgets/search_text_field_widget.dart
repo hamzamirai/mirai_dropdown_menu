@@ -13,12 +13,14 @@ class SearchTextFieldWidget extends StatelessWidget {
     required this.searchDecoration,
     required this.searchValidator,
     required this.onChanged,
+    required this.searchTextFormFieldStyle,
   });
 
   final TextEditingController? searchController;
   final InputDecoration? searchDecoration;
   final FormFieldValidator<String>? searchValidator;
   final ValueChanged<String>? onChanged;
+  final TextStyle? searchTextFormFieldStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +33,10 @@ class SearchTextFieldWidget extends StatelessWidget {
       child: TextFormField(
         controller: searchController,
         textAlignVertical: TextAlignVertical.center,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).primaryColorDark,
-            ),
+        style: searchTextFormFieldStyle ??
+            Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).primaryColorDark,
+                ),
         cursorColor: Theme.of(context).primaryColorDark,
         decoration: searchDecoration ??
             InputDecoration(

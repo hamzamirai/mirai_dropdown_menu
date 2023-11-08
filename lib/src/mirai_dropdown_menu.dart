@@ -46,6 +46,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.showSearchTextField = false,
     this.searchDecoration,
     this.searchValidator,
+    this.searchTextFormFieldStyle,
     this.itemPadding,
     this.itemOverlayColor,
     this.itemHeight,
@@ -99,6 +100,7 @@ class MiraiPopupMenu<T> extends StatefulWidget {
   final bool showSearchTextField;
   final InputDecoration? searchDecoration;
   final FormFieldValidator<String>? searchValidator;
+  final TextStyle? searchTextFormFieldStyle;
 
   final EdgeInsetsGeometry? itemPadding;
 
@@ -156,10 +158,14 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             isExpanded: widget.isExpanded,
             showOtherAndItsTextField: widget.showOtherAndItsTextField,
             showSeparator: widget.showSeparator,
-            onOtherChanged: widget.onOtherChanged,
+
+
+            /// Search
             showSearchTextField: widget.showSearchTextField,
             searchDecoration: widget.searchDecoration,
             searchValidator: widget.searchValidator,
+            searchTextFormFieldStyle: widget.searchTextFormFieldStyle,
+
             itemPadding: widget.itemPadding,
             itemOverlayColor: widget.itemOverlayColor,
             itemHeight: widget.itemHeight,
@@ -167,6 +173,7 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             listThumbVisibility: widget.listThumbVisibility,
 
             /// Other
+            onOtherChanged: widget.onOtherChanged,
             otherController: widget.otherController,
             otherDecoration: widget.otherDecoration,
             otherValidator: widget.otherValidator,
@@ -215,6 +222,7 @@ class _DropDownMenuContent<T> extends StatefulWidget {
     required this.showSearchTextField,
     required this.searchDecoration,
     required this.searchValidator,
+    required this.searchTextFormFieldStyle,
 
     /// Other
     required this.other,
@@ -257,6 +265,7 @@ class _DropDownMenuContent<T> extends StatefulWidget {
 
   final InputDecoration? searchDecoration;
   final FormFieldValidator<String>? searchValidator;
+  final TextStyle? searchTextFormFieldStyle;
 
   final TextEditingController? otherController;
   final InputDecoration? otherDecoration;
@@ -438,6 +447,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                                       searchController: searchController,
                                       searchDecoration: widget.searchDecoration,
                                       searchValidator: widget.searchValidator,
+                                      searchTextFormFieldStyle: widget.searchTextFormFieldStyle,
                                       onChanged: searchSubscription,
 
                                       /// Other

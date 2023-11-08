@@ -26,6 +26,7 @@ class ItemWidget<T> extends StatelessWidget {
     required this.searchDecoration,
     required this.searchValidator,
     required this.onChanged,
+    required this.searchTextFormFieldStyle,
 
     /// Other Fields
     required this.otherController,
@@ -53,6 +54,7 @@ class ItemWidget<T> extends StatelessWidget {
   final InputDecoration? searchDecoration;
   final FormFieldValidator<String>? searchValidator;
   final ValueChanged<String>? onChanged;
+  final TextStyle? searchTextFormFieldStyle;
 
   /// Other Fields
   final TextEditingController? otherController;
@@ -81,6 +83,7 @@ class ItemWidget<T> extends StatelessWidget {
             searchDecoration: searchDecoration,
             searchValidator: searchValidator,
             onChanged: onChanged,
+            searchTextFormFieldStyle: searchTextFormFieldStyle,
           );
         } else {
           return ItemToReturnWidget<T>(
@@ -117,6 +120,7 @@ class ItemWidget<T> extends StatelessWidget {
               searchDecoration: searchDecoration,
               searchValidator: searchValidator,
               onChanged: onChanged,
+              searchTextFormFieldStyle: searchTextFormFieldStyle,
             );
           } else {
             return ItemToReturnWidget<T>(
