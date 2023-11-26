@@ -82,7 +82,7 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MiraiPopupMenu<String>(
+    return MiraiDropDownMenu<String>(
       key: UniqueKey(),
       enable: true,
       space: 4,
@@ -157,10 +157,12 @@ class MiraiDropDownItemWidget extends StatelessWidget {
   const MiraiDropDownItemWidget({
     Key? key,
     required this.item,
+    required this.isItemSelected,
   }) : super(key: key);
 
   final String item;
-
+  final bool isItemSelected;
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -171,7 +173,7 @@ class MiraiDropDownItemWidget extends StatelessWidget {
       child: Text(
         item,
         style: const TextStyle(
-          color: Colors.black,
+          color: isItemSelected ? Colors.white : Colors.black,
         ),
       ),
     );
@@ -183,8 +185,10 @@ Then you can use MiraiDropdownWidget like this:
 ```dart
 MiraiDropdownWidget<String>(
   valueNotifier: valueNotifierFirst,
-  itemWidgetBuilder: (int index, String item) {
-    return MiraiDropDownItemWidget(item: item);
+  itemWidgetBuilder: (int index, String? item, {
+  bool isItemSelected = false,
+}) {
+    return MiraiDropDownItemWidget(item: item, isItemSelected: isItemSelected);
   },
   children: listOfItem,
   onChanged: (String value) {
@@ -198,7 +202,9 @@ To Show Search Text Field:
 MiraiDropdownWidget<String>(
   valueNotifier: valueNotifierFirst,
   showSearchTextField: true,
-  itemWidgetBuilder: (int index, String item) {
+  itemWidgetBuilder: (int index, String? item, {
+  bool isItemSelected = false,
+}) {
     return MiraiDropDownItemWidget(item: item);
   },
   children: listOfItem,

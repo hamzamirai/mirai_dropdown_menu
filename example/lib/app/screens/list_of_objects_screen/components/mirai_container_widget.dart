@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 class MiraiContainerWidget extends StatelessWidget {
   const MiraiContainerWidget({
-    Key? key,
+    super.key,
     required this.color,
     this.size,
-  }) : super(key: key);
+  });
 
   final Color color;
   final double? size;

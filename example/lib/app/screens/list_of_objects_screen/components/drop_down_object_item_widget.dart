@@ -9,14 +9,16 @@ import 'mirai_container_widget.dart';
 
 class DropDownItemWidget extends StatelessWidget {
   const DropDownItemWidget({
-    Key? key,
+    super.key,
     required this.project,
+    required this.isItemSelected,
     this.firstSpace = 30,
     this.padding,
     this.fontSize,
-  }) : super(key: key);
+  });
 
   final ProjectModel? project;
+  final bool isItemSelected;
   final double firstSpace;
   final EdgeInsetsGeometry? padding;
   final double? fontSize;
@@ -41,25 +43,17 @@ class DropDownItemWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   '${project!.name}',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(
-                    color: Colors.black,
-                    fontSize: fontSize,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Colors.black,
+                        fontSize: fontSize,
+                      ),
                 ),
                 Text(
                   '${project!.job}',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(
-                    color: Colors.grey.shade600,
-                    fontSize: fontSize,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Colors.grey.shade600,
+                        fontSize: fontSize,
+                      ),
                 ),
               ],
             ),

@@ -5,30 +5,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mirai_dropdown_menu/src/models/search_attributes_model.dart';
+import 'package:mirai_dropdown_menu/src/utils/extensions.dart';
 import 'package:mirai_dropdown_menu/src/widgets/item_widget.dart';
 import 'package:mirai_dropdown_menu/src/widgets/separator_widget.dart';
 
 import 'utils/common_function.dart';
-import 'widgets/mirai_keyboard_visibility_builder_widget.dart';
 
 part 'utils/enums.dart';
 
-typedef MiraiDropdownBuilder<T> = Widget Function(int index, T? item);
+typedef MiraiDropdownBuilder<T> = Widget Function(
+  int index,
+  T? item, {
+  bool isItemSelected,
+});
 
 typedef MiraiHighLightDropdownBuilder<T> = Widget Function(
-    int index, SearchAttributes<T> item);
+  int index,
+  SearchAttributes<T> item,
+);
 
 typedef MiraiValueChanged<T> = void Function(T value);
 
-class MiraiPopupMenu<T> extends StatefulWidget {
-  MiraiPopupMenu({
-    Key? key,
+class MiraiDropDownMenu<T> extends StatefulWidget {
+  MiraiDropDownMenu({
+    super.key,
     required this.child,
     this.other,
     this.decoration,
     required this.itemWidgetBuilder,
     this.itemHighLightBuilder,
     required this.children,
+    this.valueNotifier,
     this.mode = MiraiPopupMenuMode.dropDownMenu,
     this.showMode = MiraiShowMode.bottom,
     this.onChanged,
@@ -49,6 +56,10 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.searchTextFormFieldStyle,
     this.itemPadding,
     this.itemOverlayColor,
+    this.itemBackgroundColor,
+    this.selectedItemBackgroundColor,
+    this.showSelectedItemBackgroundColor = true,
+    this.itemMargin,
     this.itemHeight,
     this.separatorColor,
 
@@ -59,8 +70,9 @@ class MiraiPopupMenu<T> extends StatefulWidget {
     this.otherOnFieldSubmitted,
     this.otherHeight,
     this.otherMargin,
-  })  : assert(child.key != null),
-        super(key: key);
+    this.animationDuration,
+    this.searchNoDataWidget,
+  }) : assert(child.key != null);
 
   /// Child widget that has dropdown menu
   final Widget child;
@@ -75,6 +87,9 @@ class MiraiPopupMenu<T> extends StatefulWidget {
 
   /// children, is the list that we display in the dropdown
   final List<T> children;
+
+  /// User this valueNotifier to detect which item is Selected...
+  final ValueNotifier<T>? valueNotifier;
 
   /// The max height of the dropdown
   final double? maxHeight;
@@ -105,7 +120,11 @@ class MiraiPopupMenu<T> extends StatefulWidget {
   final EdgeInsetsGeometry? itemPadding;
 
   final Color? itemOverlayColor;
+  final Color? itemBackgroundColor;
+  final Color? selectedItemBackgroundColor;
+  final bool showSelectedItemBackgroundColor;
   final double? itemHeight;
+  final EdgeInsetsGeometry? itemMargin;
 
   final Color? separatorColor;
   final bool listThumbVisibility;
@@ -118,11 +137,14 @@ class MiraiPopupMenu<T> extends StatefulWidget {
   final double? otherHeight;
   final EdgeInsetsGeometry? otherMargin;
 
+  final Duration? animationDuration;
+  final Widget? searchNoDataWidget;
+
   @override
-  MiraiPopupMenuState<T> createState() => MiraiPopupMenuState<T>();
+  MiraiDropDownMenuState<T> createState() => MiraiDropDownMenuState<T>();
 }
 
-class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
+class MiraiDropDownMenuState<T> extends State<MiraiDropDownMenu<T>> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -132,6 +154,8 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
   }
 
   void _showDropDownMenu() {
+    FocusManager.instance.primaryFocus?.unfocus();
+
     /// Find RenderBox object
     RenderBox renderBox =
         (widget.child.key as GlobalKey).currentContext?.findRenderObject() as RenderBox;
@@ -153,12 +177,12 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             size: renderBox.size,
             onChanged: widget.onChanged,
             children: widget.children,
+            valueNotifier: widget.valueNotifier,
             decoration: widget.decoration,
             exit: widget.exit,
             isExpanded: widget.isExpanded,
             showOtherAndItsTextField: widget.showOtherAndItsTextField,
             showSeparator: widget.showSeparator,
-
 
             /// Search
             showSearchTextField: widget.showSearchTextField,
@@ -168,6 +192,10 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
 
             itemPadding: widget.itemPadding,
             itemOverlayColor: widget.itemOverlayColor,
+            selectedItemBackgroundColor: widget.selectedItemBackgroundColor,
+            itemBackgroundColor: widget.itemBackgroundColor,
+            showItemSelectedBackgroundColor: widget.showSelectedItemBackgroundColor,
+            itemMargin: widget.itemMargin,
             itemHeight: widget.itemHeight,
             separatorColor: widget.separatorColor,
             listThumbVisibility: widget.listThumbVisibility,
@@ -182,6 +210,8 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
             otherMargin: widget.otherMargin,
             other: widget.other,
             itemHighLightBuilder: widget.itemHighLightBuilder,
+            animationDuration: widget.animationDuration,
+            searchNoDataWidget: widget.searchNoDataWidget,
           );
         },
       );
@@ -199,8 +229,9 @@ class MiraiPopupMenuState<T> extends State<MiraiPopupMenu<T>> {
 
 class _DropDownMenuContent<T> extends StatefulWidget {
   const _DropDownMenuContent({
-    Key? key,
+    super.key,
     required this.children,
+    required this.valueNotifier,
     required this.itemWidgetBuilder,
     required this.itemHighLightBuilder,
     required this.position,
@@ -236,12 +267,19 @@ class _DropDownMenuContent<T> extends StatefulWidget {
     ///
     required this.itemPadding,
     required this.itemOverlayColor,
+    required this.itemBackgroundColor,
+    required this.selectedItemBackgroundColor,
+    required this.showItemSelectedBackgroundColor,
+    required this.itemMargin,
     required this.itemHeight,
     required this.separatorColor,
     required this.listThumbVisibility,
-  }) : super(key: key);
+    required this.animationDuration,
+    required this.searchNoDataWidget,
+  });
 
   final List<T> children;
+  final ValueNotifier<T>? valueNotifier;
   final MiraiDropdownBuilder<T> itemWidgetBuilder;
   final MiraiHighLightDropdownBuilder<T>? itemHighLightBuilder;
   final Offset position;
@@ -277,9 +315,17 @@ class _DropDownMenuContent<T> extends StatefulWidget {
   final EdgeInsetsGeometry? itemPadding;
 
   final Color? itemOverlayColor;
+  final Color? itemBackgroundColor;
+  final Color? selectedItemBackgroundColor;
+  final bool showItemSelectedBackgroundColor;
+  final EdgeInsetsGeometry? itemMargin;
   final double? itemHeight;
 
   final Color? separatorColor;
+
+  final Duration? animationDuration;
+
+  final Widget? searchNoDataWidget;
 
   @override
   _DropDownMenuContentState<T> createState() => _DropDownMenuContentState<T>();
@@ -299,18 +345,23 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
     SearchAttributes<T>(),
   );
 
+  ValueNotifier<bool> onOtherWidgetClicked = ValueNotifier<bool>(false);
+  ValueNotifier<bool> isEntirelyOnScreenValueNotifier = ValueNotifier<bool>(false);
+
   ///  Search Controller
   final TextEditingController searchController = TextEditingController();
 
   GlobalKey myWidgetKey = GlobalKey();
+  late MiraiShowMode newShowMode;
 
   @override
   void initState() {
     super.initState();
 
+    newShowMode = widget.showMode;
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: widget.animationDuration ?? const Duration(milliseconds: 200),
     );
 
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -321,7 +372,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
     );
 
     /// Copy children to searchChildren.value.searchList
-    searchChildren.value.searchList = List.from(widget.children);
+    searchChildren.value.searchList = List<T>.from(widget.children);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _animationController.forward();
@@ -346,53 +397,105 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
 
   @override
   Widget build(BuildContext context) {
+    // MiraiShowMode newShowMode = widget.showMode;
     final Size sizeScreen = MediaQuery.sizeOf(context);
-    dropHeight ??= widget.children.length > 20.0 ? 300.0 : widget.maxHeight;
+    // dropHeight ??= widget.children.length > 20 ? 300.0 : widget.maxHeight;
+    // miraiPrint('widget.maxHeight ${widget.maxHeight}');
     // miraiPrint('dropHeight $dropHeight');
+    // // if (dropHeight != null && dropHeight! >= sizeScreen.height) {
+    // if (widget.maxHeight == null || !isEntirelyOnScreenValueNotifier.value) {
+    //   if (widget.showMode == MiraiShowMode.bottom) {
+    //     dropHeight = sizeScreen.height -
+    //         widget.position.dy -
+    //         widget.size.height -
+    //         context.bottomAdding;
+    //     miraiPrint('NewDropHeight $dropHeight');
+    //   } else {
+    //     double appBarHeight = AppBar().preferredSize.height;
+    //     dropHeight = widget.position.dy - context.topPadding - appBarHeight - 20;
+    //   }
+    //
+    //   double dropPosition = (dropHeight ?? 0) - widget.position.dy;
+    //   dropPosition = dropPosition.abs();
+    //   miraiPrint('dropPosition $dropPosition');
+    //
+    //   if (dropPosition > dropHeight!) {
+    //     newShowMode = MiraiShowMode.top;
+    //     dropHeight = dropPosition;
+    //   }
+    // }
 
-    return WillPopScope(
-      onWillPop: () async {
-        _closePopup(context: context, action: null);
-        return false;
-      },
-      child: GestureDetector(
-        onTap: () =>
-            (widget.exit == MiraiExit.fromAll || widget.exit == MiraiExit.outside)
-                ? _closePopup(context: context, action: null)
-                : null,
-        child: Material(
-          elevation: 0,
-          type: MaterialType.transparency,
-          child: Container(
-            height: sizeScreen.height,
-            width: sizeScreen.width,
-            color: Colors.transparent,
-            child: Stack(
-              children: [
-                Positioned(
-                  right: (sizeScreen.width - widget.position.dx) - widget.size.width,
-                  top: widget.showMode != MiraiShowMode.top
-                      ? widget.position.dy + widget.space + widget.size.height
-                      : null,
-                  bottom: widget.showMode != MiraiShowMode.bottom
-                      ? sizeScreen.height - widget.position.dy + widget.space
-                      : null,
+    double keyBoardHeight = MediaQuery.of(context).viewInsets.bottom;
+    bool keyboardIsOpen = !(keyBoardHeight == 0);
+
+    miraiPrint('keyBoardHeight $keyBoardHeight');
+    miraiPrint('keyboardIsOpen $keyboardIsOpen');
+    if (!keyboardIsOpen) onOtherWidgetClicked.value = false;
+    if (keyboardIsOpen && dropHeight != null) {
+      double dropRestHeight = sizeScreen.height - widget.position.dy - keyBoardHeight;
+      miraiPrint('dropRestHeight $dropRestHeight');
+
+      if (dropRestHeight <= 100) newShowMode = MiraiShowMode.top;
+
+      miraiPrint('1 onOtherWidgetClicked ${onOtherWidgetClicked.value}');
+
+      if (onOtherWidgetClicked.value) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 200),
+        );
+      }
+      miraiPrint('2 onOtherWidgetClicked ${onOtherWidgetClicked.value}');
+    }
+
+    return GestureDetector(
+      onTap: () => (widget.exit == MiraiExit.fromAll || widget.exit == MiraiExit.outside)
+          ? _closePopup(context: context, action: null)
+          : null,
+      child: Material(
+        elevation: 0,
+        type: MaterialType.transparency,
+        child: Container(
+          height: sizeScreen.height,
+          width: sizeScreen.width,
+          color: Colors.transparent,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                right: (sizeScreen.width - widget.position.dx) - widget.size.width,
+                top: newShowMode != MiraiShowMode.top
+                    ? widget.position.dy + widget.space + widget.size.height
+                    : null,
+                bottom: newShowMode != MiraiShowMode.bottom
+                    ? sizeScreen.height - widget.position.dy + widget.space
+                    : null,
+                child: SizedBox(
+                  width: widget.size.width,
                   child: AnimatedBuilder(
                     animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.scale(
-                        scale: _animation.value,
-                        alignment: widget.showMode != MiraiShowMode.top
-                            ? Alignment.topCenter
-                            : Alignment.bottomCenter,
+                    builder: (BuildContext context, Widget? child) {
+                      return SizeTransition(
+                        sizeFactor: _animationController,
                         child: Opacity(
                           opacity: _animation.value,
                           child: child,
                         ),
                       );
+                      // return Transform.scale(
+                      //   scale: _animation.value,
+                      //   alignment: widget.showMode != MiraiShowMode.top
+                      //       ? Alignment.topCenter
+                      //       : Alignment.bottomCenter,
+                      //   child: Opacity(
+                      //     opacity: _animation.value,
+                      //     child: child,
+                      //   ),
+                      // );
                     },
                     child: Container(
-                      height: dropHeight,
+                      // TODO
+                      height: dropHeight ?? widget.maxHeight,
                       width: widget.size.width, // - 1,
                       decoration: widget.decoration ??
                           BoxDecoration(
@@ -402,7 +505,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                               color: const Color(0xFFCECECE),
                               width: 0.5,
                             ),
-                            boxShadow: [
+                            boxShadow: <BoxShadow>[
                               BoxShadow(
                                 color: Colors.black.withOpacity(.1),
                                 blurRadius: 8,
@@ -412,7 +515,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                       child: LayoutBuilder(
                         key: myWidgetKey,
                         builder: (_, BoxConstraints constraints) {
-                          // miraiPrint('constraints maxHeight  ${constraints.maxHeight}');
+                          miraiPrint('constraints maxHeight  ${constraints.maxHeight}');
                           return ValueListenableBuilder<SearchAttributes<T>>(
                             valueListenable: searchChildren,
                             builder: (_, SearchAttributes<T> children, __) {
@@ -427,49 +530,151 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                                 child: ListView.separated(
                                   controller: _scrollController,
                                   shrinkWrap: true,
-                                  padding: EdgeInsets.zero,
+                                  padding: EdgeInsets.only(
+                                    bottom: keyboardIsOpen ? (keyBoardHeight + 20) : 0,
+                                  ),
                                   itemCount: itemCount,
                                   itemBuilder: (_, int index) {
                                     final int newIndex =
                                         widget.showSearchTextField ? index - 1 : index;
 
-                                    final searchList =
+                                    final T? searchedItem =
                                         safeGet(children.searchList, newIndex);
-                                    return ItemWidget(
-                                      index: index,
-                                      onTapChild: () => onTapChild(newIndex),
-                                      showOtherAndItsTextField:
-                                          widget.showOtherAndItsTextField,
-                                      showSearchTextField: widget.showSearchTextField,
-                                      searchListLength: children.searchList.length,
 
-                                      /// Search
-                                      searchController: searchController,
-                                      searchDecoration: widget.searchDecoration,
-                                      searchValidator: widget.searchValidator,
-                                      searchTextFormFieldStyle: widget.searchTextFormFieldStyle,
-                                      onChanged: searchSubscription,
+                                    if (widget.valueNotifier != null) {
+                                      return ValueListenableBuilder<T>(
+                                          valueListenable: widget.valueNotifier!,
+                                          builder: (_, T value, __) {
+                                            return AnimatedSwitcher(
+                                              duration: const Duration(milliseconds: 100),
+                                              child: SizedBox(
+                                                width: widget.size.width,
+                                                child: ItemWidget<T>(
+                                                  index: index,
+                                                  key: ValueKey<String>(value.toString()),
+                                                  onTapChild: () => onTapChild(newIndex),
+                                                  showOtherAndItsTextField:
+                                                      widget.showOtherAndItsTextField,
+                                                  showSearchTextField:
+                                                      widget.showSearchTextField,
+                                                  searchListLength: itemCount,
 
-                                      /// Other
-                                      otherController: widget.otherController,
-                                      otherDecoration: widget.searchDecoration,
-                                      otherValidator: widget.searchValidator,
-                                      otherOnFieldSubmitted: widget.otherOnFieldSubmitted,
-                                      otherHeight: widget.otherHeight,
-                                      otherMargin: widget.otherMargin,
+                                                  /// Search
+                                                  searchController: searchController,
+                                                  searchDecoration:
+                                                      widget.searchDecoration,
+                                                  searchValidator: widget.searchValidator,
+                                                  searchTextFormFieldStyle:
+                                                      widget.searchTextFormFieldStyle,
+                                                  onChanged: searchSubscription,
 
-                                      ///
-                                      itemPadding: widget.itemPadding,
-                                      itemOverlayColor: widget.itemOverlayColor,
-                                      itemHeight: widget.itemHeight,
-                                      radius: widget.radius ?? 5,
-                                      isFirst: index == 0,
-                                      isLast: index == children.searchList.length - 1,
-                                      child: widget.itemWidgetBuilder(
-                                        index,
-                                        searchList,
-                                      ),
-                                    );
+                                                  /// Other
+                                                  otherController: widget.otherController,
+                                                  otherDecoration:
+                                                      widget.searchDecoration,
+                                                  otherValidator: widget.searchValidator,
+                                                  otherOnFieldSubmitted:
+                                                      widget.otherOnFieldSubmitted,
+                                                  otherHeight: keyboardIsOpen
+                                                      ? (widget.otherHeight ?? 100) * 2
+                                                      : widget.otherHeight,
+                                                  otherMargin: widget.otherMargin,
+
+                                                  ///
+                                                  itemPadding: widget.itemPadding,
+                                                  itemOverlayColor:
+                                                      widget.itemOverlayColor,
+                                                  selectedItemBackgroundColor: value ==
+                                                          searchedItem
+                                                      ? widget
+                                                              .showItemSelectedBackgroundColor
+                                                          ? (widget
+                                                                  .selectedItemBackgroundColor ??
+                                                              Colors.blue)
+                                                          : widget.itemBackgroundColor
+                                                      : widget.itemBackgroundColor,
+                                                  itemHeight: widget.itemHeight,
+                                                  radius: widget.radius ?? 5,
+                                                  isFirst: index == 0,
+                                                  isLast: index == itemCount - 1,
+                                                  scrollController: _scrollController,
+                                                  onTapOtherTextField: () =>
+                                                      onTapOtherTextField(keyboardIsOpen,
+                                                          _scrollController),
+                                                  itemBackgroundColor:
+                                                      widget.itemBackgroundColor,
+                                                  searchNoDataWidget:
+                                                      widget.searchNoDataWidget,
+                                                  itemMargin: value == searchedItem
+                                                      ? widget.itemMargin
+                                                      : null,
+                                                  child: widget.itemWidgetBuilder(
+                                                    index,
+                                                    searchedItem,
+                                                    isItemSelected: value == searchedItem,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    } else {
+                                      return ItemWidget<T>(
+                                        index: index,
+
+                                        onTapChild: () => onTapChild(newIndex),
+                                        showOtherAndItsTextField:
+                                            widget.showOtherAndItsTextField,
+                                        showSearchTextField: widget.showSearchTextField,
+                                        searchListLength: itemCount,
+
+                                        /// Search
+                                        searchController: searchController,
+                                        searchDecoration: widget.searchDecoration,
+                                        searchValidator: widget.searchValidator,
+                                        searchTextFormFieldStyle:
+                                            widget.searchTextFormFieldStyle,
+                                        onChanged: searchSubscription,
+
+                                        /// Other
+                                        otherController: widget.otherController,
+                                        otherDecoration: widget.searchDecoration,
+                                        otherValidator: widget.searchValidator,
+                                        otherOnFieldSubmitted:
+                                            widget.otherOnFieldSubmitted,
+                                        otherHeight: keyboardIsOpen
+                                            ? (widget.otherHeight ?? 100) * 2
+                                            : widget.otherHeight,
+                                        otherMargin: widget.otherMargin,
+
+                                        ///
+                                        itemPadding: widget.itemPadding,
+                                        itemOverlayColor: widget.itemOverlayColor,
+                                        itemBackgroundColor: widget.itemBackgroundColor,
+                                        itemHeight: widget.itemHeight,
+                                        radius: widget.radius ?? 5,
+                                        isFirst: index == 0,
+                                        isLast: index == itemCount - 1,
+                                        scrollController: _scrollController,
+                                        onTapOtherTextField: () => onTapOtherTextField(
+                                            keyboardIsOpen, _scrollController),
+                                        selectedItemBackgroundColor:
+                                            selectedIndex == newIndex
+                                                ? (widget.selectedItemBackgroundColor ??
+                                                    Colors.blue)
+                                                : null,
+
+                                        itemMargin: selectedIndex == newIndex
+                                            ? widget.itemMargin
+                                            : null,
+                                        searchNoDataWidget: widget.searchNoDataWidget,
+
+                                        child: widget.itemWidgetBuilder(
+                                          index,
+                                          searchedItem,
+                                          isItemSelected: false,
+                                        ),
+                                      );
+                                    }
                                   },
                                   separatorBuilder: (_, int index) {
                                     if (widget.showSeparator) {
@@ -489,36 +694,160 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              // Positioned(
+              //   //right: (sizeScreen.width - widget.position.dx) - widget.size.width,
+              //   right: 200,
+              //   top: newShowMode != MiraiShowMode.top
+              //       ? widget.position.dy + widget.space + widget.size.height
+              //       : null,
+              //   bottom: newShowMode != MiraiShowMode.bottom
+              //       ? sizeScreen.height - widget.position.dy + widget.space
+              //       : null,
+              //   child: Container(
+              //     height: dropHeight,
+              //     width: 80,
+              //     color: Colors.red,
+              //   ),
+              // ),
+              // Positioned(
+              //   right: (sizeScreen.width - widget.position.dx) - widget.size.width,
+              //   top: widget.position.dy,
+              //   // left: 20,
+              //
+              //   child: Container(
+              //     height: 20,
+              //     width: widget.size.width,
+              //     color: Colors.green,
+              //   ),
+              // ),
+              // Positioned(
+              //   // right: (sizeScreen.width - widget.position.dx) - widget.size.width,
+              //   top: 0,
+              //   left: 300,
+              //
+              //   child: Container(
+              //     height: dropHeight,
+              //     width: 80,
+              //     color: Colors.purple,
+              //     child: Center(
+              //       child: Text(
+              //         'dropHeight',
+              //         style: TextStyle(
+              //           color: Colors.white,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // Builder(builder: (context) {
+              //   final RenderBox? widgetRenderBox =
+              //       myWidgetKey.currentContext?.findRenderObject() as RenderBox?;
+              //   if (widgetRenderBox == null) {
+              //     //  miraiPrint('No RenderBox found for the widget.');
+              //     return const SizedBox();
+              //   }
+              //
+              //   final Offset widgetTopLeft = widgetRenderBox.localToGlobal(Offset.zero);
+              //
+              //   final Offset widgetBottomRight = Offset(
+              //       widgetRenderBox.size.width,
+              //       //  screenSize.height - widget.position.dy - widget.size.height - context.bottomAdding
+              //       // widgetRenderBox.size.height +
+              //       widgetTopLeft.dy
+              //       // +  widget.space
+              //       //  + widget.size.height
+              //       // + context.topPadding
+              //       //   + appBarHeight,
+              //       );
+              //
+              //   print('widgetBottomRight.dy ${widgetBottomRight.dy}');
+              //   print('widgetRenderBox.size.height ${widgetRenderBox.size.height}');
+              //   print('widgetRenderBox.size.height+dy ${widgetBottomRight.dy + widgetRenderBox.size.height}');
+              //   return Stack(
+              //     children: [
+              //       Positioned(
+              //         top: 0,
+              //         left: 20,
+              //         child: Container(
+              //           width: 120,
+              //           height: widgetBottomRight.dy,
+              //           // height: widgetRenderBox.size.height,
+              //           color: Colors.green,
+              //           child: Center(
+              //             child: Padding(
+              //               padding: EdgeInsets.all(8.0),
+              //               child: Text(
+              //                 'I am positioned to top-left!\n drop-top-lef: ${widgetBottomRight.dy}',
+              //                 style: TextStyle(color: Colors.white),textAlign: TextAlign.center,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       Positioned(
+              //         top: widgetBottomRight.dy,
+              //         left: 140,
+              //         child: Container(
+              //           width: 120,
+              //           //  height: widgetBottomRight.dy,
+              //           height: widgetRenderBox.size.height,
+              //           color: Colors.red,
+              //           child: Center(
+              //             child: Padding(
+              //               padding: EdgeInsets.all(8.0),
+              //               child: Text(
+              //                 'I am positioned from top-left to bottom-left!\n drop-height: ${widgetRenderBox.size.height}',
+              //                 style: TextStyle(color: Colors.white),
+              //                 textAlign: TextAlign.center,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       Positioned(
+              //         top: widgetBottomRight.dy + widgetRenderBox.size.height,
+              //         left: 260,
+              //         child: Container(
+              //           width: 120,
+              //           //  height: widgetBottomRight.dy,
+              //           height: widgetRenderBox.size.height,
+              //           color: Colors.purple,
+              //           child: Center(
+              //             child: Padding(
+              //               padding: EdgeInsets.all(8.0),
+              //               child: Text(
+              //                 'I am positioned from bottom-left to drop-height!\n ${widgetRenderBox.size.height}',
+              //                 style: TextStyle(color: Colors.white),
+              //                 textAlign: TextAlign.center,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   );
+              // })
+            ],
           ),
         ),
       ),
     );
   }
 
-  MiraiKeyboardVisibilityBuilder buildOtherWidget() {
-    return MiraiKeyboardVisibilityBuilder(
-      builder: (context, child, isKeyboardVisible) {
-        if (isKeyboardVisible) {
-          _scrollController.jumpTo(
-            _scrollController.position.maxScrollExtent,
-          );
-        }
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: isKeyboardVisible ? 46 : 0,
-          ),
-          child: widget.other,
-        );
-      },
-    );
+  void onTapOtherTextField(bool isKeyboardVisible, ScrollController scrollController) {
+    miraiPrint('onTapOtherTextField');
+    onOtherWidgetClicked.value = true;
   }
 
-  void _closePopup({required BuildContext context, required T? action}) {
+  void _closePopup({required BuildContext context, required T? action}) async {
+    FocusManager.instance.primaryFocus?.unfocus();
+
     widget.isExpanded?.call(false);
+    if (action != null) widget.onChanged?.call(action);
+    await Future<void>.delayed(const Duration(milliseconds: 200));
+
     _animationController.reverse().whenComplete(() {
-      if (action != null) widget.onChanged?.call(action);
       Navigator.pop(context);
     });
   }
@@ -539,7 +868,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
     searchController.clear();
     searchChildren.value.showHighLight = true;
     searchChildren.value.mQueryClient = '';
-    searchChildren.value.searchList = List.from(widget.children);
+    searchChildren.value.searchList = List<T>.from(widget.children);
   }
 
   void searchSubscription(String query) {
@@ -548,13 +877,13 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
       searchAttributes.showHighLight = true;
       searchAttributes.mQueryClient = query;
 
-      final results = widget.children.where((child) =>
+      final Iterable<T> results = widget.children.where((T child) =>
           ((child is String) ? child : child.toString()).toLowerCase().contains(query));
-      searchAttributes.searchList = List.from(results);
+      searchAttributes.searchList = List<T>.from(results);
     } else {
       searchAttributes.showHighLight = false;
       searchAttributes.mQueryClient = '';
-      searchAttributes.searchList = List.from(widget.children);
+      searchAttributes.searchList = List<T>.from(widget.children);
     }
     searchChildren.value = searchAttributes;
   }
@@ -581,48 +910,124 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
       return false;
     }
 
-    final Offset widgetTopLeft = widgetRenderBox.localToGlobal(Offset.zero);
-    final Offset widgetBottomRight = Offset(
-        widgetRenderBox.size.width,
-        widgetRenderBox.size.height +
-            widgetTopLeft.dy +
-            widget.space +
-            widget.size.height);
-
     // Get the screen size
     final Size screenSize = MediaQuery.sizeOf(key.currentContext!);
-    // final EdgeInsets padding = MediaQuery.paddingOf(key.currentContext!);
+    final EdgeInsets padding = MediaQuery.paddingOf(key.currentContext!);
+
+    double appBarHeight = AppBar().preferredSize.height;
+
+    final Offset widgetTopLeft = widgetRenderBox.localToGlobal(Offset.zero);
+
+    final Offset widgetBottomRight =
+        Offset(widgetRenderBox.size.width, widgetRenderBox.size.height
+             +   widgetTopLeft.dy
+            // +
+            //     widget.space +
+            //     widget.size.height +
+            //     context.topPadding +
+            //     appBarHeight,
+            );
+
+    // showContainer(widgetBottomRight, widgetRenderBox.size.height);
 
     // Check the position and size of the widget against the screen size
-    bool isEntirelyOnScreen = widgetTopLeft.dx >= 0 &&
-        widgetTopLeft.dy >= 0 &&
-        widgetBottomRight.dx <= screenSize.width &&
-        widgetBottomRight.dy <= screenSize.height;
+    bool isEntirelyOnScreen =
+        // widgetTopLeft.dx >= 0 &&
+        // widgetTopLeft.dy >= 0 &&
+        // widgetBottomRight.dx <= screenSize.width &&
+        (widgetBottomRight.dy + widgetRenderBox.size.height) <= screenSize.height;
 
-    //   print('isEntirelyOnScreen $isEntirelyOnScreen');
-    //   print('widgetTopLeft dx ${widgetTopLeft.dx}');
-    //   print('widgetTopLeft dy ${widgetTopLeft.dy}');
-    //   print('widgetBottomRight dx ${widgetBottomRight.dx}');
-    //   print('widgetBottomRight dy ${widgetBottomRight.dy}');
-    //   print('screenSize width ${screenSize.width}');
-    //   print('screenSize height ${screenSize.height}');
+    miraiPrint('isEntirelyOnScreen $isEntirelyOnScreen');
+    miraiPrint('widgetRenderBox.size.height dx ${widgetRenderBox.size.height}');
+    miraiPrint('widgetTopLeft dx ${widgetTopLeft.dx}');
+    miraiPrint('widgetTopLeft dy ${widgetTopLeft.dy}');
+    miraiPrint('widgetBottomRight dx ${widgetBottomRight.dx}');
+    miraiPrint('widgetBottomRight dy ${widgetBottomRight.dy}');
+    miraiPrint('screenSize width ${screenSize.width}');
+    miraiPrint('screenSize height ${screenSize.height}');
     //
 
-    // miraiPrint('widgetTopLeft: $widgetTopLeft');
-    // miraiPrint('widgetBottomRight: $widgetBottomRight');
-    // miraiPrint('screenSize: $screenSize');
-    // miraiPrint('padding: $padding');
-    // miraiPrint('Rest: ${widgetBottomRight.dy - screenSize.height}');
-    final rest = widgetBottomRight.dy - screenSize.height;
+    miraiPrint('widgetTopLeft: $widgetTopLeft');
+    miraiPrint('widgetBottomRight: $widgetBottomRight');
+    miraiPrint('screenSize: $screenSize');
+    miraiPrint('padding: $padding');
+
+    miraiPrint('Rest: ${widgetBottomRight.dy - screenSize.height}');
+    final double rest = widgetBottomRight.dy - screenSize.height;
 
     if (!isEntirelyOnScreen) {
-      setState(() {
-        dropHeight =
-            widgetRenderBox.size.height - rest - widget.size.height - widget.space;
-        // miraiPrint('dropHeight: $dropHeight');
-      });
+      // setState(() {
+      //   dropHeight =
+      //       widgetRenderBox.size.height - rest - widget.size.height - widget.space;
+      //   miraiPrint('dropHeight: $dropHeight');
+      // });
+
+      final Size sizeScreen = MediaQuery.sizeOf(context);
+      dropHeight ??= widget.children.length > 20 ? 300.0 : widget.maxHeight;
+      miraiPrint('widget.maxHeight ${widget.maxHeight}');
+      miraiPrint('dropHeight $dropHeight');
+      // if (dropHeight != null && dropHeight! >= sizeScreen.height) {
+      if (widget.maxHeight == null || !isEntirelyOnScreenValueNotifier.value) {
+        if (widget.showMode == MiraiShowMode.bottom) {
+          dropHeight = sizeScreen.height -
+              widget.position.dy -
+              widget.size.height -
+              context.bottomAdding;
+          miraiPrint('NewDropHeight $dropHeight');
+        } else {
+          double appBarHeight = AppBar().preferredSize.height;
+          dropHeight = widget.position.dy - context.topPadding - appBarHeight - 20;
+        }
+
+        double dropPosition = (dropHeight ?? 0) - widget.position.dy;
+        dropPosition = dropPosition.abs();
+        miraiPrint('dropPosition $dropPosition');
+
+        if (dropPosition > dropHeight!) {
+          newShowMode = MiraiShowMode.top;
+          dropHeight = dropPosition;
+        }
+      }
+      setState(() {});
+    } else {
+      dropHeight = null;
     }
 
+    isEntirelyOnScreenValueNotifier.value = isEntirelyOnScreen;
+    miraiPrint(
+        'isEntirelyOnScreenValueNotifier: ${isEntirelyOnScreenValueNotifier.value}');
+
     return isEntirelyOnScreen;
+  }
+
+  void showContainer(Offset bottomLeft, double height) {
+    // Use the Stack widget as the root
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Stack(
+          children: [
+            // Use Positioned widget to position the container at the bottom-left offset
+            Positioned(
+              left: 0,
+              top: bottomLeft.dy,
+              child: Container(
+                width: 150,
+                height: height,
+                color: Colors.green,
+                child: const Center(
+                  child: Text(
+                    'I am positioned at bottom-left!',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

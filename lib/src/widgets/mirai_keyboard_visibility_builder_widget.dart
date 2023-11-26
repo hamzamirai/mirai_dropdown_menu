@@ -14,10 +14,10 @@ class MiraiKeyboardVisibilityBuilder extends StatefulWidget {
   ) builder;
 
   const MiraiKeyboardVisibilityBuilder({
-    Key? key,
+    super.key,
     this.child,
     required this.builder,
-  }) : super(key: key);
+  });
 
   @override
   MiraiKeyboardVisibilityBuilderState createState() =>
@@ -43,8 +43,8 @@ class MiraiKeyboardVisibilityBuilderState
 
   @override
   void didChangeMetrics() {
-    final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
-    final newValue = bottomInset > 0.0;
+    final double bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
+    final bool newValue = bottomInset > 0.0;
     if (newValue != _isKeyboardVisible) {
       setState(() {
         _isKeyboardVisible = newValue;

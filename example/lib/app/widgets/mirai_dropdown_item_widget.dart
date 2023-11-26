@@ -9,46 +9,44 @@ import 'package:substring_highlight/substring_highlight.dart';
 
 class MiraiDropDownItemWidget extends StatelessWidget {
   const MiraiDropDownItemWidget({
-    Key? key,
+    super.key,
     required this.item,
+    required this.isItemSelected,
     this.showHighLight = false,
     this.query,
-  }) : super(key: key);
+  });
 
   final String? item;
   final bool showHighLight;
   final String? query;
+  final bool isItemSelected;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.purple,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
-        ),
-        child: showHighLight
-            ? SubstringHighlight(
-                text: '$item',
-                term: query,
-                textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      color: AppTheme.keyDarkBlueColor.withOpacity(.5),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                textStyleHighlight:
-                    Theme.of(context).textTheme.displayLarge!.copyWith(
-                          color: AppTheme.keyDarkBlueColor,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-              )
-            : Text(
-                '$item',
-                style: const TextStyle(
-                  color: Colors.black,
-                ),
+      // padding: const EdgeInsets.symmetric(
+      //   vertical: 16.0,
+      //   horizontal: 10.0,
+      // ),
+      child: showHighLight
+          ? SubstringHighlight(
+              text: '$item',
+              term: query,
+              textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
+                    color: AppTheme.keyDarkBlueColor.withOpacity(.5),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+              textStyleHighlight: Theme.of(context).textTheme.displayLarge!.copyWith(
+                    color: AppTheme.keyDarkBlueColor,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+            )
+          : Text(
+              '$item',
+              style: TextStyle(
+                color: isItemSelected ? Colors.white : Colors.black,
               ),
-      ),
+            ),
     );
   }
 }

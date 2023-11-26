@@ -14,6 +14,8 @@ class OtherWidget extends StatelessWidget {
     required this.onFieldSubmitted,
     required this.height,
     required this.margin,
+    required this.scrollController,
+    required this.onTapOtherTextField,
   });
 
   final TextEditingController? otherController;
@@ -22,6 +24,8 @@ class OtherWidget extends StatelessWidget {
   final ValueChanged<String>? onFieldSubmitted;
   final double? height;
   final EdgeInsetsGeometry? margin;
+  final ScrollController? scrollController;
+  final GestureTapCallback? onTapOtherTextField;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +57,7 @@ class OtherWidget extends StatelessWidget {
         textInputAction: TextInputAction.done,
         onFieldSubmitted: onFieldSubmitted,
         onChanged: onFieldSubmitted,
+        onTap: onTapOtherTextField,
       ),
     );
   }

@@ -9,11 +9,12 @@ import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
 
 class MiraiDropdownWidget<String> extends StatelessWidget {
   const MiraiDropdownWidget({
-    Key? key,
+    super.key,
     required this.valueNotifier,
     required this.itemWidgetBuilder,
     required this.children,
     required this.onChanged,
+    this.itemMargin,
     this.underline = false,
     this.showSeparator = true,
     this.exit = MiraiExit.fromAll,
@@ -29,10 +30,11 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
     this.otherOnFieldSubmitted,
     this.otherHeight,
     this.otherMargin,
-  }) : super(key: key);
+  });
 
   final ValueNotifier<String> valueNotifier;
   final MiraiDropdownBuilder<String> itemWidgetBuilder;
+  final EdgeInsetsGeometry? itemMargin;
   final List<String> children;
   final ValueChanged<String> onChanged;
   final bool underline;
@@ -54,7 +56,7 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MiraiPopupMenu<String>(
+    return MiraiDropDownMenu<String>(
       key: UniqueKey(),
       enable: true,
       space: 4,
@@ -63,6 +65,7 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
       showSeparator: showSeparator,
       children: children,
       itemWidgetBuilder: itemWidgetBuilder,
+      itemMargin: itemMargin,
       onChanged: onChanged,
       maxHeight: maxHeight,
       showOtherAndItsTextField: showOtherAndItsTextField,
@@ -75,6 +78,8 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
       //  otherOnFieldSubmitted: print,
       otherHeight: otherHeight,
       otherMargin: otherMargin,
+
+      valueNotifier: valueNotifier,
       child: Container(
         key: GlobalKey(),
         padding: const EdgeInsets.symmetric(

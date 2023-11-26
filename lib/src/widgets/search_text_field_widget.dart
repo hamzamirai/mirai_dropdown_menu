@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:mirai_dropdown_menu/src/utils/mirai_outline_input_border.dart';
 
+import 'mirai_keyboard_visibility_builder_widget.dart';
+
 class SearchTextFieldWidget extends StatelessWidget {
   const SearchTextFieldWidget({
     super.key,
@@ -14,6 +16,7 @@ class SearchTextFieldWidget extends StatelessWidget {
     required this.searchValidator,
     required this.onChanged,
     required this.searchTextFormFieldStyle,
+    required this.scrollController,
   });
 
   final TextEditingController? searchController;
@@ -21,6 +24,7 @@ class SearchTextFieldWidget extends StatelessWidget {
   final FormFieldValidator<String>? searchValidator;
   final ValueChanged<String>? onChanged;
   final TextStyle? searchTextFormFieldStyle;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +39,10 @@ class SearchTextFieldWidget extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         style: searchTextFormFieldStyle ??
             Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).primaryColorDark,
-                ),
+              color: Theme.of(context).primaryColorDark,
+            ),
         cursorColor: Theme.of(context).primaryColorDark,
+       // autofocus: true,
         decoration: searchDecoration ??
             InputDecoration(
               filled: true,
@@ -57,3 +62,13 @@ class SearchTextFieldWidget extends StatelessWidget {
     );
   }
 }
+
+/*
+  if (isKeyboardVisible) {
+        if (scrollController != null) {
+          scrollController!.jumpTo(
+            scrollController!.position.maxScrollExtent,
+          );
+        }
+      }
+ */

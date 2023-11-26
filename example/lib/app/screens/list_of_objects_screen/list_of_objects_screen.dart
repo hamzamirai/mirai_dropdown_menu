@@ -12,7 +12,7 @@ import 'components/drop_down_object_child_widget.dart';
 import 'components/drop_down_object_item_widget.dart';
 
 class ListObjectsScreen extends StatefulWidget {
-  const ListObjectsScreen({Key? key}) : super(key: key);
+  const ListObjectsScreen({super.key});
 
   @override
   State<ListObjectsScreen> createState() => _ListObjectsScreenState();
@@ -61,13 +61,20 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                   ),
             ),
             const SizedBox(height: 40),
-            MiraiPopupMenu<ProjectModel>(
+            MiraiDropDownMenu<ProjectModel>(
               key: UniqueKey(),
               children: listProjects,
               space: 4,
               showSearchTextField: true,
-              itemWidgetBuilder: (int index, ProjectModel? project) {
-                return DropDownItemWidget(project: project);
+              itemWidgetBuilder: (
+                int index,
+                ProjectModel? project, {
+                bool isItemSelected = false,
+              }) {
+                return DropDownItemWidget(
+                  project: project,
+                  isItemSelected: isItemSelected,
+                );
               },
               onChanged: (ProjectModel project) {
                 projectValueNotifierFirst.value = project;
@@ -81,14 +88,19 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: MiraiPopupMenu<ProjectModel>(
+                  child: MiraiDropDownMenu<ProjectModel>(
                     key: UniqueKey(),
                     children: listProjects,
                     space: 4,
                     maxHeight: 300,
-                    itemWidgetBuilder: (int index, ProjectModel? project) {
+                    itemWidgetBuilder: (
+                      int index,
+                      ProjectModel? project, {
+                      bool isItemSelected = false,
+                    }) {
                       return DropDownItemWidget(
                         project: project,
+                        isItemSelected: isItemSelected,
                         firstSpace: 10,
                         fontSize: 12,
                       );
@@ -105,14 +117,19 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: MiraiPopupMenu<ProjectModel>(
+                  child: MiraiDropDownMenu<ProjectModel>(
                     key: UniqueKey(),
                     children: listProjects,
                     space: 4,
                     maxHeight: 360,
-                    itemWidgetBuilder: (int index, ProjectModel? project) {
+                    itemWidgetBuilder: (
+                      int index,
+                      ProjectModel? project, {
+                      bool isItemSelected = false,
+                    }) {
                       return DropDownItemWidget(
                         project: project,
+                        isItemSelected: isItemSelected,
                         firstSpace: 10,
                         fontSize: 12,
                       );
@@ -133,14 +150,19 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: MiraiPopupMenu<ProjectModel>(
+                  child: MiraiDropDownMenu<ProjectModel>(
                     key: UniqueKey(),
                     children: listProjects,
                     space: 4,
                     maxHeight: 300,
-                    itemWidgetBuilder: (int index, ProjectModel? project) {
+                    itemWidgetBuilder: (
+                      int index,
+                      ProjectModel? project, {
+                      bool isItemSelected = false,
+                    }) {
                       return DropDownItemWidget(
                         project: project,
+                        isItemSelected: isItemSelected,
                         fontSize: 10,
                         firstSpace: 8,
                         padding: const EdgeInsets.symmetric(
@@ -165,14 +187,19 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: MiraiPopupMenu<ProjectModel>(
+                  child: MiraiDropDownMenu<ProjectModel>(
                     key: UniqueKey(),
                     children: listProjects,
                     space: 4,
                     maxHeight: 360,
-                    itemWidgetBuilder: (int index, ProjectModel? project) {
+                    itemWidgetBuilder: (
+                      int index,
+                      ProjectModel? project, {
+                      bool isItemSelected = false,
+                    }) {
                       return DropDownItemWidget(
                         project: project,
+                        isItemSelected: isItemSelected,
                         fontSize: 10,
                         firstSpace: 8,
                         padding: const EdgeInsets.symmetric(
@@ -197,14 +224,19 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: MiraiPopupMenu<ProjectModel>(
+                  child: MiraiDropDownMenu<ProjectModel>(
                     key: UniqueKey(),
                     children: listProjects,
                     space: 4,
                     maxHeight: 360,
-                    itemWidgetBuilder: (int index, ProjectModel? project) {
+                    itemWidgetBuilder: (
+                      int index,
+                      ProjectModel? project, {
+                      bool isItemSelected = false,
+                    }) {
                       return DropDownItemWidget(
                         project: project,
+                        isItemSelected: isItemSelected,
                         fontSize: 10,
                         firstSpace: 8,
                         padding: const EdgeInsets.symmetric(

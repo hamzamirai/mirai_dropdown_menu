@@ -1,4 +1,30 @@
-## 0.0.7+3 - 2023-11-08
+## 0.0.8 - 2023-11-25
+
+- Changed MiraiPopupMenu to MiraiDropDownMenu.
+- Added Animation Duration.
+- Added AnimatedSwitcher when Choosing an item.
+- Added Switch showMode to Top when keyboard is Open while searching.
+- Added Switch showMode to Top if the there is no available space to show drop-down at the bottom.
+- Added searchNoDataWidget.
+- Added Selected Item Background Color
+    -     itemWidgetBuilder: (
+                int index,
+                String? item, {
+                bool isItemSelected = false,
+              }) {
+                return MiraiDropDownItemWidget(
+                  item: item,
+                  isItemSelected: isItemSelected,
+                );
+              }, 
+    - You can control select item color as you want, for example:
+        - color: isSelectedItem ? Colors.white : Colors.black,
+    - New Fields:
+        - showItemSelectedBackgroundColor
+        - itemBackgroundColor
+        - selectedItemBackgroundColor
+
+- ## 0.0.7+3 - 2023-11-08
 
 - Added Search TextFormField Style
 
@@ -36,11 +62,11 @@
 ## 0.0.6 - 2022-06-24
 
 - Added new features such as:
-  - Make Dropdown not opening when Children list isEmpty
-  - Added search TextFormField:
-    - make showSearchTextField: true,
-    - Also, you can use a custom input decoration:
-      - searchDecoration: InputDecoration(),
+    - Make Dropdown not opening when Children list isEmpty
+    - Added search TextFormField:
+        - make showSearchTextField: true,
+        - Also, you can use a custom input decoration:
+            - searchDecoration: InputDecoration(),
 
 ## 0.0.5+1 - 2022-05-26
 

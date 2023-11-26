@@ -3,6 +3,7 @@
 * On 9/10/2023.
 */
 import 'package:flutter/material.dart';
+import 'package:mirai_dropdown_menu/src/utils/common_function.dart';
 import 'package:mirai_dropdown_menu/src/widgets/search_text_field_widget.dart';
 
 import 'item_to_return_widget.dart';
@@ -18,7 +19,11 @@ class ItemWidget<T> extends StatelessWidget {
     required this.searchListLength,
     required this.itemPadding,
     required this.child,
+    required this.searchNoDataWidget,
     required this.itemOverlayColor,
+    required this.itemBackgroundColor,
+    required this.itemMargin,
+    required this.selectedItemBackgroundColor,
     required this.itemHeight,
 
     /// Search Fields
@@ -35,15 +40,17 @@ class ItemWidget<T> extends StatelessWidget {
     required this.otherOnFieldSubmitted,
     required this.otherHeight,
     required this.otherMargin,
-
     required this.radius,
     required this.isFirst,
     required this.isLast,
+    required this.scrollController,
+    required this.onTapOtherTextField,
   });
 
   final Widget? child;
+  final Widget? searchNoDataWidget;
   final int index;
-  final VoidCallback onTapChild;
+  final VoidCallback? onTapChild;
   final EdgeInsetsGeometry? itemPadding;
   final bool showOtherAndItsTextField;
   final bool showSearchTextField;
@@ -65,25 +72,49 @@ class ItemWidget<T> extends StatelessWidget {
   final EdgeInsetsGeometry? otherMargin;
 
   final Color? itemOverlayColor;
+  final Color? itemBackgroundColor;
+  final EdgeInsetsGeometry? itemMargin;
+  final Color? selectedItemBackgroundColor;
   final double? itemHeight;
 
   final double radius;
   final bool isFirst;
   final bool isLast;
 
+  final ScrollController? scrollController;
+
+  final GestureTapCallback? onTapOtherTextField;
+
   @override
   Widget build(BuildContext context) {
+    miraiPrint('showSearchTextField $showSearchTextField');
+    miraiPrint('showOtherAndItsTextField $showOtherAndItsTextField');
+    miraiPrint('searchListLength $searchListLength');
+    miraiPrint('index $index');
+    miraiPrint('CheckOther ${index != searchListLength + (showSearchTextField ? 1 : 0)}');
     if (!showOtherAndItsTextField) {
       if (showSearchTextField) {
-
-
         if (index == 0 && showSearchTextField) {
-          return SearchTextFieldWidget(
-            searchController: searchController,
-            searchDecoration: searchDecoration,
-            searchValidator: searchValidator,
-            onChanged: onChanged,
-            searchTextFormFieldStyle: searchTextFormFieldStyle,
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SearchTextFieldWidget(
+                searchController: searchController,
+                searchDecoration: searchDecoration,
+                searchValidator: searchValidator,
+                onChanged: onChanged,
+                searchTextFormFieldStyle: searchTextFormFieldStyle,
+                scrollController: scrollController,
+              ),
+              if (searchListLength <= 1)
+                searchNoDataWidget ??
+                    const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(40.0),
+                        child: Text('No Data!'),
+                      ),
+                    ),
+            ],
           );
         } else {
           return ItemToReturnWidget<T>(
@@ -91,10 +122,13 @@ class ItemWidget<T> extends StatelessWidget {
             onTapChild: onTapChild,
             padding: itemPadding,
             itemOverlayColor: itemOverlayColor,
+            itemBackgroundColor: itemBackgroundColor,
             itemHeight: itemHeight,
             radius: radius,
             isFirst: isFirst,
             isLast: isLast,
+            selectedItemBackgroundColor: selectedItemBackgroundColor,
+            margin: itemMargin,
             child: child,
           );
         }
@@ -104,23 +138,40 @@ class ItemWidget<T> extends StatelessWidget {
           onTapChild: onTapChild,
           padding: itemPadding,
           itemOverlayColor: itemOverlayColor,
+          itemBackgroundColor: itemBackgroundColor,
           itemHeight: itemHeight,
           radius: radius,
           isFirst: isFirst,
           isLast: isLast,
+          selectedItemBackgroundColor: selectedItemBackgroundColor,
+          margin: itemMargin,
           child: child,
         );
       }
     } else {
-      if (index != searchListLength + (showSearchTextField ? 1 : 0)) {
+      if (index != (searchListLength - 1)) {
         if (showSearchTextField) {
           if (index == 0) {
-            return SearchTextFieldWidget(
-              searchController: searchController,
-              searchDecoration: searchDecoration,
-              searchValidator: searchValidator,
-              onChanged: onChanged,
-              searchTextFormFieldStyle: searchTextFormFieldStyle,
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SearchTextFieldWidget(
+                  searchController: searchController,
+                  searchDecoration: searchDecoration,
+                  searchValidator: searchValidator,
+                  onChanged: onChanged,
+                  searchTextFormFieldStyle: searchTextFormFieldStyle,
+                  scrollController: scrollController,
+                ),
+                if (searchListLength <= 2)
+                  searchNoDataWidget ??
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(40.0),
+                          child: Text('No Data!'),
+                        ),
+                      ),
+              ],
             );
           } else {
             return ItemToReturnWidget<T>(
@@ -128,10 +179,13 @@ class ItemWidget<T> extends StatelessWidget {
               onTapChild: onTapChild,
               padding: itemPadding,
               itemOverlayColor: itemOverlayColor,
+              itemBackgroundColor: itemBackgroundColor,
+              selectedItemBackgroundColor: selectedItemBackgroundColor,
               itemHeight: itemHeight,
               radius: radius,
               isFirst: isFirst,
               isLast: isLast,
+              margin: itemMargin,
               child: child,
             );
           }
@@ -141,10 +195,13 @@ class ItemWidget<T> extends StatelessWidget {
             onTapChild: onTapChild,
             padding: itemPadding,
             itemOverlayColor: itemOverlayColor,
+            itemBackgroundColor: itemBackgroundColor,
             itemHeight: itemHeight,
             radius: radius,
             isFirst: isFirst,
             isLast: isLast,
+            selectedItemBackgroundColor: selectedItemBackgroundColor,
+            margin: itemMargin,
             child: child,
           );
         }
@@ -156,6 +213,8 @@ class ItemWidget<T> extends StatelessWidget {
           onFieldSubmitted: otherOnFieldSubmitted,
           height: otherHeight,
           margin: otherMargin,
+          scrollController: scrollController,
+          onTapOtherTextField: onTapOtherTextField,
         );
       }
     }

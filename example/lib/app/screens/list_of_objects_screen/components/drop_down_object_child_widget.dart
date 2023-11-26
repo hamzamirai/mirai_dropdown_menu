@@ -11,7 +11,7 @@ import 'mirai_container_widget.dart';
 
 class DropDownObjectChildWidget extends StatelessWidget {
   const DropDownObjectChildWidget({
-    Key? key,
+    super.key,
     required this.projectValueNotifier,
     this.firstSpace = 12,
     this.secondSpace = 16,
@@ -19,7 +19,7 @@ class DropDownObjectChildWidget extends StatelessWidget {
     this.fontSize,
     this.coloredContainerSize,
     this.height,
-  }) : super(key: key);
+  });
 
   final ValueNotifier<ProjectModel> projectValueNotifier;
   final double firstSpace;

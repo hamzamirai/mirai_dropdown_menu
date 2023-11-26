@@ -9,7 +9,7 @@ import 'package:example/app/screens/list_of_strings_screen/list_of_strings_scree
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.title}) : super(key: key);
+  const HomeScreen({super.key, required this.title});
 
   final String title;
 
@@ -58,9 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const ListOfStringScreen(),
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const ListOfStringScreen(),
                     ),
                   );
                 },
@@ -81,9 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const ListObjectsScreen(),
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const ListObjectsScreen(),
                     ),
                   );
                 },
