@@ -919,8 +919,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
     final Offset widgetTopLeft = widgetRenderBox.localToGlobal(Offset.zero);
 
     final Offset widgetBottomRight =
-        Offset(widgetRenderBox.size.width, widgetRenderBox.size.height
-             +   widgetTopLeft.dy
+        Offset(widgetRenderBox.size.width, widgetRenderBox.size.height + widgetTopLeft.dy
             // +
             //     widget.space +
             //     widget.size.height +
@@ -988,9 +987,17 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
           dropHeight = dropPosition;
         }
       }
+
+      if (widget.maxHeight != null) {
+        dropHeight = widget.maxHeight;
+      }
       setState(() {});
     } else {
       dropHeight = null;
+
+      if (widget.maxHeight != null) {
+        dropHeight = widget.maxHeight;
+      }
     }
 
     isEntirelyOnScreenValueNotifier.value = isEntirelyOnScreen;
