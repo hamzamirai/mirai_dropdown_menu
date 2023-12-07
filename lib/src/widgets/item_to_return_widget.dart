@@ -47,6 +47,7 @@ class ItemToReturnWidget<T> extends StatelessWidget {
           );
     return Container(
       margin: margin,
+      height: itemHeight,
       decoration: BoxDecoration(
         color: selectedItemBackgroundColor ?? itemBackgroundColor,
         borderRadius: borderRadius,
@@ -54,17 +55,15 @@ class ItemToReturnWidget<T> extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTapChild,
         style: ElevatedButton.styleFrom(
-                backgroundColor: selectedItemBackgroundColor ??
-                    itemBackgroundColor ??
-                    Colors.transparent,
-                padding:
-                    padding ?? const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: borderRadius,
-                ),
-                minimumSize:
-                    itemHeight != null ? Size(double.infinity, itemHeight!) : null)
-            .copyWith(
+          backgroundColor:
+              selectedItemBackgroundColor ?? itemBackgroundColor ?? Colors.transparent,
+          padding: padding ?? const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius,
+          ),
+          // minimumSize:
+          //     itemHeight != null ? Size(double.infinity, itemHeight!) : null
+        ).copyWith(
           elevation: MaterialStateProperty.all(0),
           //padding: MaterialStateProperty.all(padding),
           overlayColor: MaterialStateProperty.all(itemOverlayColor),

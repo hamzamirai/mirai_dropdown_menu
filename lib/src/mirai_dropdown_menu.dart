@@ -494,7 +494,6 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
                       // );
                     },
                     child: Container(
-                      // TODO
                       height: dropHeight ?? widget.maxHeight,
                       width: widget.size.width, // - 1,
                       decoration: widget.decoration ??
