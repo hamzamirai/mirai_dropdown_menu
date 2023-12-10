@@ -30,6 +30,7 @@ class MiraiDropDownMenu<T> extends StatefulWidget {
   MiraiDropDownMenu({
     super.key,
     required this.child,
+    this.isKeyboardOpen = false,
     this.other,
     this.decoration,
     required this.itemWidgetBuilder,
@@ -76,6 +77,7 @@ class MiraiDropDownMenu<T> extends StatefulWidget {
 
   /// Child widget that has dropdown menu
   final Widget child;
+  final bool isKeyboardOpen;
 
   /// Drop Down Decoration
   final Decoration? decoration;
@@ -148,21 +150,35 @@ class MiraiDropDownMenuState<T> extends State<MiraiDropDownMenu<T>> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.enable ? _showDropDownMenu : null,
+      onTap: widget.enable
+          ? () async {
+              miraiPrint('context.isKeyboardOpen ${widget.isKeyboardOpen}');
+              if (widget.isKeyboardOpen) {
+                FocusManager.instance.primaryFocus?.unfocus();
+
+                miraiPrint('BeforeWait');
+                await 500.waitForMilliseconds();
+                miraiPrint('AfterWait');
+                _showDropDownMenu();
+                miraiPrint('_showDropDownMenuCalled');
+              } else {
+                _showDropDownMenu();
+                miraiPrint('_showDropDownMenuCalled');
+              }
+            }
+          : null,
       child: widget.child,
     );
   }
 
   void _showDropDownMenu() {
-    FocusManager.instance.primaryFocus?.unfocus();
-
     /// Find RenderBox object
     RenderBox renderBox =
         (widget.child.key as GlobalKey).currentContext?.findRenderObject() as RenderBox;
     Offset position = renderBox.localToGlobal(Offset.zero);
 
     if (widget.children.isNotEmpty) {
-      showCupertinoDialog(
+      showCupertinoDialog<void>(
         context: context,
         barrierDismissible: false,
         builder: (_) {
