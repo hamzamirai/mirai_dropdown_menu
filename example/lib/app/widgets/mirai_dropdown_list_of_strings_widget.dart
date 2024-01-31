@@ -10,6 +10,7 @@ import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
 class MiraiDropdownWidget<String> extends StatelessWidget {
   const MiraiDropdownWidget({
     super.key,
+    this.dropdownKey,
     required this.valueNotifier,
     required this.itemWidgetBuilder,
     required this.children,
@@ -32,6 +33,7 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
     this.otherMargin,
   });
 
+  final Key? dropdownKey;
   final ValueNotifier<String> valueNotifier;
   final MiraiDropdownBuilder<String> itemWidgetBuilder;
   final EdgeInsetsGeometry? itemMargin;
@@ -57,7 +59,7 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MiraiDropDownMenu<String>(
-      key: UniqueKey(),
+      key: dropdownKey ?? UniqueKey(),
       enable: true,
       space: 4,
       showMode: showMode,

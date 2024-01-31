@@ -50,6 +50,9 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
   late ValueNotifier<String> valueNotifierNinth;
   late ValueNotifier<String> valueNotifierTenth;
 
+  GlobalKey<MiraiDropDownMenuState<String?>> firstDropdownGlobalKey =
+      GlobalKey<MiraiDropDownMenuState<String?>>();
+
   @override
   void initState() {
     super.initState();
@@ -137,12 +140,31 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                 ),
           ),
           const SizedBox(height: 40),
+          ElevatedButton(
+            onPressed: () {
+              firstDropdownGlobalKey.currentState?.showDropDownMenu();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).primaryColorDark,
+              minimumSize: const Size(double.infinity, 56),
+            ),
+            child: Text(
+              'Open First Drop Down',
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+            ),
+          ),
+          const SizedBox(height: 40),
           const Text('Drop Down'),
           const SizedBox(height: 8),
           MiraiDropdownWidget<String>(
+            dropdownKey: firstDropdownGlobalKey,
             valueNotifier: valueNotifierZero,
-           // showOtherAndItsTextField: true,
-           // showSearchTextField: true,
+            // showOtherAndItsTextField: true,
+            // showSearchTextField: true,
             otherOnFieldSubmitted: (String value) {
               miraiPrint('otherOnFieldSubmitted $value');
             },

@@ -159,10 +159,10 @@ class MiraiDropDownMenuState<T> extends State<MiraiDropDownMenu<T>> {
                 miraiPrint('BeforeWait');
                 await 500.waitForMilliseconds();
                 miraiPrint('AfterWait');
-                _showDropDownMenu();
+                showDropDownMenu();
                 miraiPrint('_showDropDownMenuCalled');
               } else {
-                _showDropDownMenu();
+                showDropDownMenu();
                 miraiPrint('_showDropDownMenuCalled');
               }
             }
@@ -171,7 +171,7 @@ class MiraiDropDownMenuState<T> extends State<MiraiDropDownMenu<T>> {
     );
   }
 
-  void _showDropDownMenu() {
+  void showDropDownMenu() {
     /// Find RenderBox object
     RenderBox renderBox =
         (widget.child.key as GlobalKey).currentContext?.findRenderObject() as RenderBox;

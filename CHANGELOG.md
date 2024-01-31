@@ -1,4 +1,17 @@
-## 0.0.8 - 2023-11-25
+## 0.0.8+1 - 2024-01-31
+
+- Made showDropDownMenu public.
+1- You create a GlobalKey for the MiraiDropDownMenuState<String?>:
+```dart
+GlobalKey<MiraiDropDownMenuState<String?>> firstDropdownGlobalKey = GlobalKey<MiraiDropDownMenuState<String?>>();
+```
+2- You can then assign this GlobalKey to your MiraiDropDownMenu widget. This allows you to access the widget's state from anywhere in your widget tree.
+3- To open the dropdown menu from another button, you call the showDropDownMenu method on the current state of the MiraiDropDownMenu widget:
+```dart
+firstDropdownGlobalKey.currentState?.showDropDownMenu();
+```
+
+- ## 0.0.8 - 2023-11-25
 
 - Changed MiraiPopupMenu to MiraiDropDownMenu.
 - Added Animation Duration.
