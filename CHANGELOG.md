@@ -1,14 +1,22 @@
-## 0.0.8+1 - 2024-01-31
+## 0.0.8+2 - 2024-01-31
 
 - Made showDropDownMenu public.
-1- You create a GlobalKey for the MiraiDropDownMenuState<String?>:
+- 1- You create a GlobalKey for the MiraiDropDownMenuState<String?>:
 ```dart
 GlobalKey<MiraiDropDownMenuState<String?>> firstDropdownGlobalKey = GlobalKey<MiraiDropDownMenuState<String?>>();
 ```
-2- You can then assign this GlobalKey to your MiraiDropDownMenu widget. This allows you to access the widget's state from anywhere in your widget tree.
-3- To open the dropdown menu from another button, you call the showDropDownMenu method on the current state of the MiraiDropDownMenu widget:
+- 2- You can then assign this GlobalKey to your MiraiDropDownMenu widget. This allows you to access the widget's state from anywhere in your widget tree.
+- 3- To open the dropdown menu from another button, you call the showDropDownMenu method on the current state of the MiraiDropDownMenu widget:
 ```dart
 firstDropdownGlobalKey.currentState?.showDropDownMenu();
+```
+- 4- Assigning the GlobalKey: By using firstDropdownGlobalKey in the dropdownKey property, you're ensuring that this specific instance of your dropdown widget is associated with the GlobalKey. Your code snippet would look like this:
+```dart
+// ... inside your widget build method
+MiraiDropdownWidget<String>(
+dropdownKey: firstDropdownGlobalKey,
+// ... other properties
+)
 ```
 
 - ## 0.0.8 - 2023-11-25
