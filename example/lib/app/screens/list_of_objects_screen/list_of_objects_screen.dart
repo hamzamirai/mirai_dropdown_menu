@@ -66,6 +66,8 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
               children: listProjects,
               space: 4,
               showSearchTextField: true,
+              itemMargin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              itemPadding: EdgeInsets.zero,
               itemWidgetBuilder: (
                 int index,
                 ProjectModel? project, {
@@ -93,6 +95,8 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 300,
+                    itemMargin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    itemPadding: EdgeInsets.zero,
                     itemWidgetBuilder: (
                       int index,
                       ProjectModel? project, {
@@ -122,6 +126,8 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 360,
+                    itemMargin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    itemPadding: EdgeInsets.zero,
                     itemWidgetBuilder: (
                       int index,
                       ProjectModel? project, {
@@ -155,6 +161,8 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 300,
+                    itemMargin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    itemPadding: EdgeInsets.zero,
                     itemWidgetBuilder: (
                       int index,
                       ProjectModel? project, {
@@ -192,6 +200,8 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 360,
+                    itemMargin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    itemPadding: EdgeInsets.zero,
                     itemWidgetBuilder: (
                       int index,
                       ProjectModel? project, {
@@ -229,6 +239,8 @@ class _ListObjectsScreenState extends State<ListObjectsScreen> {
                     children: listProjects,
                     space: 4,
                     maxHeight: 360,
+                    itemMargin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    itemPadding: EdgeInsets.zero,
                     itemWidgetBuilder: (
                       int index,
                       ProjectModel? project, {

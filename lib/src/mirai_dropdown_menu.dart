@@ -929,7 +929,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
     final Size screenSize = MediaQuery.sizeOf(key.currentContext!);
     final EdgeInsets padding = MediaQuery.paddingOf(key.currentContext!);
 
-    double appBarHeight = AppBar().preferredSize.height;
+    // double appBarHeight = AppBar().preferredSize.height;
 
     final Offset widgetTopLeft = widgetRenderBox.localToGlobal(Offset.zero);
 
@@ -967,7 +967,7 @@ class _DropDownMenuContentState<T> extends State<_DropDownMenuContent<T>>
     miraiPrint('padding: $padding');
 
     miraiPrint('Rest: ${widgetBottomRight.dy - screenSize.height}');
-    final double rest = widgetBottomRight.dy - screenSize.height;
+    // final double rest = widgetBottomRight.dy - screenSize.height;
 
     if (!isEntirelyOnScreen) {
       // setState(() {

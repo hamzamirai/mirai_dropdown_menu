@@ -6,8 +6,6 @@
 import 'package:flutter/material.dart';
 import 'package:mirai_dropdown_menu/src/utils/mirai_outline_input_border.dart';
 
-import 'mirai_keyboard_visibility_builder_widget.dart';
-
 class SearchTextFieldWidget extends StatelessWidget {
   const SearchTextFieldWidget({
     super.key,

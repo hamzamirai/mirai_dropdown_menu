@@ -223,6 +223,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                   valueNotifier: valueNotifierSecond,
                   showOtherAndItsTextField: true,
                   other: const Text('Other'),
+                  itemMargin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   itemWidgetBuilder: (
                     int index,
                     String? item, {
@@ -244,6 +245,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                 child: MiraiDropdownWidget<String>(
                   maxHeight: listOfItem.length > 8 ? 300 : null,
                   valueNotifier: valueNotifierThird,
+                  itemMargin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   itemWidgetBuilder: (
                     int index,
                     String? item, {
@@ -271,6 +273,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                 child: MiraiDropdownWidget<String>(
                   maxHeight: listOfItem.length > 6 ? 240 : null,
                   valueNotifier: valueNotifierFourth,
+                  itemMargin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   itemWidgetBuilder: (
                     int index,
                     String? item, {
@@ -292,6 +295,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                 child: MiraiDropdownWidget<String>(
                   maxHeight: listOfItem.length > 6 ? 240 : null,
                   valueNotifier: valueNotifierFifth,
+                  itemMargin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   itemWidgetBuilder: (
                     int index,
                     String? item, {
@@ -313,6 +317,7 @@ class _ListOfStringScreenState extends State<ListOfStringScreen> {
                 child: MiraiDropdownWidget<String>(
                   maxHeight: listOfItem.length > 6 ? 240 : null,
                   valueNotifier: valueNotifierSixth,
+                  itemMargin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   itemWidgetBuilder: (
                     int index,
                     String? item, {

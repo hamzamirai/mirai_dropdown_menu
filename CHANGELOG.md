@@ -1,3 +1,7 @@
+## 0.0.9 - 2024-07-29
+
+- Update to Flutter 3.22.3 & Dart 3.4.3.
+
 ## 0.0.8+2 - 2024-01-31
 
 - Made showDropDownMenu public.
