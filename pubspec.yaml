@@ -1,0 +1,22 @@
+name: mirai_dropdown_menu
+description: MiraiDevs developed the Mirai Dropdown Menu Package. Using this package, you can set a static list of objects or a list you have downloaded from an API.
+version: 0.0.9
+
+homepage: https://github.com/devhch/mirai_dropdown_menu
+
+environment:
+  sdk: ^3.5.3
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_keyboard_visibility: ^6.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
