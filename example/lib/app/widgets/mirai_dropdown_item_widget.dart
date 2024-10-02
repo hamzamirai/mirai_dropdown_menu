@@ -5,7 +5,7 @@
 
 import 'package:example/app/core/utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:substring_highlight/substring_highlight.dart';
+import 'package:mirai_substring_highlight/mirai_substring_highlight.dart';
 
 class MiraiDropDownItemWidget extends StatelessWidget {
   const MiraiDropDownItemWidget({

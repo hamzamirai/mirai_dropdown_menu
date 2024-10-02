@@ -6,26 +6,28 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.2.0 <4.0.0"
+  sdk: ">=3.5.3 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.6
-  google_fonts: ^6.1.0
-  font_awesome_flutter: ^10.6.0
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.2.1
+  font_awesome_flutter: ^10.7.0
 
-  substring_highlight: ^1.0.33
+  mirai_substring_highlight:
+    git:
+      url: https://github.com/hamzamirai/mirai_substring_highlight.git
 
   mirai_dropdown_menu:
     path: ../
 
 dev_dependencies:
+  flutter_lints: ^5.0.0
+
   flutter_test:
     sdk: flutter
-
-  flutter_lints: ^3.0.1
 
 flutter:
 

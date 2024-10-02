@@ -1,3 +1,7 @@
+## 0.0.9+1 - 2024-10-02
+
+- Update to Flutter 3.24.3 & Dart 3.5.3.
+
 ## 0.0.9 - 2024-07-29
 
 - Update to Flutter 3.22.3 & Dart 3.4.3.
