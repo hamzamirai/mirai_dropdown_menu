@@ -8,8 +8,8 @@ class SearchAttributes<T> {
   String mQueryClient;
 
   SearchAttributes({
-    this.searchList = const [],
+    List<T>? searchList,
     this.showHighLight = false,
     this.mQueryClient = '',
-  });
+  }) : searchList = searchList ?? <T>[];
 }

@@ -64,9 +64,9 @@ class ItemToReturnWidget<T> extends StatelessWidget {
           // minimumSize:
           //     itemHeight != null ? Size(double.infinity, itemHeight!) : null
         ).copyWith(
-          elevation: MaterialStateProperty.all(0),
-          //padding: MaterialStateProperty.all(padding),
-          overlayColor: MaterialStateProperty.all(itemOverlayColor),
+          elevation: WidgetStateProperty.all(0),
+          //padding: WidgetStateProperty.all(padding),
+          overlayColor: WidgetStateProperty.all(itemOverlayColor),
         ),
         child: child,
       ),
