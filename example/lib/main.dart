@@ -1,47 +1,52 @@
-import 'package:example/app/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'app/core/localization/localization_manager.dart';
+import 'app/core/localization/state/language_notifier.dart';
+import 'app/core/theme/app_theme.dart';
 import 'app/core/utils/app_size_config.dart';
+import 'app/screens/home_screen/home_screen.dart';
 
 void main() {
-  // const bool isProduction = bool.fromEnvironment('dart.vm.product');
-  // if (isProduction) {
-  //   // analyser does not like empty function body
-  //   // debugPrint = (String message, {int wrapWidth}) {};
-  //   // so i changed it to this:
-  //   debugPrint = (String? message, {int? wrapWidth}) {};
-  // }
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, BoxConstraints boxConstraints) {
-        return OrientationBuilder(
-          builder: (__, Orientation orientation) {
-            /// init sizes
-            AppSizeConfig.init(
-              orientation: orientation,
-              constraints: boxConstraints,
-            );
-            return MaterialApp(
-              title: 'Mirai dropdown menu example',
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-                primaryColor: Colors.transparent,
-                textTheme: TextTheme(
-                  displayMedium: GoogleFonts.nunito(),
-                  labelLarge: GoogleFonts.nunito(),
-                ),
-              ),
-              home: const HomeScreen(title: 'Mirai Dropdown menu \nExample'),
+    return ListenableBuilder(
+      listenable: LanguageNotifier.instance,
+      builder: (BuildContext context, Widget? _) {
+        final Locale currentLocale = LanguageNotifier.instance.currentLocale;
+
+        return LayoutBuilder(
+          builder: (_, BoxConstraints boxConstraints) {
+            return OrientationBuilder(
+              builder: (_, Orientation orientation) {
+                /// init sizes
+                AppSizeConfig.init(
+                  orientation: orientation,
+                  constraints: boxConstraints,
+                );
+                return MaterialApp(
+                  title: 'Mirai Dropdown Menu Example',
+                  debugShowCheckedModeBanner: false,
+                  theme: AppTheme.light(),
+                  darkTheme: AppTheme.dark(),
+                  themeMode: ThemeMode.light,
+                  locale: currentLocale,
+                  supportedLocales: AppLocalization.supportedLocales,
+                  localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+                    const AppLocalizationDelegate(),
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  home: const HomeScreen(title: 'Mirai Dropdown Menu\nExample'),
+                );
+              },
             );
           },
         );

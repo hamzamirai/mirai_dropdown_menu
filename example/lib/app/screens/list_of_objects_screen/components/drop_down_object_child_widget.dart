@@ -45,7 +45,7 @@ class DropDownObjectChildWidget extends StatelessWidget {
       height: height ?? 40,
       child: ValueListenableBuilder<ProjectModel>(
         valueListenable: projectValueNotifier,
-        builder: (_, ProjectModel project, __) {
+        builder: (_, ProjectModel project, _) {
           return Row(
             children: <Widget>[
               MiraiContainerWidget(

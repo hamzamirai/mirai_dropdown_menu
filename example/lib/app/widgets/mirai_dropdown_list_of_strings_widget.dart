@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mirai_dropdown_menu/mirai_dropdown_menu.dart';
 
-class MiraiDropdownWidget<String> extends StatelessWidget {
+class MiraiDropdownWidget<T> extends StatelessWidget {
   const MiraiDropdownWidget({
     super.key,
     this.dropdownKey,
@@ -34,11 +34,11 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
   });
 
   final Key? dropdownKey;
-  final ValueNotifier<String> valueNotifier;
-  final MiraiDropdownBuilder<String> itemWidgetBuilder;
+  final ValueNotifier<T> valueNotifier;
+  final MiraiDropdownBuilder<T> itemWidgetBuilder;
   final EdgeInsetsGeometry? itemMargin;
-  final List<String> children;
-  final ValueChanged<String> onChanged;
+  final List<T> children;
+  final ValueChanged<T> onChanged;
   final bool underline;
   final bool showSeparator;
   final MiraiExit exit;
@@ -58,7 +58,7 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MiraiDropDownMenu<String>(
+    return MiraiDropDownMenu<T>(
       key: dropdownKey ?? UniqueKey(),
       enable: true,
       space: 4,
@@ -106,16 +106,16 @@ class MiraiDropdownWidget<String> extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Flexible(
-              child: ValueListenableBuilder<String>(
+              child: ValueListenableBuilder<T>(
                 valueListenable: valueNotifier,
-                builder: (_, String chosenTitle, __) {
+                builder: (_, T chosenTitle, _) {
                   return AnimatedSize(
                     duration: const Duration(milliseconds: 200),
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 100),
                       child: Text(
                         '$chosenTitle',
-                        key: ValueKey<String>(chosenTitle),
+                        key: ValueKey<T>(chosenTitle),
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
                         ),

@@ -33,7 +33,7 @@ class MiraiDropDownItemWidget extends StatelessWidget {
               text: '$item',
               term: query,
               textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
-                    color: AppTheme.keyDarkBlueColor.withOpacity(.5),
+                    color: AppTheme.keyDarkBlueColor.withValues(alpha: 0.5),
                     overflow: TextOverflow.ellipsis,
                   ),
               textStyleHighlight: Theme.of(context).textTheme.displayLarge!.copyWith(
