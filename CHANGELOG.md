@@ -1,3 +1,38 @@
+## 1.0.1 - 2026-08-15
+
+- Updated SDK constraints to Flutter >=3.47.0 and Dart >=3.13.0
+- Fixed missing required `itemWidgetBuilder` parameter in `MiraiDropDownMenu` constructor
+- Forwarded missing multi-selection & highlight parameters to `DropDownMenuContent`
+- Resolved all static analysis warnings and lints (type annotations, unused imports, wildcard underscores)
+- Cleaned up example application for modern Flutter compatibility
+
+## 1.0.0 - 2025-10-25
+
+### 🎉 Major Release - Production Ready!
+
+This is the first stable 1.0.0 release of Mirai Dropdown Menu! The package is now fully compatible with the latest Flutter and Dart versions, with all deprecations resolved and best practices implemented.
+
+### Bug Fixes & Improvements
+- Fixed deprecated `Color.withOpacity()` usage - replaced with `Color.withValues(alpha:)` for Flutter 3.35+ compatibility
+- Fixed deprecated `MaterialStateProperty` - replaced with `WidgetStateProperty`
+- Fixed deprecated `dart:ui.window` usage - replaced with `View.of(context)`
+- Added missing type annotations throughout the codebase for improved type safety
+- Replaced `print()` statements with `debugPrint()` in example app for better logging practices
+- Cleaned up extensive commented-out debug code to improve code readability
+- Fixed potential null safety issues in `SearchAttributes` model
+- Enhanced code quality and reduced lint warnings
+
+### Technical Details
+- ✅ Fully compatible with Flutter 3.35.7 & Dart 3.9.2+
+- ✅ Zero deprecation warnings
+- ✅ Clean static analysis with no errors
+- ✅ Improved code maintainability and reduced technical debt
+- ✅ All modern Flutter best practices implemented
+- ✅ Production-ready and stable
+
+### Breaking Changes
+None - This is a backward-compatible release. All existing implementations will continue to work.
+
 ## 0.0.9+1 - 2024-10-02
 
 - Update to Flutter 3.24.3 & Dart 3.5.3.
